@@ -24,13 +24,13 @@ public class SeleccionScreen implements Screen{
 
     private Stage stage;
     private TowerAttack game;
-    private Container miniMapa, tropasMax;
+    private Container miniMapa, tropasMax, textoTropasMax;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer renderer;
 
-    private static Label.LabelStyle textStyle;
+    private static Label.LabelStyle textStyle, textStylePequenio;
 
-    private Label contador;
+    private Label contador, textoTropas;
     int cont = 50;
 
     public SeleccionScreen(Batch batch, Viewport viewport) {
@@ -45,13 +45,20 @@ public class SeleccionScreen implements Screen{
         miniMapa.setPosition(Settings.GAME_WIDTH - Settings.MINIMAPA_WIDTH, 0);
 
         textStyle = AssetManager.textStyle;
+        textStylePequenio = AssetManager.textStylePequenio;
+
 
         contador = new Label("" + cont, textStyle);
         tropasMax = new Container(contador);
 
         tropasMax.setTransform(true);
         tropasMax.center();
-        tropasMax.setPosition((Settings.GAME_WIDTH / 5),Settings.GAME_HEIGHT/4);
+        tropasMax.setPosition(350, 175);
+
+        textoTropas = new Label("Tropas máximas restantes: ", textStylePequenio);
+        textoTropasMax = new Container(textoTropas);
+        textoTropasMax.center();
+        textoTropasMax.setPosition(400,50);
 
         tiledMap = AssetManager.tiledMap;
         renderer = AssetManager.renderer;
@@ -68,6 +75,7 @@ public class SeleccionScreen implements Screen{
 
         stage.addActor(miniMapa);
         stage.addActor(tropasMax);
+        stage.addActor(textoTropasMax);
 
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
@@ -91,7 +99,6 @@ public class SeleccionScreen implements Screen{
 
         stage.draw();
         stage.act(delta);
-
     }
 
     @Override

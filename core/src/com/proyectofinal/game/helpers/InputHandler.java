@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.screens.MenuScreen;
 import com.proyectofinal.game.screens.SeleccionScreen;
 import com.proyectofinal.game.utils.Settings;
@@ -15,6 +16,7 @@ import com.proyectofinal.game.utils.Settings;
 
 public class InputHandler implements InputProcessor {
 
+    private TowerAttack towerAttack;
     private SeleccionScreen selecScreen;
     private MenuScreen menuScreen;
     private Stage stage;
@@ -46,16 +48,19 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (Settings.pantalla == 2) {
-            selecScreen.modMaxTropas();
-            return true;
-        } else if (Settings.pantalla == 1){
+        if (Settings.pantalla == 1){
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
-                Gdx.app.log("HIT", actorHit.getName()); //.toString().replaceAll("Label: ", "")
+                String lvl = actorHit.toString().replaceAll("Label: ", "");
+                if (lvl.equals("1")){
+                    menuScreen.siguientePantalla("1");
+                }
             }
-        return true;
+            return true;
+        } else if (Settings.pantalla == 2) {
+            selecScreen.modMaxTropas();
+            return true;
         }else{
             return true;
         }

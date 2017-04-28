@@ -41,7 +41,7 @@ public class MenuScreen implements Screen {
         stage.addActor(new Image(AssetManager.background));
 
         textStyle = AssetManager.textStyle;
-
+        textStyleTitulo = AssetManager.textStyleTitulo;
 
         textLbl = new Label("1", textStyle);
         textLbl2 = new Label("2", textStyle);
@@ -51,7 +51,7 @@ public class MenuScreen implements Screen {
         textLbl6 = new Label("6", textStyle);
         textLbl7 = new Label("7", textStyle);
         textLbl8 = new Label("8", textStyle);
-        titulo = new Label("TowerAttack", textStyle);
+        titulo = new Label("TowerAttack", textStyleTitulo);
 
         // Creem el contenidor necessari per aplicar-li les accions
         container1 = new Container(textLbl);
@@ -67,12 +67,10 @@ public class MenuScreen implements Screen {
         container1.setTransform(true);
         container1.center();
         container1.setPosition((Settings.GAME_WIDTH / 5),Settings.GAME_HEIGHT/2);
-        container1.setName("1");
 
         container2.setTransform(true);
         container2.center();
         container2.setPosition((Settings.GAME_WIDTH / 5)*2,Settings.GAME_HEIGHT/2);
-        container2.setName("2");
 
         container3.setTransform(true);
         container3.center();
@@ -93,7 +91,6 @@ public class MenuScreen implements Screen {
         container7.setTransform(true);
         container7.center();
         container7.setPosition((Settings.GAME_WIDTH / 5)*3,Settings.GAME_HEIGHT/2 + Settings.GAME_HEIGHT/4);
-        container7.setName("7");
 
         container8.setTransform(true);
         container8.center();
@@ -103,6 +100,7 @@ public class MenuScreen implements Screen {
         contenedorTitulo.center();
         contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2,Settings.GAME_HEIGHT/6);
 
+        stage.addActor(contenedorTitulo);
         stage.addActor(container1);
         stage.addActor(container2);
         stage.addActor(container3);
@@ -111,13 +109,6 @@ public class MenuScreen implements Screen {
         stage.addActor(container6);
         stage.addActor(container7);
         stage.addActor(container8);
-        stage.addActor(contenedorTitulo);
-
-        Array<Actor> actores = stage.getActors();
-        for (int i = 0; i < actores.size; i++){
-            actores.get(i).setName("hola");
-        }
-
 
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
@@ -127,22 +118,15 @@ public class MenuScreen implements Screen {
 
     }
 
+    public void siguientePantalla(String lvl){
+        game.setScreen(new SeleccionScreen(stage.getBatch(), stage.getViewport()));
+        dispose();
+    }
+
     @Override
     public void render(float delta) {
         stage.draw();
         stage.act(delta);
-        Vector3 vector;
-
-        // Si es fa clic en la pantalla, canviem la pantalla
-       /* if (Gdx.input.isTouched()) {
-            vector = new Vector3 (Gdx.input.getX(), Gdx.input.getY(), 0);
-            if(vector.x >= 140 && vector.x <= 170 && vector.y >= 95 && vector.y <= 165){
-
-                game.setScreen(new SeleccionScreen(stage.getBatch(), stage.getViewport()));
-                dispose();
-            }
-            //if (container1.hit)
-        }*/
     }
 
     @Override

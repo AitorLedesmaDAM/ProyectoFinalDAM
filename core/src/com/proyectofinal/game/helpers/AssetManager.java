@@ -25,8 +25,8 @@ public class AssetManager {
     public static Texture mapa1;
 
     //Fuente
-    public static BitmapFont font;
-    public static Label.LabelStyle textStyle, textStyleTitulo;
+    public static BitmapFont fontGrande, font, fontPequenia;
+    public static Label.LabelStyle textStyle, textStyleTitulo, textStylePequenio;
 
     public static TextureRegion background;
 
@@ -52,13 +52,20 @@ public class AssetManager {
         //Fuente
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");
         font = new BitmapFont(fontFile, true);
-        font.getData().setScale(3f);
+        font.getData().setScale(4f);
 
-        // Creem l'estil de l'etiqueta i l'etiqueta
+        fontGrande = new BitmapFont(fontFile, true);
+        fontGrande.getData().setScale(5f);
+
+        fontPequenia = new BitmapFont(fontFile, true);
+        fontPequenia.getData().setScale(2f);
+
+        // Creem l'estil de l'etiqueta
         textStyle = new Label.LabelStyle(font, null);
 
-        font.getData().setScale(4f);
-        textStyleTitulo = new Label.LabelStyle(font, null);
+        textStyleTitulo = new Label.LabelStyle(fontGrande, null);
+
+        textStylePequenio = new Label.LabelStyle(fontPequenia,null);
 
         // Creem la càmera de les dimensions del joc
         camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
