@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -23,6 +24,8 @@ public class AssetManager {
 
     //Textura del mapa1
     public static Texture mapa1;
+
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec;
 
     //Fuente
     public static BitmapFont fontGrande, font, fontPequenia;
@@ -48,6 +51,17 @@ public class AssetManager {
 
         mapa1 = new Texture(Gdx.files.internal("texturas/mapa1.png"));
         mapa1.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        caballeroSelec = new Sprite(new Texture(Gdx.files.internal("tropas/caballeroSelec_prueba.png")));
+        caballeroSelec.flip(false, true);
+
+        ninjaSelec = new Sprite(new Texture(Gdx.files.internal("tropas/ninjaSelec_prueba.png")));
+        ninjaSelec.flip(false, true);
+
+        robotSelec = new Sprite(new Texture(Gdx.files.internal("tropas/robotSelec_prueba.png")));
+        robotSelec.flip(false, true);
+
+
 
         //Fuente
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");
