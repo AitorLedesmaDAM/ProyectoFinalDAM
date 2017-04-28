@@ -22,13 +22,14 @@ public class InputHandler implements InputProcessor {
     private Stage stage;
     private Vector2 stageCoord;
 
-    public InputHandler(SeleccionScreen selecScreen) {
-        this.selecScreen = selecScreen;
-    }
-
     public InputHandler(MenuScreen menuScreen) {
         this.menuScreen = menuScreen;
         stage = menuScreen.getStage();
+    }
+
+    public InputHandler(SeleccionScreen selecScreen) {
+        this.selecScreen = selecScreen;
+        stage = selecScreen.getStage();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class InputHandler implements InputProcessor {
             if (actorHit != null) {
                 String lvl = actorHit.toString().replaceAll("Label: ", "");
                 if (lvl.equals("1")){
-                    menuScreen.siguientePantalla("1");
+                    menuScreen.siguientePantalla(lvl, 50);
                 }
             }
             return true;

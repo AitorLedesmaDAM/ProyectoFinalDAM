@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -24,16 +23,15 @@ public class SeleccionScreen implements Screen{
 
     private Stage stage;
     private TowerAttack game;
-    private Container miniMapa, tropasMax, textoTropasMax;
-    private TiledMap tiledMap;
-    private OrthogonalTiledMapRenderer renderer;
 
     private static Label.LabelStyle textStyle, textStylePequenio;
 
     private Label contador, textoTropas;
-    int cont = 50;
+    private int maxTropasContador;
 
-    public SeleccionScreen(Batch batch, Viewport viewport) {
+    private Container miniMapa, tropasMax, textoTropasMax;
+
+    public SeleccionScreen(Batch batch, Viewport viewport, String lvl, int _maxTropasContador) {
         Settings.pantalla = 2;
 
         OrthographicCamera camera = AssetManager.camera;
@@ -47,10 +45,9 @@ public class SeleccionScreen implements Screen{
         textStyle = AssetManager.textStyle;
         textStylePequenio = AssetManager.textStylePequenio;
 
-
-        contador = new Label("" + cont, textStyle);
+        maxTropasContador = _maxTropasContador;
+        contador = new Label("" + maxTropasContador, textStyle);
         tropasMax = new Container(contador);
-
         tropasMax.setTransform(true);
         tropasMax.center();
         tropasMax.setPosition(350, 175);
@@ -59,9 +56,6 @@ public class SeleccionScreen implements Screen{
         textoTropasMax = new Container(textoTropas);
         textoTropasMax.center();
         textoTropasMax.setPosition(400,50);
-
-        tiledMap = AssetManager.tiledMap;
-        renderer = AssetManager.renderer;
 
         // Creem el viewport amb les mateixes dimensions que la càmera
         //StretchViewport viewport;
@@ -72,7 +66,6 @@ public class SeleccionScreen implements Screen{
 
         // Afegim el fons
         stage.addActor(new Image(AssetManager.background));
-
         stage.addActor(miniMapa);
         stage.addActor(tropasMax);
         stage.addActor(textoTropasMax);
@@ -81,8 +74,8 @@ public class SeleccionScreen implements Screen{
     }
 
     public void modMaxTropas(){
-        if (cont >= 0) {
-            contador.setText("" + cont--);
+        if (maxTropasContador > -1) {
+            contador.setText("" + maxTropasContador--);
         }
     }
 
@@ -124,5 +117,9 @@ public class SeleccionScreen implements Screen{
     @Override
     public void dispose() {
 
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

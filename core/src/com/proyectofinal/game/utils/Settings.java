@@ -13,7 +13,7 @@ public class Settings {
     public static final int MINIMAPA_WIDTH = 650;
     public static final int MINIMAPA_HEIGHT = 350;
 
-    public static int pantalla = 2;
+    public static int pantalla = 0;
 
 
 }
