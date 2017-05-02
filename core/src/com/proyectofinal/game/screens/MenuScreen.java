@@ -16,6 +16,8 @@ import com.proyectofinal.game.utils.Settings;
 public class MenuScreen implements Screen {
 
     private TowerAttack game;
+    StretchViewport viewport;
+    OrthographicCamera camera;
     private Stage stage;
 
     private static Label.LabelStyle textStyle, textStyleTitulo;
@@ -26,10 +28,10 @@ public class MenuScreen implements Screen {
         this.game = game;
         Settings.pantalla = 1;
 
-        OrthographicCamera camera = AssetManager.camera;
+        camera = AssetManager.camera;
 
         // Creem el viewport amb les mateixes dimensions que la càmera
-        StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
+        viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
 
         // Creem l'stage i assginem el viewport
         stage = new Stage(viewport);
@@ -128,7 +130,8 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
+        camera.update();
     }
 
     @Override

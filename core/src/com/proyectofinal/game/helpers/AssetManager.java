@@ -22,10 +22,7 @@ public class AssetManager {
     //Textura de la imagen de fondo
     public static Texture fondo;
 
-    //Textura del mapa1
-    public static Texture mapa1;
-
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1;
 
     //Fuente
     public static BitmapFont fontGrande, font, fontPequenia;
@@ -49,8 +46,8 @@ public class AssetManager {
         background = new TextureRegion(fondo);
         background.flip(false, true);
 
-        mapa1 = new Texture(Gdx.files.internal("texturas/mapa1.png"));
-        mapa1.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        mapa1 = new Sprite(new Texture(Gdx.files.internal("texturas/mapa1.png")));
+        mapa1.flip(false, true);
 
         caballeroSelec = new Sprite(new Texture(Gdx.files.internal("tropas/caballeroSelec_prueba.png")));
         caballeroSelec.flip(false, true);

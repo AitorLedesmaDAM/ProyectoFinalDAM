@@ -23,6 +23,8 @@ public class SeleccionScreen implements Screen{
 
     private Stage stage;
     private TowerAttack game;
+    OrthographicCamera camera;
+    Viewport viewport;
 
     private static Label.LabelStyle textStyle, textStylePequenio;
 
@@ -31,10 +33,10 @@ public class SeleccionScreen implements Screen{
 
     private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerNinja, containerRobot;
 
-    public SeleccionScreen(Batch batch, Viewport viewport, String lvl, int _maxTropasContador) {
+    public SeleccionScreen(Batch batch, Viewport _viewport, String lvl, int _maxTropasContador) {
         Settings.pantalla = 2;
 
-        OrthographicCamera camera = AssetManager.camera;
+        camera = AssetManager.camera;
 
         miniMapa = new Container(new Image(AssetManager.mapa1));
         miniMapa.setTransform(true);
@@ -61,23 +63,23 @@ public class SeleccionScreen implements Screen{
         containerCaballero.setTransform(true);
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerCaballero.setPosition(Settings.GAME_WIDTH / 2 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 2);
+        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 2);
 
         containerNinja = new Container(new Image(AssetManager.ninjaSelec));
         containerNinja.setTransform(true);
         containerNinja.center();
         containerNinja.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerNinja.setPosition(Settings.GAME_WIDTH / 2 - Settings.TROPA_SELEC_WIDTH / 2, Settings.GAME_HEIGHT / 2);
+        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH/2 + Settings.TROPA_SELEC_WIDTH/3), Settings.GAME_HEIGHT / 2);
 
         containerRobot = new Container(new Image(AssetManager.robotSelec));
         containerRobot.setTransform(true);
         containerRobot.center();
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerRobot.setPosition(Settings.GAME_WIDTH / 2 + Settings.TROPA_SELEC_WIDTH, Settings.GAME_HEIGHT / 2);
+        containerRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH/3, Settings.GAME_HEIGHT / 2);
 
         // Creem el viewport amb les mateixes dimensions que la càmera
         //StretchViewport viewport;
-        viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
+        viewport = _viewport;
 
 
         // Creem l'stage i assginem el viewport
@@ -96,8 +98,9 @@ public class SeleccionScreen implements Screen{
     }
 
     public void modMaxTropas(){
+        maxTropasContador--;
         if (maxTropasContador > -1) {
-            contador.setText("" + maxTropasContador--);
+            contador.setText("" + maxTropasContador);
         }
     }
 
@@ -118,7 +121,8 @@ public class SeleccionScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
+        camera.update();
     }
 
     @Override
