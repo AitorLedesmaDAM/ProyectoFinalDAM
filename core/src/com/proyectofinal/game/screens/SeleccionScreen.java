@@ -61,7 +61,7 @@ public class SeleccionScreen implements Screen{
         containerCaballero.setTransform(true);
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerCaballero.setPosition(Settings.GAME_WIDTH / 8, Settings.GAME_HEIGHT / 2);
+        containerCaballero.setPosition(Settings.GAME_WIDTH / 2 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 2);
 
         containerNinja = new Container(new Image(AssetManager.ninjaSelec));
         containerNinja.setTransform(true);
@@ -73,11 +73,12 @@ public class SeleccionScreen implements Screen{
         containerRobot.setTransform(true);
         containerRobot.center();
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerRobot.setPosition(Settings.GAME_WIDTH / 2 + (Settings.GAME_WIDTH / 8*2) , Settings.GAME_HEIGHT / 2);
+        containerRobot.setPosition(Settings.GAME_WIDTH / 2 + Settings.TROPA_SELEC_WIDTH, Settings.GAME_HEIGHT / 2);
 
         // Creem el viewport amb les mateixes dimensions que la càmera
         //StretchViewport viewport;
         viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
+
 
         // Creem l'stage i assginem el viewport
         stage = new Stage(viewport, batch);

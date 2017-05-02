@@ -13,8 +13,8 @@ public class Settings {
     public static final int MINIMAPA_WIDTH = 650;
     public static final int MINIMAPA_HEIGHT = 350;
 
-    public static final int TROPA_SELEC_WIDTH = 300;
-    public static final int TROPA_SELEC_HEIGHT = 400;
+    public static final int TROPA_SELEC_WIDTH = 250;
+    public static final int TROPA_SELEC_HEIGHT = 300;
 
     public static int pantalla = 0;
 
