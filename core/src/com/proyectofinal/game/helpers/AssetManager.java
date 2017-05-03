@@ -3,6 +3,7 @@ package com.proyectofinal.game.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,9 +21,9 @@ import com.proyectofinal.game.utils.Settings;
 public class AssetManager {
 
     //Textura de la imagen de fondo
-    public static Texture fondo;
+    public static Texture fondo, textureBtnCont;
 
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar;
 
     //Fuente
     public static BitmapFont fontGrande, font, fontPequenia;
@@ -58,7 +59,9 @@ public class AssetManager {
         robotSelec = new Sprite(new Texture(Gdx.files.internal("tropas/robotSelec_prueba.png")));
         robotSelec.flip(false, true);
 
-
+        textureBtnCont = new Texture(Gdx.files.internal("otros/ContinuarBtn1.png"));
+        btnContinuar = new Sprite(textureBtnCont);
+        btnContinuar.flip(false, true);
 
         //Fuente
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");

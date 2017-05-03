@@ -60,7 +60,20 @@ public class InputHandler implements InputProcessor {
             }
             return true;
         } else if (Settings.pantalla == 2) {
-            selecScreen.modMaxTropas();
+            stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
+            Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
+            if (actorHit != null) {
+                String tropa = actorHit.toString();
+                if (tropa.equals("Caballero")){
+                    selecScreen.modMaxTropas(1);
+                }else if (tropa.equals("Ninja")){
+                    selecScreen.modMaxTropas(2);
+                }else if (tropa.equals("Robot")){
+                    selecScreen.modMaxTropas(3);
+                }else{
+                    selecScreen.siguientePantalla();
+                }
+            }
             return true;
         }else{
             return true;
