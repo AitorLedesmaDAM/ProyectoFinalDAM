@@ -35,16 +35,6 @@ public class AtaqueScreen implements Screen {
         this.game = game;
         Settings.pantalla = 3;
 
-
-
-
-
-
-
-    }
-
-    @Override
-    public void show() {
         mapa = AssetManager.tiledMap;
         renderer = new OrthogonalTiledMapRenderer(mapa);
 
@@ -54,6 +44,16 @@ public class AtaqueScreen implements Screen {
         camera.update();
 
         batch = new SpriteBatch();
+
+
+
+
+
+    }
+
+    @Override
+    public void show() {
+
     }
 
     @Override
