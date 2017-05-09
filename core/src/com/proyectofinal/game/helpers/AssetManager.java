@@ -22,7 +22,7 @@ public class AssetManager {
 
     //Textura de la imagen de fondo
     public static Texture fondo, textureBtnCont;
-    public static Animation<TextureRegion> caballeroRun, caballeroAttack;
+    public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack;
 
     public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak;
 
@@ -82,6 +82,20 @@ public class AssetManager {
         TextureRegion[] regionCaballeroAtaque = TextureRegion.split(new Texture("tropas/knight_attack.png"), 587, 707)[0];
         caballeroAttack = new Animation(0.01f, regionCaballeroAtaque);
         caballeroAttack.setPlayMode(Animation.PlayMode.LOOP);
+
+        TextureRegion[] regionNinjaRun = TextureRegion.split(new Texture("tropas/ninja_run.png"), 365, 458)[0];
+        ninjaRun = new Animation(0.10f, regionNinjaRun);
+        ninjaRun.setPlayMode(Animation.PlayMode.LOOP);
+        TextureRegion[] regionNinjaAtaque = TextureRegion.split(new Texture("tropas/ninja_attack.png"), 365, 458)[0];
+        ninjaAttack = new Animation(0.01f, regionNinjaAtaque);
+        ninjaAttack.setPlayMode(Animation.PlayMode.LOOP);
+
+        TextureRegion[] regionRobotRun = TextureRegion.split(new Texture("tropas/robot_run.png"), 580, 556)[0];
+        robotRun = new Animation(0.10f, regionRobotRun);
+        robotRun.setPlayMode(Animation.PlayMode.LOOP);
+        TextureRegion[] regionRobotAtaque = TextureRegion.split(new Texture("tropas/robot_shoot.png"), 580, 556)[0];
+        robotAttack = new Animation(0.01f, regionRobotAtaque);
+        robotAttack.setPlayMode(Animation.PlayMode.LOOP);
 
         //Fuente
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");
