@@ -77,6 +77,11 @@ public class AssetManager {
 
         //Carreguem les textures de les tropes
         TextureRegion[] regionCaballeroRun = TextureRegion.split(new Texture("tropas/knight_run.png"), 587, 707)[0];
+        caballeroRun = new Animation(0.10f, regionCaballeroRun);
+        caballeroRun.setPlayMode(Animation.PlayMode.LOOP);
+        TextureRegion[] regionCaballeroAtaque = TextureRegion.split(new Texture("tropas/knight_attack.png"), 587, 707)[0];
+        caballeroAttack = new Animation(0.01f, regionCaballeroAtaque);
+        caballeroAttack.setPlayMode(Animation.PlayMode.LOOP);
 
         //Fuente
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");

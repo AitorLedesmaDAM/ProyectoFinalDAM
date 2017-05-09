@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * Created by ALUMNEDAM on 05/05/2017.
  */
 
-public abstract class Tropas extends Actor {
+public abstract class Tropas{
 
     protected enum Estado {
         Atacando, Caminando
