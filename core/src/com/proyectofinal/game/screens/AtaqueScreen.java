@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
@@ -79,11 +80,11 @@ public class AtaqueScreen implements Screen {
 
 
         // Creem el viewport amb les mateixes dimensions que la càmera
-        this.viewport = viewport;
+        viewport = new StretchViewport(3200, 1600, camera);
 
 
         // Creem l'stage i assginem el viewport
-        stage = new Stage(this.viewport, this.batch);
+        stage = new Stage(viewport, this.batch);
 
 
         stage.addActor(containerCaballero);
