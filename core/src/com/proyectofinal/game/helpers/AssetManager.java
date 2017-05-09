@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,6 +23,7 @@ public class AssetManager {
 
     //Textura de la imagen de fondo
     public static Texture fondo, textureBtnCont;
+    public static Animation<TextureRegion> caballeroRun, caballeroAttack;
 
     public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar;
 
@@ -40,7 +42,7 @@ public class AssetManager {
     //    Settings.GAME_WIDTH = Gdx.graphics.getWidth();
     //    Settings.GAME_HEIGHT = Gdx.graphics.getHeight();
 
-        // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
+        // Carreguem les textures en sprites
         fondo = new Texture(Gdx.files.internal("fondos/fondo_degradado.jpg"));
         fondo.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
@@ -62,6 +64,9 @@ public class AssetManager {
         textureBtnCont = new Texture(Gdx.files.internal("otros/ContinuarBtn1.png"));
         btnContinuar = new Sprite(textureBtnCont);
         btnContinuar.flip(false, true);
+
+        //Carreguem les textures de les tropes
+        TextureRegion[] regionCaballeroRun = TextureRegion.split(new Texture("tropas/knight_run.png"), 587, 707)[0];
 
         //Fuente
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");

@@ -16,6 +16,9 @@ public class Settings {
     public static final int TROPA_SELEC_WIDTH = 250;
     public static final int TROPA_SELEC_HEIGHT = 300;
 
+    public static final int TROPA_WIDTH = 70;
+    public static final int TROPA_HEIGHT = 100;
+
     public static int pantalla = 0;
 
 
