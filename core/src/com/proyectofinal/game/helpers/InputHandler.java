@@ -91,7 +91,7 @@ public class InputHandler implements InputProcessor {
             if (actorHit != null) {
                 String tropa = actorHit.toString();
                 if (tropa.equals("Caballero2")){
-
+                    AtaqueScreen.SoltarTropa(tropa);
                     System.out.println("Sale caballero");
                 }else if (tropa.equals("Ninja2")){
 

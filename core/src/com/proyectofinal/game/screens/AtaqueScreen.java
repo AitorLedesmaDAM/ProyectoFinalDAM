@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
+import com.proyectofinal.game.objects.trops.Caballero;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -31,13 +32,19 @@ public class AtaqueScreen implements Screen {
     SeleccionScreen segunda;
     SpriteBatch batch;
     Viewport viewport;
-    private Stage stage;
+    private static Stage stage;
 
+    public static int numCaballero;
+    public static int numNinja;
+    public static int numRobot;
     private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
 
     public AtaqueScreen(TowerAttack game, int numCaballero, int numNinja, int numRobot, Batch batch, Viewport viewport){
         this.game = game;
         Settings.pantalla = 3;
+        this.numCaballero = numCaballero;
+        this.numNinja = numNinja;
+        this.numRobot = numRobot;
 
         mapa = AssetManager.tiledMap;
         renderer = new OrthogonalTiledMapRenderer(mapa);
@@ -150,5 +157,38 @@ public class AtaqueScreen implements Screen {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public static void SoltarTropa(String tropa) {
+
+        if(tropa.equals("Caballero2")){
+
+            if(numCaballero != 0){
+                numCaballero = numCaballero -1;
+                //TODO SOLTAR CABALLERO
+                System.out.println("Estoy en soltar caballero");
+                Caballero cab = new Caballero(200,500,2,2);
+                stage.addActor(cab);
+            }
+
+        }else if(tropa.equals("Ninja2")){
+
+            if(numNinja != 0){
+                numNinja = numNinja -1;
+                //TODO SOLTAR NINJA
+
+            }
+
+        }else if(tropa.equals("Robot2")){
+
+            if(numRobot != 0){
+                numRobot = numRobot -1;
+                //TODO SOLTAR ROBOT
+
+            }
+
+        }
+
+
     }
 }
