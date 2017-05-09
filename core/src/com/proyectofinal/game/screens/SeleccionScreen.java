@@ -22,6 +22,7 @@ public class SeleccionScreen implements Screen{
     private TowerAttack game;
     OrthographicCamera camera;
     Viewport viewport;
+    public int numCaballero, numNinja, numRobot;
 
     private static Label.LabelStyle textStyle, textStylePequenio;
 
@@ -141,6 +142,7 @@ public class SeleccionScreen implements Screen{
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
+
     public void modMaxTropas(int resta){
 
         if (contadorTropas - resta > -1) {
@@ -195,7 +197,7 @@ public class SeleccionScreen implements Screen{
 
     public void siguientePantalla(){
         if (contadorTropas < 25) {
-            game.setScreen(new AtaqueScreen(game));
+            game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot,stage.getBatch(), stage.getViewport()));
             dispose();
         }
     }
@@ -203,4 +205,18 @@ public class SeleccionScreen implements Screen{
     public Stage getStage() {
         return stage;
     }
+
+
+    public void sumarCaballero(int i) {
+        numCaballero = numCaballero + i;
+    }
+
+    public void sumarNinja(int i) {
+        numNinja = numNinja + i;
+    }
+
+    public void sumarRobot(int i) {
+        numRobot = numRobot + i;
+    }
+
 }

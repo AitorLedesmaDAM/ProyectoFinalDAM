@@ -1,11 +1,11 @@
 package com.proyectofinal.game.helpers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.proyectofinal.game.TowerAttack;
+import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.screens.MenuScreen;
 import com.proyectofinal.game.screens.SeleccionScreen;
 import com.proyectofinal.game.utils.Settings;
@@ -19,6 +19,7 @@ public class InputHandler implements InputProcessor {
     private TowerAttack towerAttack;
     private SeleccionScreen selecScreen;
     private MenuScreen menuScreen;
+    private AtaqueScreen ataqueScreen;
     private Stage stage;
     private Vector2 stageCoord;
 
@@ -30,6 +31,11 @@ public class InputHandler implements InputProcessor {
     public InputHandler(SeleccionScreen selecScreen) {
         this.selecScreen = selecScreen;
         stage = selecScreen.getStage();
+    }
+
+    public InputHandler(AtaqueScreen ataqueScreen) {
+        this.ataqueScreen = ataqueScreen;
+        stage = ataqueScreen.getStage();
     }
 
     @Override
@@ -66,16 +72,20 @@ public class InputHandler implements InputProcessor {
                 String tropa = actorHit.toString();
                 if (tropa.equals("Caballero")){
                     selecScreen.modMaxTropas(1);
+                    selecScreen.sumarCaballero(1);
                 }else if (tropa.equals("Ninja")){
                     selecScreen.modMaxTropas(2);
+                    selecScreen.sumarNinja(1);
                 }else if (tropa.equals("Robot")){
                     selecScreen.modMaxTropas(3);
+                    selecScreen.sumarRobot(1);
                 }else{
                     selecScreen.siguientePantalla();
                 }
             }
             return true;
         }else{
+            System.out.println("has pulsado algo!! :D");
             return true;
         }
     }

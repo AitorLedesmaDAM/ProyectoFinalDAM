@@ -1,6 +1,5 @@
 package com.proyectofinal.game.screens;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,14 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
+import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -28,10 +27,14 @@ public class AtaqueScreen implements Screen {
     OrthogonalTiledMapRenderer renderer;
     OrthographicCamera camera;
     private TowerAttack game;
-
+    SeleccionScreen segunda;
     SpriteBatch batch;
+    Viewport viewport;
+    private Stage stage;
 
-    public AtaqueScreen(TowerAttack game){
+    private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
+
+    public AtaqueScreen(TowerAttack game, int numCaballero, int numNinja, int numRobot, Batch batch, Viewport viewport){
         this.game = game;
         Settings.pantalla = 3;
 
@@ -43,12 +46,54 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         camera.update();
 
-        batch = new SpriteBatch();
+        this.batch = new SpriteBatch();
+
+        System.out.println("nuumero de Caballeros: "+ numCaballero);
+        System.out.println("nuumero de Ninjas: "+ numNinja);
+        System.out.println("nuumero de Robots: "+ numRobot);
 
 
+        Image caballero = new Image(AssetManager.caballeroSelec);   //Selección de caballero
+        caballero.setName("Caballero");
+        containerCaballero = new Container(caballero);
+        containerCaballero.setTransform(true);
+        containerCaballero.center();
+        containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
+        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 2);
+
+        Image ninja = new Image(AssetManager.ninjaSelec);   //Selección del ninja
+        ninja.setName("Ninja");
+        containerNinja = new Container(ninja);
+        containerNinja.setTransform(true);
+        containerNinja.center();
+        containerNinja.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
+        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH/2 + Settings.TROPA_SELEC_WIDTH/3), Settings.GAME_HEIGHT / 2);
+
+        Image robot = new Image(AssetManager.robotSelec);   //Selección del robot
+        robot.setName("Robot");
+        containerRobot = new Container(robot);
+        containerRobot.setTransform(true);
+        containerRobot.center();
+        containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
+        containerRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH/3, Settings.GAME_HEIGHT / 2);
 
 
+        // Creem el viewport amb les mateixes dimensions que la càmera
+        this.viewport = viewport;
 
+
+        // Creem l'stage i assginem el viewport
+        stage = new Stage(this.viewport, this.batch);
+
+
+        stage.addActor(containerCaballero);
+        stage.addActor(containerNinja);
+        stage.addActor(containerRobot);
+
+
+        Gdx.input.setInputProcessor(new InputHandler(this));
+        
+        
     }
 
     @Override
@@ -101,5 +146,9 @@ public class AtaqueScreen implements Screen {
         System.out.println("Disposed");
         batch.dispose();
         renderer.dispose();
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }
