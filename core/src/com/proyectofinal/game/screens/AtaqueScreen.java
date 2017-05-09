@@ -19,6 +19,8 @@ import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.objects.trops.Caballero;
 import com.proyectofinal.game.utils.Settings;
 
+import java.util.ArrayList;
+
 /**
  * Created by ALUMNEDAM on 25/04/2017.
  */
@@ -34,6 +36,8 @@ public class AtaqueScreen implements Screen {
     Viewport viewport;
     private static Stage stage;
 
+    ArrayList<Caballero> caballeros;
+
     public static int numCaballero;
     public static int numNinja;
     public static int numRobot;
@@ -45,6 +49,8 @@ public class AtaqueScreen implements Screen {
         this.numCaballero = numCaballero;
         this.numNinja = numNinja;
         this.numRobot = numRobot;
+
+        caballeros = new ArrayList<Caballero>(numCaballero);
 
         mapa = AssetManager.tiledMap;
         renderer = new OrthogonalTiledMapRenderer(mapa);
@@ -122,6 +128,11 @@ public class AtaqueScreen implements Screen {
         stage.draw();
         stage.act(delta);
 
+        if (caballeros != null) {
+            for (int i = 0; i < caballeros.size(); i++) {
+                caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
+            }
+        }
         batch.begin();
 
         batch.end();
@@ -159,7 +170,7 @@ public class AtaqueScreen implements Screen {
         return stage;
     }
 
-    public static void SoltarTropa(String tropa) {
+    public void SoltarTropa(String tropa) {
 
         if(tropa.equals("Caballero2")){
 
@@ -167,7 +178,8 @@ public class AtaqueScreen implements Screen {
                 numCaballero = numCaballero -1;
                 //TODO SOLTAR CABALLERO
                 System.out.println("Estoy en soltar caballero");
-                Caballero cab = new Caballero(200,500,2,2);
+                Caballero cab = new Caballero(200,500);
+                caballeros.add(cab);
                 stage.addActor(cab);
             }
 
