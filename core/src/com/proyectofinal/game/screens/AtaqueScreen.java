@@ -60,7 +60,7 @@ public class AtaqueScreen implements Screen {
         containerCaballero.setTransform(true);
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 4);
+        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT /10);
 
         Image ninja = new Image(AssetManager.ninjaSelecAtak);   //Selección del ninja
         ninja.setName("Ninja2");
@@ -68,7 +68,7 @@ public class AtaqueScreen implements Screen {
         containerNinja.setTransform(true);
         containerNinja.center();
         containerNinja.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 3);
+        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 10+ Settings.TROPA_SELEC_HEIGHT+20);
 
         Image robot = new Image(AssetManager.robotSelecAtak);   //Selección del robot
         robot.setName("Robot2");
@@ -76,7 +76,7 @@ public class AtaqueScreen implements Screen {
         containerRobot.setTransform(true);
         containerRobot.center();
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerRobot.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT );
+        containerRobot.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 10+ Settings.TROPA_SELEC_HEIGHT *2 +40);
 
 
         // Creem el viewport amb les mateixes dimensions que la càmera
