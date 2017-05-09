@@ -3,7 +3,6 @@ package com.proyectofinal.game.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,7 +24,7 @@ public class AssetManager {
     public static Texture fondo, textureBtnCont;
     public static Animation<TextureRegion> caballeroRun, caballeroAttack;
 
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak;
 
     //Fuente
     public static BitmapFont fontGrande, font, fontPequenia;
@@ -43,6 +42,17 @@ public class AssetManager {
     //    Settings.GAME_HEIGHT = Gdx.graphics.getHeight();
 
         // Carreguem les textures en sprites
+        caballeroSelecAtak = new Sprite(new Texture(Gdx.files.internal("tropas/caballeroSelec_prueba.png")));
+        caballeroSelecAtak.flip(true, false);
+
+        ninjaSelecAtak = new Sprite(new Texture(Gdx.files.internal("tropas/ninjaSelec_prueba.png")));
+        ninjaSelecAtak.flip(true, false);
+
+        robotSelecAtak = new Sprite(new Texture(Gdx.files.internal("tropas/robotSelec_prueba.png")));
+        robotSelecAtak.flip(true, false);
+
+
+
         fondo = new Texture(Gdx.files.internal("fondos/fondo_degradado.jpg"));
         fondo.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 

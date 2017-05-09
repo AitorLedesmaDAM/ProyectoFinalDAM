@@ -84,8 +84,25 @@ public class InputHandler implements InputProcessor {
                 }
             }
             return true;
-        }else{
+        }else if (Settings.pantalla == 3){
             System.out.println("has pulsado algo!! :D");
+            stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
+            Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
+            if (actorHit != null) {
+                String tropa = actorHit.toString();
+                if (tropa.equals("Caballero2")){
+
+                    System.out.println("Sale caballero");
+                }else if (tropa.equals("Ninja2")){
+
+                    System.out.println("Sale Ninja");
+                }else if (tropa.equals("Robot2")) {
+
+                    System.out.println("Sale Robot");
+                }
+            }
+            return true;
+        }else {
             return true;
         }
     }

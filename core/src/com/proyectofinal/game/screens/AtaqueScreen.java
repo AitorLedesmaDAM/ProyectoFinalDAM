@@ -54,29 +54,29 @@ public class AtaqueScreen implements Screen {
         System.out.println("nuumero de Robots: "+ numRobot);
 
 
-        Image caballero = new Image(AssetManager.caballeroSelec);   //Selección de caballero
-        caballero.setName("Caballero");
+        Image caballero = new Image(AssetManager.caballeroSelecAtak);   //Selección de caballero
+        caballero.setName("Caballero2");
         containerCaballero = new Container(caballero);
         containerCaballero.setTransform(true);
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 2);
+        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 4);
 
-        Image ninja = new Image(AssetManager.ninjaSelec);   //Selección del ninja
-        ninja.setName("Ninja");
+        Image ninja = new Image(AssetManager.ninjaSelecAtak);   //Selección del ninja
+        ninja.setName("Ninja2");
         containerNinja = new Container(ninja);
         containerNinja.setTransform(true);
         containerNinja.center();
         containerNinja.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH/2 + Settings.TROPA_SELEC_WIDTH/3), Settings.GAME_HEIGHT / 2);
+        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 3);
 
-        Image robot = new Image(AssetManager.robotSelec);   //Selección del robot
-        robot.setName("Robot");
+        Image robot = new Image(AssetManager.robotSelecAtak);   //Selección del robot
+        robot.setName("Robot2");
         containerRobot = new Container(robot);
         containerRobot.setTransform(true);
         containerRobot.center();
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH/3, Settings.GAME_HEIGHT / 2);
+        containerRobot.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT );
 
 
         // Creem el viewport amb les mateixes dimensions que la càmera
@@ -84,7 +84,7 @@ public class AtaqueScreen implements Screen {
 
 
         // Creem l'stage i assginem el viewport
-        stage = new Stage(viewport, this.batch);
+        stage = new Stage(viewport, batch);
 
 
         stage.addActor(containerCaballero);
@@ -108,13 +108,12 @@ public class AtaqueScreen implements Screen {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //stage.draw();
-        //stage.act(delta);
-
-
         camera.update();
         renderer.setView(camera);
         renderer.render();
+
+        stage.draw();
+        stage.act(delta);
 
         batch.begin();
 
