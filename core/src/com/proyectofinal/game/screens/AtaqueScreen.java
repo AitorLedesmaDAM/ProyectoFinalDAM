@@ -80,7 +80,7 @@ public class AtaqueScreen implements Screen {
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
         containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT /10);
-
+        
         Image ninja = new Image(AssetManager.ninjaSelecAtak);   //Selección del ninja
         ninja.setName("Ninja2");
         containerNinja = new Container(ninja);
