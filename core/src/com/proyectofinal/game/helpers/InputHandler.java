@@ -94,10 +94,10 @@ public class InputHandler implements InputProcessor {
                     ataqueScreen.SoltarTropa(tropa);
                     System.out.println("Sale caballero");
                 }else if (tropa.equals("Ninja2")){
-
+                    ataqueScreen.SoltarTropa(tropa);
                     System.out.println("Sale Ninja");
                 }else if (tropa.equals("Robot2")) {
-
+                    ataqueScreen.SoltarTropa(tropa);
                     System.out.println("Sale Robot");
                 }
             }

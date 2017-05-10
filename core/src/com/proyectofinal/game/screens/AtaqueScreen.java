@@ -17,6 +17,8 @@ import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.objects.trops.Caballero;
+import com.proyectofinal.game.objects.trops.Ninja;
+import com.proyectofinal.game.objects.trops.Robot;
 import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public class AtaqueScreen implements Screen {
     private static Stage stage;
 
     ArrayList<Caballero> caballeros;
+    ArrayList<Ninja> ninjas;
+    ArrayList<Robot> robots;
 
     public static int numCaballero;
     public static int numNinja;
@@ -51,6 +55,8 @@ public class AtaqueScreen implements Screen {
         this.numRobot = numRobot;
 
         caballeros = new ArrayList<Caballero>(numCaballero);
+        ninjas = new ArrayList<Ninja>(numNinja);
+        robots = new ArrayList<Robot>(numRobot);
 
         mapa = AssetManager.tiledMap;
         renderer = new OrthogonalTiledMapRenderer(mapa);
@@ -133,6 +139,16 @@ public class AtaqueScreen implements Screen {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
             }
         }
+        if (ninjas != null) {
+            for (int i = 0; i < ninjas.size(); i++) {
+                ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
+            }
+        }
+        if (robots != null) {
+            for (int i = 0; i < robots.size(); i++) {
+                robots.get(i).setTiempoDeEstado(robots.get(i).getTiempoDeEstado() + delta);
+            }
+        }
         batch.begin();
 
         batch.end();
@@ -186,7 +202,11 @@ public class AtaqueScreen implements Screen {
         }else if(tropa.equals("Ninja2")){
 
             if(numNinja != 0){
+                System.out.println("Estoy en soltar Ninja");
                 numNinja = numNinja -1;
+                Ninja nin = new Ninja(200,500);
+                ninjas.add(nin);
+                stage.addActor(nin);
                 //TODO SOLTAR NINJA
 
             }
@@ -194,7 +214,11 @@ public class AtaqueScreen implements Screen {
         }else if(tropa.equals("Robot2")){
 
             if(numRobot != 0){
+                System.out.println("Estoy en soltar Robot");
                 numRobot = numRobot -1;
+                Robot rob = new Robot(200,500);
+                robots.add(rob);
+                stage.addActor(rob);
                 //TODO SOLTAR ROBOT
 
             }
