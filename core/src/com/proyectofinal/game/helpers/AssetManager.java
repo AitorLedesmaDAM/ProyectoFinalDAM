@@ -40,7 +40,6 @@ public class AssetManager {
     public static void load() {
     //    Settings.GAME_WIDTH = Gdx.graphics.getWidth();
     //    Settings.GAME_HEIGHT = Gdx.graphics.getHeight();
-        
 
         // Carreguem les textures en sprites
         caballeroSelecAtak = new Sprite(new Texture(Gdx.files.internal("tropas/caballeroSelec_prueba.png")));
