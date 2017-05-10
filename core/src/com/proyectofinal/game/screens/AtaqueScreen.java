@@ -33,30 +33,37 @@ public class AtaqueScreen implements Screen {
     OrthogonalTiledMapRenderer renderer;
     OrthographicCamera camera;
     private TowerAttack game;
-    SeleccionScreen segunda;
-    SpriteBatch batch;
+    Batch batch;
     Viewport viewport;
-    private static Stage stage;
+    private Stage stage;
 
     ArrayList<Caballero> caballeros;
     ArrayList<Ninja> ninjas;
     ArrayList<Robot> robots;
 
-    public static int numCaballero;
-    public static int numNinja;
-    public static int numRobot;
+    public int maxCaballeros, maxNinjas, maxRobots;
+    public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0;
     private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
 
-    public AtaqueScreen(TowerAttack game, int numCaballero, int numNinja, int numRobot, Batch batch, Viewport viewport){
+    public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots){
         this.game = game;
         Settings.pantalla = 3;
-        this.numCaballero = numCaballero;
-        this.numNinja = numNinja;
-        this.numRobot = numRobot;
+        this.maxCaballeros = maxCaballeros;
+        this.maxNinjas = maxNinjas;
+        this.maxRobots = maxRobots;
 
-        caballeros = new ArrayList<Caballero>(numCaballero);
-        ninjas = new ArrayList<Ninja>(numNinja);
-        robots = new ArrayList<Robot>(numRobot);
+        caballeros = new ArrayList<Caballero>(maxCaballeros);
+        for (int i = 0; i < maxCaballeros; i++){
+            caballeros.add(new Caballero(200,500));
+        }
+        ninjas = new ArrayList<Ninja>(maxNinjas);
+        for (int i = 0; i < maxNinjas; i++){
+            ninjas.add(new Ninja(200,500));
+        }
+        robots = new ArrayList<Robot>(maxRobots);
+        for (int i = 0; i < maxRobots; i++){
+            robots.add(new Robot(200,750));
+        }
 
         mapa = AssetManager.tiledMap;
         renderer = new OrthogonalTiledMapRenderer(mapa);
@@ -66,11 +73,10 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         camera.update();
 
-        this.batch = new SpriteBatch();
 
-        System.out.println("nuumero de Caballeros: "+ numCaballero);
-        System.out.println("nuumero de Ninjas: "+ numNinja);
-        System.out.println("nuumero de Robots: "+ numRobot);
+        System.out.println("nuumero de Caballeros: "+ maxCaballeros);
+        System.out.println("nuumero de Ninjas: "+ maxNinjas);
+        System.out.println("nuumero de Robots: "+ maxRobots);
 
 
         Image caballero = new Image(AssetManager.caballeroSelecAtak);   //Selección de caballero
@@ -80,7 +86,7 @@ public class AtaqueScreen implements Screen {
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
         containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT /10);
-        
+
         Image ninja = new Image(AssetManager.ninjaSelecAtak);   //Selección del ninja
         ninja.setName("Ninja2");
         containerNinja = new Container(ninja);
@@ -103,17 +109,27 @@ public class AtaqueScreen implements Screen {
 
 
         // Creem l'stage i assginem el viewport
-        stage = new Stage(viewport, batch);
+        stage = new Stage(viewport);
+
+        batch = stage.getBatch();
 
 
-        stage.addActor(containerCaballero);
-        stage.addActor(containerNinja);
-        stage.addActor(containerRobot);
+        if (maxCaballeros > 0) {
+            stage.addActor(containerCaballero);
+        }
+        if (maxNinjas > 0){
+            stage.addActor(containerNinja);
+        }
+        if (maxRobots > 0){
+            stage.addActor(containerRobot);
+        }
+
+
 
 
         Gdx.input.setInputProcessor(new InputHandler(this));
-        
-        
+
+
     }
 
     @Override
@@ -156,8 +172,8 @@ public class AtaqueScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //viewport.update(width, height);
-        //camera.update();
+        viewport.update(width, height);
+        camera.update();
     }
 
     @Override
@@ -190,35 +206,32 @@ public class AtaqueScreen implements Screen {
 
         if(tropa.equals("Caballero2")){
 
-            if(numCaballero != 0){
-                numCaballero = numCaballero -1;
+            if(maxCaballeros > 0){
                 //TODO SOLTAR CABALLERO
                 System.out.println("Estoy en soltar caballero");
-                Caballero cab = new Caballero(200,500);
-                caballeros.add(cab);
-                stage.addActor(cab);
+                stage.addActor(caballeros.get(contadorCaballeros));
+                contadorCaballeros++;
+                maxCaballeros--;
             }
 
         }else if(tropa.equals("Ninja2")){
 
-            if(numNinja != 0){
+            if(maxNinjas > 0){
                 System.out.println("Estoy en soltar Ninja");
-                numNinja = numNinja -1;
-                Ninja nin = new Ninja(200,500);
-                ninjas.add(nin);
-                stage.addActor(nin);
+                stage.addActor(ninjas.get(contadorNinjas));
+                contadorNinjas++;
+                maxNinjas--;
                 //TODO SOLTAR NINJA
 
             }
 
         }else if(tropa.equals("Robot2")){
 
-            if(numRobot != 0){
+            if(maxRobots > 0){
                 System.out.println("Estoy en soltar Robot");
-                numRobot = numRobot -1;
-                Robot rob = new Robot(200,500);
-                robots.add(rob);
-                stage.addActor(rob);
+                stage.addActor(robots.get(contadorRobots));
+                contadorRobots++;
+                maxRobots--;
                 //TODO SOLTAR ROBOT
 
             }
