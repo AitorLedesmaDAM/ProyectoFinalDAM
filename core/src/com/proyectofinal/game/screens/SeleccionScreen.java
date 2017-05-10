@@ -197,7 +197,7 @@ public class SeleccionScreen implements Screen{
 
     public void siguientePantalla(){
         if (contadorTropas < 25) {
-            game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot,stage.getBatch(), stage.getViewport()));
+            game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
             dispose();
         }
     }

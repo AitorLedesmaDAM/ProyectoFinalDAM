@@ -79,8 +79,10 @@ public class InputHandler implements InputProcessor {
                 }else if (tropa.equals("Robot")){
                     selecScreen.modMaxTropas(3);
                     selecScreen.sumarRobot(1);
-                }else{
+                }else if (tropa.equals("Continuar")){
                     selecScreen.siguientePantalla();
+                }else{
+
                 }
             }
             return true;

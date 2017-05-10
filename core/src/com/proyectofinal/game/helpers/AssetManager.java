@@ -80,21 +80,21 @@ public class AssetManager {
         caballeroRun = new Animation(0.10f, regionCaballeroRun);
         caballeroRun.setPlayMode(Animation.PlayMode.LOOP);
         TextureRegion[] regionCaballeroAtaque = TextureRegion.split(new Texture("tropas/knight_attack.png"), 587, 707)[0];
-        caballeroAttack = new Animation(0.01f, regionCaballeroAtaque);
+        caballeroAttack = new Animation(0.10f, regionCaballeroAtaque);
         caballeroAttack.setPlayMode(Animation.PlayMode.LOOP);
 
-        TextureRegion[] regionNinjaRun = TextureRegion.split(new Texture("tropas/ninja_run.png"), 365, 458)[0];
+        TextureRegion[] regionNinjaRun = TextureRegion.split(new Texture("tropas/ninja_run.png"), 363, 458)[0];
         ninjaRun = new Animation(0.10f, regionNinjaRun);
         ninjaRun.setPlayMode(Animation.PlayMode.LOOP);
-        TextureRegion[] regionNinjaAtaque = TextureRegion.split(new Texture("tropas/ninja_attack.png"), 365, 458)[0];
-        ninjaAttack = new Animation(0.01f, regionNinjaAtaque);
+        TextureRegion[] regionNinjaAtaque = TextureRegion.split(new Texture("tropas/ninja_attack.png"), 365, 495)[0];
+        ninjaAttack = new Animation(0.10f, regionNinjaAtaque);
         ninjaAttack.setPlayMode(Animation.PlayMode.LOOP);
 
-        TextureRegion[] regionRobotRun = TextureRegion.split(new Texture("tropas/robot_run.png"), 580, 556)[0];
-        robotRun = new Animation(0.10f, regionRobotRun);
+        TextureRegion[] regionRobotRun = TextureRegion.split(new Texture("tropas/robot_run.png"), 567, 556)[0];
+        robotRun = new Animation(0.12f, regionRobotRun);
         robotRun.setPlayMode(Animation.PlayMode.LOOP);
-        TextureRegion[] regionRobotAtaque = TextureRegion.split(new Texture("tropas/robot_shoot.png"), 580, 556)[0];
-        robotAttack = new Animation(0.01f, regionRobotAtaque);
+        TextureRegion[] regionRobotAtaque = TextureRegion.split(new Texture("tropas/robot_shoot.png"), 567, 556)[0];
+        robotAttack = new Animation(0.12f, regionRobotAtaque);
         robotAttack.setPlayMode(Animation.PlayMode.LOOP);
 
         //Fuente

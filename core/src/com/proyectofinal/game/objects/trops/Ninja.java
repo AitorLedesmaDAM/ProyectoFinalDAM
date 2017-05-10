@@ -37,13 +37,13 @@ public class Ninja extends Actor {
     }
     public void act(float delta)
     {
-        this.position.x += 60*delta;
+        this.position.x += 90*delta;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.ninjaRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 200, 200, 0.4f, 0.4f, 0);
+        batch.draw(AssetManager.ninjaRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 110, 120, 1f, 1f, 0);
     }
 
     public float getX() {

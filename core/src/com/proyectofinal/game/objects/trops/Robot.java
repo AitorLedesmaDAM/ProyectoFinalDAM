@@ -43,7 +43,7 @@ public class Robot extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.robotRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 300, 300, 0.4f, 0.4f, 0);
+        batch.draw(AssetManager.robotRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 120, 140, 1f, 1f, 0);
     }
 
     public float getX() {
