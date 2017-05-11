@@ -24,7 +24,7 @@ public class SeleccionScreen implements Screen{
     Viewport viewport;
     public int numCaballero, numNinja, numRobot;
 
-    private static Label.LabelStyle textStyle, textStylePequenio;
+    private Label.LabelStyle textStyle, textStylePequenio;
 
     private Label contador, textoTropas, costeCaballero, costeNinja, costeRobot;
     private int maxTropasContador, contadorTropas;
@@ -63,6 +63,7 @@ public class SeleccionScreen implements Screen{
 
         textoTropas = new Label("Tropas máximas restantes: ", textStylePequenio);   //Texto encima del contador
         containerTextocontainerTropasMax = new Container(textoTropas);
+        containerTextocontainerTropasMax.setTransform(true);
         containerTextocontainerTropasMax.center();
         containerTextocontainerTropasMax.setPosition(400,50);
 
