@@ -2,17 +2,17 @@ package com.proyectofinal.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
@@ -39,39 +39,23 @@ public class AtaqueScreen implements Screen {
     Viewport viewport;
     private Stage stage;
 
-
-    Image caballero;
-
-    private Label.LabelStyle textStyle;
-    private Label lbl_caballero, lbl_ninja, lbl_robot;
-
     ArrayList<Caballero> caballeros;
     ArrayList<Ninja> ninjas;
     ArrayList<Robot> robots;
+    ArrayList<Float> posicionX;
+    ArrayList<Float> posicionY;
 
     public int maxCaballeros, maxNinjas, maxRobots;
     public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0;
-    private Container containerCaballero, containerNinja, containerRobot, containerTextoCaballero, containerTextoNinja, containerTextoRobot;
+    private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
 
-    public AtaqueScreen(TowerAttack game, int _maxCaballeros, int _maxNinjas, int _maxRobots){
+    public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots){
         this.game = game;
         Settings.pantalla = 3;
-        this.maxCaballeros = _maxCaballeros;
-        this.maxNinjas = _maxNinjas;
-        this.maxRobots = _maxRobots;
+        this.maxCaballeros = maxCaballeros;
+        this.maxNinjas = maxNinjas;
+        this.maxRobots = maxRobots;
 
-        caballeros = new ArrayList<Caballero>(maxCaballeros);
-        for (int i = 0; i < maxCaballeros; i++){
-            caballeros.add(new Caballero(200,500));
-        }
-        ninjas = new ArrayList<Ninja>(maxNinjas);
-        for (int i = 0; i < maxNinjas; i++){
-            ninjas.add(new Ninja(200,500));
-        }
-        robots = new ArrayList<Robot>(maxRobots);
-        for (int i = 0; i < maxRobots; i++){
-            robots.add(new Robot(200,750));
-        }
 
         mapa = AssetManager.tiledMap;
         renderer = new OrthogonalTiledMapRenderer(mapa);
@@ -81,12 +65,45 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         camera.update();
 
+        posicionX = new ArrayList<Float>();
+        posicionY = new ArrayList<Float>();
+
+        MapObjects objects = mapa.getLayers().get("CaminoObjetos").getObjects();
+
+        for (int i = 0; i < objects.getCount(); i++) {
+            RectangleMapObject rmo = (RectangleMapObject) objects.get(i);
+            Rectangle rect = rmo.getRectangle();
+
+
+            if (i > 0) {
+                posicionX.add((posicionX.get(i - 1) + rect.getX()) / 2);
+                posicionY.add((posicionY.get(i - 1) + rect.getY()) / 2);
+            }
+            posicionX.add(rect.getX());
+            posicionY.add(rect.getY());
+        }
+
+        caballeros = new ArrayList<Caballero>(maxCaballeros);
+        for (int i = 0; i < maxCaballeros; i++){
+            caballeros.add(new Caballero(posicionX.get(0).intValue(),posicionY.get(0).intValue()));
+        }
+        ninjas = new ArrayList<Ninja>(maxNinjas);
+        for (int i = 0; i < maxNinjas; i++){
+            ninjas.add(new Ninja(posicionX.get(0).intValue(),posicionY.get(0).intValue()));
+        }
+        robots = new ArrayList<Robot>(maxRobots);
+        for (int i = 0; i < maxRobots; i++){
+            robots.add(new Robot(posicionX.get(0).intValue(),posicionY.get(0).intValue()));
+        }
+
+
+
         System.out.println("nuumero de Caballeros: "+ maxCaballeros);
         System.out.println("nuumero de Ninjas: "+ maxNinjas);
         System.out.println("nuumero de Robots: "+ maxRobots);
 
 
-        caballero = new Image(AssetManager.caballeroSelecAtak);   //Selección de caballero
+        Image caballero = new Image(AssetManager.caballeroSelecAtak);   //Selección de caballero
         caballero.setName("Caballero2");
         containerCaballero = new Container(caballero);
         containerCaballero.setTransform(true);
@@ -110,27 +127,6 @@ public class AtaqueScreen implements Screen {
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
         containerRobot.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 10+ Settings.TROPA_SELEC_HEIGHT *2 +40);
 
-    /*    //Creamos dos estilos de texto
-        textStyle = AssetManager.textStyle;
-
-        lbl_caballero = new Label("" + maxCaballeros, textStyle);
-        lbl_caballero.setName("cab");
-        lbl_ninja = new Label("" + maxNinjas, textStyle);
-        lbl_robot = new Label("" + maxRobots, textStyle);
-
-        containerTextoCaballero = new Container(lbl_caballero);
-        containerTextoCaballero.center();
-        containerTextoCaballero.setPosition(containerCaballero.getX() + containerCaballero.getWidth() + 100, containerCaballero.getY());
-
-        containerTextoNinja = new Container(lbl_ninja);
-        containerTextoNinja.setTransform(true);
-        containerTextoNinja.setPosition(containerNinja.getX() + containerNinja.getWidth() + 100, containerNinja.getY());
-
-        containerTextoRobot = new Container(lbl_robot);
-        containerTextoRobot.setTransform(true);
-        containerTextoRobot.center();
-        containerTextoRobot.setPosition(containerRobot.getX() + containerRobot.getWidth() + 100, containerRobot.getY());
-    */
 
         // Creem el viewport amb les mateixes dimensions que la càmera
         viewport = new StretchViewport(3200, 1600, camera);
@@ -144,19 +140,19 @@ public class AtaqueScreen implements Screen {
 
         if (maxCaballeros > 0) {
             stage.addActor(containerCaballero);
-            //stage.addActor(containerTextoCaballero);
         }
         if (maxNinjas > 0){
             stage.addActor(containerNinja);
-            //stage.addActor(containerTextoNinja);
         }
         if (maxRobots > 0){
             stage.addActor(containerRobot);
-            //stage.addActor(containerTextoRobot);
         }
 
 
+
+
         Gdx.input.setInputProcessor(new InputHandler(this));
+
 
     }
 
@@ -240,7 +236,6 @@ public class AtaqueScreen implements Screen {
                 stage.addActor(caballeros.get(contadorCaballeros));
                 contadorCaballeros++;
                 maxCaballeros--;
-                //lbl_caballero.setText("" + maxCaballeros);
             }
 
         }else if(tropa.equals("Ninja2")){
@@ -250,7 +245,6 @@ public class AtaqueScreen implements Screen {
                 stage.addActor(ninjas.get(contadorNinjas));
                 contadorNinjas++;
                 maxNinjas--;
-                //lbl_ninja.setText("" + maxNinjas);
                 //TODO SOLTAR NINJA
 
             }
@@ -262,7 +256,6 @@ public class AtaqueScreen implements Screen {
                 stage.addActor(robots.get(contadorRobots));
                 contadorRobots++;
                 maxRobots--;
-                //lbl_robot.setText("" + maxRobots);
                 //TODO SOLTAR ROBOT
 
             }

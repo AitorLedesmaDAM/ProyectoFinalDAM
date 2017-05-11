@@ -187,10 +187,6 @@
   <object id="112" name="camino108" type="camino" x="2903.03" y="875.758"/>
   <object id="113" name="camino109" type="camino" x="2933.33" y="869.697"/>
   <object id="114" name="camino110" type="camino" x="2963.64" y="875.758"/>
-  <object id="115" name="Torre2" type="Torre" x="1263.64" y="363.636" width="154.545" height="136.364"/>
-  <object id="118" name="Torre1" type="Torre" x="816.667" y="965.151" width="154.545" height="136.364"/>
-  <object id="121" name="Torre3" type="Torre" x="1716.67" y="834.848" width="154.545" height="136.364"/>
-  <object id="122" name="Torre4" type="Torre" x="2419.7" y="616.666" width="154.545" height="136.364"/>
  </objectgroup>
  <layer name="CapaCastillo" width="100" height="50">
   <data encoding="csv">
