@@ -20,6 +20,7 @@ public class Torre_Fuego extends Actor {
     //Spacecraft space;
     public float tiempoDeEstado = 0;
     boolean orientacion;
+    private float radius;
 
     public Torre_Fuego(float x, float y, boolean orientacion)
     {
@@ -30,17 +31,19 @@ public class Torre_Fuego extends Actor {
     this.orientacion = orientacion;
         // Creem el rectangle de col·lisions
         collisionCircle = new Circle();
+        radius = 300;
 
-        collisionCircle.set(position.x + width / 2.0f, position.y + width / 2.0f, width / 2.0f);
+
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
 
     }
-  /*  public void act(float delta)
+    public void act(float delta)
     {
        // this.position.x += 60*delta;
-         }*/
+        collisionCircle.set(position.x,position.y,radius);
+         }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -57,6 +60,10 @@ public class Torre_Fuego extends Actor {
         return position.x;
     }
 
+    public float getY() {
+        return position.y;
+    }
+
     public Circle getCollisionCircle() {
         return collisionCircle;
     }
@@ -67,6 +74,10 @@ public class Torre_Fuego extends Actor {
 
     public void setTiempoDeEstado(float tiempoDeEstado) {
         this.tiempoDeEstado = tiempoDeEstado;
+    }
+
+    public float getRadius() {
+        return radius;
     }
 }
 

@@ -45,6 +45,7 @@ public class AtaqueScreen implements Screen {
     Viewport viewport;
     private Stage stage;
     Torre_Fuego torreFuego;
+    private float sizeDiv;
 
     ArrayList<Caballero> caballeros;
     ArrayList<Ninja> ninjas;
@@ -174,7 +175,8 @@ public class AtaqueScreen implements Screen {
         for (int i = 0; i < objectsT.getCount(); i++) {
             RectangleMapObject rmo = (RectangleMapObject) objectsT.get(i);
             Rectangle rect = rmo.getRectangle();
-            int pos = i +1;
+            sizeDiv = (rect.getWidth()/2);
+            int pos = i + 1;
             boolean x = mapa.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
             System.out.println(x);
             torre_fuegos.add(new Torre_Fuego(rect.getX(), rect.getY(),x));
@@ -249,7 +251,10 @@ public class AtaqueScreen implements Screen {
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
 
         debugRenderer.setColor(Color.RED);
-        debugRenderer.rect(torreFuego.getX(), torreFuego.getY(), torreFuego.getWidth(), torreFuego.getHeight());
+        for (int i = 0; i < torre_fuegos.size(); i++){
+            debugRenderer.circle(torre_fuegos.get(i).getX() + sizeDiv,torre_fuegos.get(i).getY() + sizeDiv, torre_fuegos.get(i).getRadius());
+        }
+
 
         debugRenderer.end();
 
