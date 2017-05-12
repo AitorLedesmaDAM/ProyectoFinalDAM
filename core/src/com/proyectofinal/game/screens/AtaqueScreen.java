@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
+import com.proyectofinal.game.objects.Nivel;
+import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.trops.Caballero;
 import com.proyectofinal.game.objects.trops.Ninja;
 import com.proyectofinal.game.objects.trops.Robot;
@@ -33,6 +35,7 @@ public class AtaqueScreen implements Screen {
 
     TiledMap mapa;
     OrthogonalTiledMapRenderer renderer;
+    private Nivel nivel;
     OrthographicCamera camera;
     private TowerAttack game;
     Batch batch;
@@ -42,8 +45,8 @@ public class AtaqueScreen implements Screen {
     ArrayList<Caballero> caballeros;
     ArrayList<Ninja> ninjas;
     ArrayList<Robot> robots;
-    ArrayList<Float> posicionX;
-    ArrayList<Float> posicionY;
+    public ArrayList<Camino> camino;
+    private long contador = 0;
 
     public int maxCaballeros, maxNinjas, maxRobots;
     public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0;
@@ -65,35 +68,40 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         camera.update();
 
-        posicionX = new ArrayList<Float>();
-        posicionY = new ArrayList<Float>();
-
-        MapObjects objects = mapa.getLayers().get("CaminoObjetos").getObjects();
-
-        for (int i = 0; i < objects.getCount(); i++) {
-            RectangleMapObject rmo = (RectangleMapObject) objects.get(i);
-            Rectangle rect = rmo.getRectangle();
+        camino = new ArrayList<Camino>();
+            MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
+            Camino cam, caminoMitad;
+            for (int i = 0; i < objects.getCount(); i++) {
+                RectangleMapObject rmo = (RectangleMapObject) objects.get(i);
+                Rectangle rect = rmo.getRectangle();
 
 
-            if (i > 0) {
-                posicionX.add((posicionX.get(i - 1) + rect.getX()) / 2);
-                posicionY.add((posicionY.get(i - 1) + rect.getY()) / 2);
-            }
-            posicionX.add(rect.getX());
-            posicionY.add(rect.getY());
+                if (i > 0) {
+                    cam = new Camino((camino.get(camino.size()-1).getX() + rect.getX()) / 2, (camino.get(camino.size()-1).getY() + rect.getY()) / 2);
+                    caminoMitad = new Camino((camino.get(camino.size() - 1).getX() + cam.getX()) / 2, (camino.get(camino.size() - 1).getY() + cam.getY()) / 2);
+                    camino.add(caminoMitad);
+                    camino.add(cam);
+                    camino.add(new Camino((cam.getX() + rect.getX()) / 2, (cam.getY() + rect.getY()) / 2));
+                    //camino.add(new Camino((cam.getX() / 2) + cam.getX(), (cam.getY() / 2) + cam.getY()));
+                    //System.out.println((camino.get(i - 1).getX() + rect.getX()) / 2 + " - " + (camino.get(i - 1).getY() + rect.getY()) / 2);
+                }
+                camino.add(new Camino(rect.getX(), rect.getY()));
+                //System.out.println(rect.getX() + " - " + rect.getY());
         }
+        System.out.println(camino.size());
+
 
         caballeros = new ArrayList<Caballero>(maxCaballeros);
         for (int i = 0; i < maxCaballeros; i++){
-            caballeros.add(new Caballero(posicionX.get(0).intValue(),posicionY.get(0).intValue()));
+            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY()));
         }
         ninjas = new ArrayList<Ninja>(maxNinjas);
         for (int i = 0; i < maxNinjas; i++){
-            ninjas.add(new Ninja(posicionX.get(0).intValue(),posicionY.get(0).intValue()));
+            ninjas.add(new Ninja(camino.get(0).getX(),camino.get(0).getY()));
         }
         robots = new ArrayList<Robot>(maxRobots);
         for (int i = 0; i < maxRobots; i++){
-            robots.add(new Robot(posicionX.get(0).intValue(),posicionY.get(0).intValue()));
+            robots.add(new Robot(camino.get(0).getX(),camino.get(0).getY()));
         }
 
 
@@ -163,6 +171,8 @@ public class AtaqueScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        contador++;
+
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -171,27 +181,33 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         renderer.render();
 
-        stage.draw();
-        stage.act(delta);
+
 
         if (caballeros != null) {
             for (int i = 0; i < caballeros.size(); i++) {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
-            }
-        }
-        if (ninjas != null) {
-            for (int i = 0; i < ninjas.size(); i++) {
-                ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
-            }
-        }
-        if (robots != null) {
-            for (int i = 0; i < robots.size(); i++) {
-                robots.get(i).setTiempoDeEstado(robots.get(i).getTiempoDeEstado() + delta);
-            }
-        }
-        batch.begin();
+                if (contador % 10 == 0) {
 
-        batch.end();
+                    caballeros.get(i).siguienteCasilla(camino);
+                }
+            }
+            if (ninjas != null) {
+                for (int i = 0; i < ninjas.size(); i++) {
+                    ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
+                }
+            }
+            if (robots != null) {
+                for (int i = 0; i < robots.size(); i++) {
+                    robots.get(i).setTiempoDeEstado(robots.get(i).getTiempoDeEstado() + delta);
+                }
+            }
+            stage.draw();
+            stage.act(delta);
+
+            batch.begin();
+
+            batch.end();
+        }
     }
 
     @Override
@@ -233,6 +249,7 @@ public class AtaqueScreen implements Screen {
             if(maxCaballeros > 0){
                 //TODO SOLTAR CABALLERO
                 System.out.println("Estoy en soltar caballero");
+                caballeros.get(contadorCaballeros).casillaActual = 0;
                 stage.addActor(caballeros.get(contadorCaballeros));
                 contadorCaballeros++;
                 maxCaballeros--;

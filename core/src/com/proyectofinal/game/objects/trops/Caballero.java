@@ -6,7 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.proyectofinal.game.helpers.AssetManager;
+import com.proyectofinal.game.objects.Nivel;
+import com.proyectofinal.game.objects.road.Camino;
+import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.utils.Settings;
+
+import java.util.ArrayList;
 
 /**
  * Created by ALUMNEDAM on 05/05/2017.
@@ -19,6 +24,9 @@ public class Caballero extends Actor {
     private Rectangle collisionRect;
     //Spacecraft space;
     public float tiempoDeEstado = 0;
+    public int casillaActual = 0;
+
+    public AtaqueScreen at;
 
     public Caballero(float x, float y)
     {
@@ -35,10 +43,12 @@ public class Caballero extends Actor {
         setTouchable(Touchable.enabled);
 
     }
-    public void act(float delta)
+    /*public void act(float delta)
     {
-        this.position.x += 60*delta;
-    }
+        //position.x += 90*delta;
+        //position.y +=90*delta;
+
+    }*/
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -48,6 +58,10 @@ public class Caballero extends Actor {
 
     public float getX() {
         return position.x;
+    }
+
+    public float getY() {
+        return position.y;
     }
 
     public Rectangle getCollisionRect() {
@@ -60,6 +74,12 @@ public class Caballero extends Actor {
 
     public void setTiempoDeEstado(float tiempoDeEstado) {
         this.tiempoDeEstado = tiempoDeEstado;
+    }
+
+    public void siguienteCasilla(ArrayList<Camino> camino){
+        casillaActual++;
+        position.x = camino.get(casillaActual).getX();
+        position.y = camino.get(casillaActual).getY();
     }
 }
 
