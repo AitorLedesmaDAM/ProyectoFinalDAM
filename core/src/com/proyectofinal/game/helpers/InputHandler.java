@@ -1,5 +1,6 @@
 package com.proyectofinal.game.helpers;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -40,6 +41,10 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.B) {
+            AtaqueScreen.debug = !AtaqueScreen.debug;
+            System.out.println("hola");
+        }
         return false;
     }
 
@@ -103,6 +108,7 @@ public class InputHandler implements InputProcessor {
                     System.out.println("Sale Robot");
                 }
             }
+
             return true;
         }else {
             return true;

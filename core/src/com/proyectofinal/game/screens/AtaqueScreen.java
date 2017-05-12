@@ -2,9 +2,11 @@ package com.proyectofinal.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -20,6 +22,7 @@ import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
+import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.trops.Caballero;
 import com.proyectofinal.game.objects.trops.Ninja;
 import com.proyectofinal.game.objects.trops.Robot;
@@ -41,12 +44,18 @@ public class AtaqueScreen implements Screen {
     Batch batch;
     Viewport viewport;
     private Stage stage;
+    Torre_Fuego torreFuego;
 
     ArrayList<Caballero> caballeros;
     ArrayList<Ninja> ninjas;
     ArrayList<Robot> robots;
     public ArrayList<Camino> camino;
     private long contador = 0;
+
+    ArrayList<Torre_Fuego> torre_fuegos;
+
+    public static boolean debug = false;
+    private ShapeRenderer debugRenderer;
 
     public int maxCaballeros, maxNinjas, maxRobots;
     public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0;
@@ -59,6 +68,7 @@ public class AtaqueScreen implements Screen {
         this.maxNinjas = maxNinjas;
         this.maxRobots = maxRobots;
 
+        debugRenderer = new ShapeRenderer();
 
         mapa = AssetManager.tiledMap;
         renderer = new OrthogonalTiledMapRenderer(mapa);
@@ -157,6 +167,26 @@ public class AtaqueScreen implements Screen {
         }
 
 
+        //bucle para saber las posiciones de los objetos torre
+        torre_fuegos = new ArrayList<Torre_Fuego>();
+        MapObjects objectsT = mapa.getLayers().get("TorresObjetos").getObjects();
+
+        for (int i = 0; i < objectsT.getCount(); i++) {
+            RectangleMapObject rmo = (RectangleMapObject) objectsT.get(i);
+            Rectangle rect = rmo.getRectangle();
+            int pos = i +1;
+            boolean x = mapa.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
+            System.out.println(x);
+            torre_fuegos.add(new Torre_Fuego(rect.getX(), rect.getY(),x));
+            System.out.println(torre_fuegos.get(i).getX()+" - "+torre_fuegos.get(i).getY());
+        }
+
+        //boolean x = mapa.getLayers().get("TorresObjetos").getProperties().containsKey("orientacion");
+        //System.out.println(x);
+        for (int i = 0; i < torre_fuegos.size(); i++) {
+            System.out.println(torre_fuegos.get(i).getX()+" - "+torre_fuegos.get(i).getY());
+            stage.addActor(torre_fuegos.get(i));
+        }
 
 
         Gdx.input.setInputProcessor(new InputHandler(this));
@@ -182,7 +212,6 @@ public class AtaqueScreen implements Screen {
         renderer.render();
 
 
-
         if (caballeros != null) {
             for (int i = 0; i < caballeros.size(); i++) {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
@@ -204,10 +233,26 @@ public class AtaqueScreen implements Screen {
             stage.draw();
             stage.act(delta);
 
+            if (debug) renderDebug();
+
             batch.begin();
 
             batch.end();
         }
+    }
+
+
+    private void renderDebug() {
+
+        System.out.println("Estoy en pintar!");
+        debugRenderer.setProjectionMatrix(camera.combined);
+        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+        debugRenderer.setColor(Color.RED);
+        debugRenderer.rect(torreFuego.getX(), torreFuego.getY(), torreFuego.getWidth(), torreFuego.getHeight());
+
+        debugRenderer.end();
+
     }
 
     @Override
