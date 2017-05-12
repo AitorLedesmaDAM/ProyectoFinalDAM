@@ -21,10 +21,10 @@ import com.proyectofinal.game.utils.Settings;
 public class AssetManager {
 
     //Textura de la imagen de fondo
-    public static Texture fondo, textureBtnCont;
+    public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig;
     public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack;
 
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak,torreF,torreF2;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak,torreF,torreF2, btnReiniciar, btnSalir, btnSig;
 
     //Fuente
     public static BitmapFont fontGrande, font, fontPequenia;
@@ -80,6 +80,23 @@ public class AssetManager {
         textureBtnCont = new Texture(Gdx.files.internal("otros/ContinuarBtn1.png"));
         btnContinuar = new Sprite(textureBtnCont);
         btnContinuar.flip(false, true);
+
+        textureBtnReiniciar = new Texture(Gdx.files.internal("otros/Reiniciar.png"));
+        btnReiniciar = new Sprite(textureBtnReiniciar);
+        btnReiniciar.flip(false, true);
+
+        textureBtnSalir = new Texture(Gdx.files.internal("otros/Salir.png"));
+        btnSalir = new Sprite(textureBtnSalir);
+        btnSalir.flip(false, true);
+
+        textureBtnSig = new Texture(Gdx.files.internal("otros/Siguiente.png"));
+        btnSig = new Sprite(textureBtnSig);
+        btnSig.flip(false, true);
+
+
+
+
+
 
         //Carreguem les textures de les tropes
         TextureRegion[] regionCaballeroRun = TextureRegion.split(new Texture("tropas/knight_run.png"), 587, 707)[0];
