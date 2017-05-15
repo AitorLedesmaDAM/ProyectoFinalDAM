@@ -22,18 +22,21 @@ public class Caballero extends Actor {
     private Vector2 position;
     private int width, height;
     private Rectangle collisionRect;
+    private int desviacionY, desviacionX;
     //Spacecraft space;
     public float tiempoDeEstado = 0;
     public int casillaActual = 0;
 
     public AtaqueScreen at;
 
-    public Caballero(float x, float y)
+    public Caballero(float x, float y,int desviacionX, int desviacionY)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
         this.height = Settings.TROPA_HEIGHT;
         position = new Vector2(x, y);
+        this.desviacionY = desviacionY;
+        this.desviacionX = desviacionX;
 
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
@@ -78,8 +81,8 @@ public class Caballero extends Actor {
 
     public void siguienteCasilla(ArrayList<Camino> camino){
         casillaActual++;
-        position.x = camino.get(casillaActual).getX();
-        position.y = camino.get(casillaActual).getY();
+        position.x = camino.get(casillaActual).getX() + desviacionX;
+        position.y = camino.get(casillaActual).getY() + desviacionY;
     }
 }
 

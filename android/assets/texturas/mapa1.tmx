@@ -76,117 +76,111 @@
 </data>
  </layer>
  <objectgroup name="CaminoObjetos">
-  <object id="1" name="camino1" type="camino" x="593.939" y="878.788"/>
-  <object id="4" name="camino2" type="camino" x="621.212" y="875.758"/>
-  <object id="5" name="camino3" type="camino" x="654.545" y="878.788"/>
-  <object id="6" name="camino4" type="camino" x="687.879" y="875.758"/>
-  <object id="7" name="camino5" type="camino" x="718.182" y="875.758"/>
-  <object id="8" name="camino6" type="camino" x="748.485" y="872.727"/>
-  <object id="9" name="camino7" x="787.879" y="875.758"/>
-  <object id="10" name="camino8" type="camino" x="812.121" y="875.758"/>
-  <object id="11" name="camino9" type="camino" x="848.485" y="878.788"/>
-  <object id="12" name="camino10" type="camino" x="878.788" y="878.788"/>
-  <object id="13" name="camino11" type="camino" x="918.182" y="881.818"/>
-  <object id="14" name="camino12" type="camino" x="942.424" y="878.788"/>
-  <object id="15" name="camino13" type="camino" x="969.697" y="878.788"/>
-  <object id="16" name="camino14" type="camino" x="1006.06" y="881.818"/>
-  <object id="17" name="camino15" type="camino" x="1039.39" y="881.818"/>
-  <object id="18" name="camino16" type="camino" x="1066.67" y="878.788"/>
-  <object id="19" name="camino17" type="camino" x="1093.94" y="878.788"/>
-  <object id="20" name="camino18" type="camino" x="1130.3" y="881.818"/>
-  <object id="21" name="camino19" type="camino" x="1169.7" y="875.758"/>
-  <object id="22" name="camino20" type="camino" x="1160.61" y="848.485"/>
-  <object id="23" name="camino21" type="camino" x="1169.7" y="821.212"/>
-  <object id="24" name="camino22" type="camino" x="1166.67" y="790.909"/>
-  <object id="25" name="camino23" type="camino" x="1166.67" y="754.545"/>
-  <object id="26" name="camino24" type="camino" x="1166.67" y="724.242"/>
-  <object id="27" name="camino25" type="camino" x="1163.64" y="693.939"/>
-  <object id="28" name="camino26" type="camino" x="1160.61" y="660.606"/>
-  <object id="29" name="camino27" type="camino" x="1169.7" y="630.303"/>
-  <object id="30" name="camino28" type="camino" x="1196.97" y="621.212"/>
-  <object id="31" x="1236.36" y="618.182" height="3.0303"/>
-  <object id="32" name="camino29" type="camino" x="1218.18" y="612.121" width="21.2121" height="21.2121"/>
-  <object id="33" name="camino30" type="camino" x="1251.52" y="609.091" width="27.2727" height="24.2424"/>
-  <object id="34" name="camino31" type="camino" x="1290.91" y="621.212"/>
-  <object id="35" name="camino32" type="camino" x="1318.18" y="621.212"/>
-  <object id="36" name="camino33" type="camino" x="1348.48" y="624.242"/>
-  <object id="37" name="camino34" type="camino" x="1378.79" y="621.212"/>
-  <object id="38" name="camino35" type="camino" x="1409.09" y="624.242"/>
-  <object id="39" name="camino36" type="camino" x="1439.39" y="624.242"/>
-  <object id="40" name="camino37" type="camino" x="1466.67" y="624.242"/>
-  <object id="41" name="camino38" type="camino" x="1500" y="627.273"/>
-  <object id="42" name="camino39" type="camino" x="1527.27" y="624.242"/>
-  <object id="43" name="camino40" type="camino" x="1539.39" y="648.485"/>
-  <object id="44" name="camino41" type="camino" x="1542.42" y="666.667"/>
-  <object id="45" name="camino42" type="camino" x="1548.48" y="706.061"/>
-  <object id="46" name="camino43" type="camino" x="1548.48" y="733.333"/>
-  <object id="47" name="camino44" type="camino" x="1551.52" y="757.576"/>
-  <object id="48" name="camino45" type="camino" x="1551.52" y="787.879"/>
-  <object id="49" name="camino46" type="camino" x="1551.52" y="818.182"/>
-  <object id="50" name="camino47" type="camino" x="1554.55" y="842.424"/>
-  <object id="51" name="camino48" type="camino" x="1551.52" y="878.788"/>
-  <object id="52" name="camino49" type="camino" x="1551.52" y="909.091"/>
-  <object id="53" name="camino50" type="camino" x="1548.48" y="945.455"/>
-  <object id="54" name="camino51" x="1548.48" y="978.788"/>
-  <object id="55" name="camino52" type="camino" x="1545.45" y="1000"/>
-  <object id="56" name="camino53" type="camino" x="1548.48" y="1036.36"/>
-  <object id="57" name="camino54" type="camino" x="1545.45" y="1075.76"/>
-  <object id="58" name="camino55" type="camino" x="1554.55" y="1106.06"/>
-  <object id="59" name="camino56" type="camino" x="1584.85" y="1106.06"/>
-  <object id="60" name="camino57" type="camino" x="1612.12" y="1106.06"/>
-  <object id="61" name="camino58" type="camino" x="1639.39" y="1106.06"/>
-  <object id="62" name="camino59" type="camino" x="1672.73" y="1106.06"/>
-  <object id="63" name="camino60" type="camino" x="1700" y="1103.03"/>
-  <object id="64" name="camino61" type="camino" x="1724.24" y="1103.03"/>
-  <object id="65" name="camino62" type="camino" x="1748.48" y="1103.03"/>
-  <object id="66" name="camino63" type="camino" x="1772.73" y="1103.03"/>
-  <object id="67" name="camino64" type="camino" x="1806.06" y="1106.06"/>
-  <object id="68" name="camino65" type="camino" x="1839.39" y="1106.06"/>
-  <object id="69" name="camino66" type="camino" x="1866.67" y="1100"/>
-  <object id="70" name="camino67" type="camino" x="1890.91" y="1103.03"/>
-  <object id="71" name="camino68" type="camino" x="1921.21" y="1106.06"/>
-  <object id="72" name="camino69" type="camino" x="1945.45" y="1106.06"/>
-  <object id="73" name="camino70" type="camino" x="1981.82" y="1106.06"/>
-  <object id="74" name="camino71" type="camino" x="2006.06" y="1103.03"/>
-  <object id="75" name="camino72" type="camino" x="2033.33" y="1106.06"/>
-  <object id="76" name="camino73" type="camino" x="2063.64" y="1106.06"/>
-  <object id="77" name="camino74" type="camino" x="2069.7" y="1075.76"/>
-  <object id="78" name="camino75" type="camino" x="2066.67" y="1045.45"/>
-  <object id="79" name="camino76" type="camino" x="2066.67" y="1015.15"/>
-  <object id="80" name="camino77" type="camino" x="2063.64" y="978.788"/>
-  <object id="81" name="camino78" type="camino" x="2063.64" y="951.515"/>
-  <object id="82" name="camino79" type="camino" x="2063.64" y="924.242"/>
-  <object id="83" name="camino80" type="camino" x="2066.67" y="890.909"/>
-  <object id="84" name="camino81" type="camino" x="2103.03" y="881.818"/>
-  <object id="85" name="camino82" type="camino" x="2136.36" y="878.788"/>
-  <object id="86" name="camino83" type="camino" x="2166.67" y="878.788"/>
-  <object id="87" name="camino84" type="camino" x="2206.06" y="881.818"/>
-  <object id="89" name="camino85" type="camino" x="2242.42" y="881.818"/>
-  <object id="90" name="camino86" type="camino" x="2269.7" y="875.758"/>
-  <object id="91" name="camino87" type="camino" x="2300" y="878.788"/>
-  <object id="92" name="camino88" type="camino" x="2336.36" y="872.727"/>
-  <object id="93" name="camino89" type="camino" x="2363.64" y="872.727"/>
-  <object id="94" name="camino90" type="camino" x="2396.97" y="866.667"/>
-  <object id="95" name="camino91" type="camino" x="2424.24" y="869.697"/>
-  <object id="96" name="camino92" type="camino" x="2448.48" y="872.727"/>
-  <object id="97" name="camino93" type="camino" x="2475.76" y="869.697"/>
-  <object id="98" name="camino94" type="camino" x="2509.09" y="869.697"/>
-  <object id="99" name="camino95" type="camino" x="2533.33" y="872.727"/>
-  <object id="100" name="camino96" type="camino" x="2560.61" y="872.727"/>
-  <object id="101" name="camino97" type="camino" x="2584.85" y="872.727"/>
-  <object id="102" name="camino98" type="camino" x="2615.15" y="869.697"/>
-  <object id="103" name="camino99" type="camino" x="2642.42" y="869.697"/>
-  <object id="104" name="camino100" type="camino" x="2672.73" y="872.727"/>
-  <object id="105" name="camino101" type="camino" x="2700" y="872.727"/>
-  <object id="106" name="camino102" type="camino" x="2724.24" y="872.727"/>
-  <object id="107" name="camino103" x="2751.52" y="872.727"/>
-  <object id="108" name="camino104" type="camino" x="2784.85" y="872.727"/>
-  <object id="109" name="camino105" type="camino" x="2815.15" y="875.758"/>
-  <object id="110" name="camino106" type="camino" x="2842.42" y="875.758"/>
-  <object id="111" name="camino107" type="camino" x="2875.76" y="872.727"/>
-  <object id="112" name="camino108" type="camino" x="2903.03" y="875.758"/>
-  <object id="113" name="camino109" type="camino" x="2933.33" y="869.697"/>
-  <object id="114" name="camino110" type="camino" x="2963.64" y="875.758"/>
+  <object id="1" name="camino1" type="camino" x="577.439" y="864.288" width="29.5" height="31"/>
+  <object id="4" name="camino2" type="camino" x="608.712" y="863.758" width="30" height="31"/>
+  <object id="5" name="camino3" type="camino" x="641.545" y="864.788" width="29" height="30.5"/>
+  <object id="6" name="camino4" type="camino" x="673.379" y="864.758" width="30" height="30"/>
+  <object id="7" name="camino5" type="camino" x="705.682" y="864.758" width="29" height="30"/>
+  <object id="8" name="camino6" type="camino" x="738.485" y="864.727" width="28" height="30.5"/>
+  <object id="9" name="camino7" x="768.879" y="864.758" width="30" height="30.5"/>
+  <object id="10" name="camino8" type="camino" x="801.121" y="864.258" width="29.5" height="30.5"/>
+  <object id="11" name="camino9" type="camino" x="831.985" y="864.788" width="30.5" height="30.5"/>
+  <object id="12" name="camino10" type="camino" x="864.288" y="863.788" width="31" height="31.5"/>
+  <object id="13" name="camino11" type="camino" x="897.182" y="865.318" width="29.5" height="30"/>
+  <object id="14" name="camino12" type="camino" x="928.424" y="864.788" width="30.5" height="30.5"/>
+  <object id="15" name="camino13" type="camino" x="961.197" y="865.288" width="30" height="30"/>
+  <object id="16" name="camino14" type="camino" x="993.06" y="864.818" width="30" height="30"/>
+  <object id="17" name="camino15" type="camino" x="1025.39" y="865.318" width="30" height="30"/>
+  <object id="18" name="camino16" type="camino" x="1057.17" y="865.288" width="30" height="29.5"/>
+  <object id="19" name="camino17" type="camino" x="1088.44" y="865.288" width="31" height="29.5"/>
+  <object id="20" name="camino18" type="camino" x="1121.3" y="864.818" width="29.5" height="30"/>
+  <object id="21" name="camino19" type="camino" x="1153.2" y="865.258" width="30" height="29.5"/>
+  <object id="22" name="camino20" type="camino" x="1151.61" y="832.985" width="32" height="29"/>
+  <object id="23" name="camino21" type="camino" x="1152.2" y="800.712" width="30.5" height="30"/>
+  <object id="24" name="camino22" type="camino" x="1152.67" y="768.409" width="31" height="30"/>
+  <object id="25" name="camino23" type="camino" x="1153.17" y="736.545" width="30" height="29.5"/>
+  <object id="26" name="camino24" type="camino" x="1153.17" y="705.242" width="30.5" height="29"/>
+  <object id="27" name="camino25" type="camino" x="1152.64" y="672.939" width="30.5" height="29.5"/>
+  <object id="28" name="camino26" type="camino" x="1152.61" y="640.606" width="30.5" height="30"/>
+  <object id="29" name="camino27" type="camino" x="1153.2" y="608.303" width="29" height="30.5"/>
+  <object id="30" name="camino28" type="camino" x="1184.97" y="608.712" width="29.5" height="30.5"/>
+  <object id="32" name="camino29" type="camino" x="1217.18" y="608.121" width="28.7121" height="30.2121"/>
+  <object id="33" name="camino30" type="camino" x="1248.02" y="609.091" width="30.7727" height="29.2424"/>
+  <object id="34" name="camino31" type="camino" x="1281.91" y="608.712" width="31" height="29.5"/>
+  <object id="35" name="camino32" type="camino" x="1314.18" y="609.212" width="28.5" height="29.5"/>
+  <object id="36" name="camino33" type="camino" x="1343.98" y="609.242" width="32.5" height="29.5"/>
+  <object id="37" name="camino34" type="camino" x="1377.29" y="608.712" width="30" height="30.5"/>
+  <object id="38" name="camino35" type="camino" x="1409.09" y="608.742" width="29.5" height="30.5"/>
+  <object id="39" name="camino36" type="camino" x="1440.89" y="608.742" width="30" height="30.5"/>
+  <object id="40" name="camino37" type="camino" x="1473.17" y="609.242" width="29.5" height="30"/>
+  <object id="41" name="camino38" type="camino" x="1504.5" y="608.773" width="31" height="30"/>
+  <object id="42" name="camino39" type="camino" x="1536.77" y="609.242" width="30.5" height="29.5"/>
+  <object id="43" name="camino40" type="camino" x="1536.89" y="640.985" width="30" height="30.5"/>
+  <object id="44" name="camino41" type="camino" x="1537.92" y="673.167" width="28.5" height="30"/>
+  <object id="45" name="camino42" type="camino" x="1537.48" y="705.561" width="29" height="29"/>
+  <object id="46" name="camino43" type="camino" x="1537.48" y="736.833" width="28.5" height="30.5"/>
+  <object id="47" name="camino44" type="camino" x="1538.02" y="769.076" width="28.5" height="31"/>
+  <object id="48" name="camino45" type="camino" x="1537.52" y="801.379" width="29" height="30.5"/>
+  <object id="49" name="camino46" type="camino" x="1537.02" y="833.682" width="29.5" height="29.5"/>
+  <object id="50" name="camino47" type="camino" x="1537.05" y="865.424" width="29.5" height="29.5"/>
+  <object id="51" name="camino48" type="camino" x="1537.02" y="897.288" width="30" height="29.5"/>
+  <object id="52" name="camino49" type="camino" x="1537.52" y="928.591" width="29" height="30.5"/>
+  <object id="53" name="camino50" type="camino" x="1536.98" y="960.955" width="30" height="30.5"/>
+  <object id="54" name="camino51" x="1537.48" y="992.788" width="29.5" height="30"/>
+  <object id="55" name="camino52" type="camino" x="1537.45" y="1024.5" width="29.5" height="30.5"/>
+  <object id="56" name="camino53" type="camino" x="1537.48" y="1057.36" width="29" height="29.5"/>
+  <object id="57" name="camino54" type="camino" x="1537.45" y="1088.76" width="29" height="30"/>
+  <object id="58" name="camino55" type="camino" x="1568.55" y="1088.56" width="30.5" height="30"/>
+  <object id="59" name="camino56" type="camino" x="1600.85" y="1089.06" width="30.5" height="30"/>
+  <object id="60" name="camino57" type="camino" x="1633.12" y="1088.56" width="29.5" height="30"/>
+  <object id="61" name="camino58" type="camino" x="1663.89" y="1089.06" width="31.5" height="30"/>
+  <object id="62" name="camino59" type="camino" x="1696.73" y="1089.06" width="30.5" height="30"/>
+  <object id="63" name="camino60" type="camino" x="1728.5" y="1089.03" width="30" height="30"/>
+  <object id="64" name="camino61" type="camino" x="1761.24" y="1088.03" width="30" height="31"/>
+  <object id="65" name="camino62" type="camino" x="1793.48" y="1089.03" width="29" height="30"/>
+  <object id="66" name="camino63" type="camino" x="1824.73" y="1089.53" width="31.5" height="29.5"/>
+  <object id="67" name="camino64" type="camino" x="1858.06" y="1089.56" width="28.5" height="30"/>
+  <object id="68" name="camino65" type="camino" x="1889.39" y="1089.06" width="30" height="30"/>
+  <object id="69" name="camino66" type="camino" x="1922.17" y="1089" width="28.5" height="30"/>
+  <object id="70" name="camino67" type="camino" x="1953.91" y="1089.03" width="29.5" height="29.5"/>
+  <object id="71" name="camino68" type="camino" x="1985.21" y="1088.56" width="31" height="30.5"/>
+  <object id="72" name="camino69" type="camino" x="2017.95" y="1088.56" width="29.5" height="30.5"/>
+  <object id="73" name="camino70" type="camino" x="2049.32" y="1088.56" width="29.5" height="31"/>
+  <object id="74" name="camino71" type="camino" x="2048.56" y="1057.03" width="31" height="29.5"/>
+  <object id="75" name="camino72" type="camino" x="2049.33" y="1025.06" width="30" height="30"/>
+  <object id="76" name="camino73" type="camino" x="2049.14" y="993.06" width="29.5" height="30"/>
+  <object id="77" name="camino74" type="camino" x="2049.7" y="961.26" width="29" height="29.5"/>
+  <object id="80" name="camino77" type="camino" x="2049.14" y="929.288" width="30" height="29.5"/>
+  <object id="81" name="camino78" type="camino" x="2049.14" y="897.015" width="29.5" height="29.5"/>
+  <object id="82" name="camino79" type="camino" x="2048.64" y="864.742" width="30.5" height="30"/>
+  <object id="83" name="camino80" type="camino" x="2081.17" y="864.409" width="29.5" height="31.5"/>
+  <object id="84" name="camino81" type="camino" x="2112.36" y="864.151" width="31.3333" height="31"/>
+  <object id="85" name="camino82" type="camino" x="2145.03" y="864.788" width="30.6667" height="30.3333"/>
+  <object id="86" name="camino83" type="camino" x="2176.34" y="864.455" width="31" height="30.6667"/>
+  <object id="87" name="camino84" type="camino" x="2208.39" y="864.485" width="31" height="31.3333"/>
+  <object id="89" name="camino85" type="camino" x="2240.42" y="864.485" width="31.3333" height="31.3333"/>
+  <object id="90" name="camino86" type="camino" x="2272.7" y="864.425" width="30.6667" height="31"/>
+  <object id="91" name="camino87" type="camino" x="2304.33" y="864.455" width="31" height="31"/>
+  <object id="92" name="camino88" type="camino" x="2336.36" y="864.394" width="31" height="31"/>
+  <object id="93" name="camino89" type="camino" x="2368.64" y="864.394" width="30.6667" height="31"/>
+  <object id="94" name="camino90" type="camino" x="2400.3" y="864.334" width="31" height="31.3333"/>
+  <object id="95" name="camino91" type="camino" x="2432.57" y="864.364" width="31" height="31.3333"/>
+  <object id="96" name="camino92" type="camino" x="2464.48" y="864.394" width="31" height="31.6667"/>
+  <object id="97" name="camino93" type="camino" x="2496.43" y="864.364" width="31" height="31.3333"/>
+  <object id="98" name="camino94" type="camino" x="2528.42" y="864.697" width="31" height="30.6667"/>
+  <object id="99" name="camino95" type="camino" x="2560.66" y="864.394" width="30.6667" height="31"/>
+  <object id="100" name="camino96" type="camino" x="2592.28" y="864.06" width="31" height="31.3333"/>
+  <object id="101" name="camino97" type="camino" x="2624.85" y="864.394" width="30" height="31"/>
+  <object id="102" name="camino98" type="camino" x="2656.15" y="864.364" width="31.6667" height="31.3333"/>
+  <object id="103" name="camino99" type="camino" x="2688.09" y="864.697" width="31.3333" height="30.6667"/>
+  <object id="104" name="camino100" type="camino" x="2720.4" y="864.394" width="30.6667" height="31.3333"/>
+  <object id="105" name="camino101" type="camino" x="2752" y="864.394" width="31.3333" height="31"/>
+  <object id="106" name="camino102" type="camino" x="2784.24" y="864.394" width="31" height="31"/>
+  <object id="107" name="camino103" x="2815.85" y="864.394" width="31.3333" height="31.3333"/>
+  <object id="108" name="camino104" type="camino" x="2848.18" y="864.394" width="31" height="31.3333"/>
+  <object id="109" name="camino105" type="camino" x="2879.82" y="864.425" width="31.6667" height="31.3333"/>
+  <object id="110" name="camino106" type="camino" x="2912.75" y="864.425" width="30.6667" height="31.3333"/>
+  <object id="111" name="camino107" type="camino" x="2944.43" y="864.06" width="31" height="31.6667"/>
  </objectgroup>
  <objectgroup name="TorresObjetos">
   <object id="123" name="torre2" type="torre" x="845.459" y="993.939" width="184.848" height="160.606">

@@ -29,6 +29,7 @@ import com.proyectofinal.game.objects.trops.Robot;
 import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by ALUMNEDAM on 25/04/2017.
@@ -81,30 +82,38 @@ public class AtaqueScreen implements Screen {
 
         camino = new ArrayList<Camino>();
             MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
-            Camino cam, caminoMitad;
+            Camino camMitad, camDoble, camMitadMitad, caminoMitadMitadMitad, caminoMitadMitadDoble, caminoDobleMitad, caminoDobleDoble;
             for (int i = 0; i < objects.getCount(); i++) {
                 RectangleMapObject rmo = (RectangleMapObject) objects.get(i);
                 Rectangle rect = rmo.getRectangle();
 
 
                 if (i > 0) {
-                    cam = new Camino((camino.get(camino.size()-1).getX() + rect.getX()) / 2, (camino.get(camino.size()-1).getY() + rect.getY()) / 2);
-                    caminoMitad = new Camino((camino.get(camino.size() - 1).getX() + cam.getX()) / 2, (camino.get(camino.size() - 1).getY() + cam.getY()) / 2);
-                    camino.add(caminoMitad);
-                    camino.add(cam);
-                    camino.add(new Camino((cam.getX() + rect.getX()) / 2, (cam.getY() + rect.getY()) / 2));
-                    //camino.add(new Camino((cam.getX() / 2) + cam.getX(), (cam.getY() / 2) + cam.getY()));
-                    //System.out.println((camino.get(i - 1).getX() + rect.getX()) / 2 + " - " + (camino.get(i - 1).getY() + rect.getY()) / 2);
+                    camMitad = new Camino((camino.get(camino.size()-1).getX() + rect.getX()) / 2, (camino.get(camino.size()-1).getY() + rect.getY()) / 2);
+                    camMitadMitad = new Camino((camino.get(camino.size() - 1).getX() + camMitad.getX()) / 2, (camino.get(camino.size() - 1).getY() + camMitad.getY()) / 2);
+                    camDoble = new Camino((camMitad.getX() + rect.getX()) / 2, (camMitad.getY() + rect.getY()) / 2);
+
+                    caminoMitadMitadMitad = new Camino((camino.get(camino.size() - 1).getX() + camMitadMitad.getX()) / 2, (camino.get(camino.size() - 1).getY() + camMitadMitad.getY()) / 2);
+                    caminoMitadMitadDoble = new Camino((camMitad.getX() + camMitadMitad.getX()) / 2 , (camMitad.getY() + camMitadMitad.getY()) / 2);
+                    caminoDobleMitad = new Camino((camMitad.getX() + camDoble.getX()) / 2, (camMitad.getY() + camDoble.getY()) / 2);
+                    caminoDobleDoble = new Camino((camDoble.getX() + rect.getX()) / 2, (camDoble.getY() + rect.getY()) / 2);
+                    camino.add(caminoMitadMitadMitad);
+                    camino.add(camMitadMitad);
+                    camino.add(caminoMitadMitadDoble);
+                    camino.add(camMitad);
+                    camino.add(caminoDobleMitad);
+                    camino.add(camDoble);
+                    camino.add(caminoDobleDoble);
                 }
                 camino.add(new Camino(rect.getX(), rect.getY()));
                 //System.out.println(rect.getX() + " - " + rect.getY());
         }
         System.out.println(camino.size());
 
-
+        Random random = new Random();
         caballeros = new ArrayList<Caballero>(maxCaballeros);
         for (int i = 0; i < maxCaballeros; i++){
-            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY()));
+            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-62), random.nextInt(150)+(-75)));
         }
         ninjas = new ArrayList<Ninja>(maxNinjas);
         for (int i = 0; i < maxNinjas; i++){
@@ -217,7 +226,7 @@ public class AtaqueScreen implements Screen {
         if (caballeros != null) {
             for (int i = 0; i < caballeros.size(); i++) {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
-                if (contador % 10 == 0) {
+                if (contador % 2 == 0) {
 
                     caballeros.get(i).siguienteCasilla(camino);
                 }
