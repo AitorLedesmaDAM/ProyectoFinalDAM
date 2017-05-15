@@ -107,14 +107,12 @@ public class AtaqueScreen implements Screen {
                     camino.add(caminoDobleDoble);
                 }
                 camino.add(new Camino(rect.getX(), rect.getY()));
-                //System.out.println(rect.getX() + " - " + rect.getY());
         }
-        System.out.println(camino.size());
 
         Random random = new Random();
         caballeros = new ArrayList<Caballero>(maxCaballeros);
         for (int i = 0; i < maxCaballeros; i++){
-            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-62), random.nextInt(150)+(-75)));
+            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-62), random.nextInt(150)+(-75), false));
         }
         ninjas = new ArrayList<Ninja>(maxNinjas);
         for (int i = 0; i < maxNinjas; i++){
@@ -190,7 +188,6 @@ public class AtaqueScreen implements Screen {
             boolean x = mapa.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
             System.out.println(x);
             torre_fuegos.add(new Torre_Fuego(rect.getX(), rect.getY(),x));
-            System.out.println(torre_fuegos.get(i).getX()+" - "+torre_fuegos.get(i).getY());
         }
 
         //boolean x = mapa.getLayers().get("TorresObjetos").getProperties().containsKey("orientacion");
@@ -227,9 +224,10 @@ public class AtaqueScreen implements Screen {
         if (caballeros != null) {
             for (int i = 0; i < caballeros.size(); i++) {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
-                if (contador % 2 == 0) {
-
+                if (caballeros.get(i).getVisible()){
+                    if (contador % 2 == 0) {
                     caballeros.get(i).siguienteCasilla(camino);
+                    }
                 }
             }
             if (ninjas != null) {
@@ -326,6 +324,7 @@ public class AtaqueScreen implements Screen {
                 //TODO SOLTAR CABALLERO
                 System.out.println("Estoy en soltar caballero");
                 caballeros.get(contadorCaballeros).casillaActual = 0;
+                caballeros.get(contadorCaballeros).setVisible(true);
                 stage.addActor(caballeros.get(contadorCaballeros));
                 contadorCaballeros++;
                 maxCaballeros--;
