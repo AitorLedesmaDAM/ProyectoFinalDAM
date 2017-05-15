@@ -30,7 +30,7 @@ public abstract class Tropas extends Actor{
     public int casillaActual = 0;
     private boolean visible;
 
-    public Tropas(float x, float y,int desviacionX, int desviacionY, boolean visible)
+    public Tropas(float x, float y, int desviacionX, int desviacionY, boolean visible)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
@@ -57,10 +57,7 @@ public abstract class Tropas extends Actor{
     }*/
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.caballeroRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 116, 140, 1f, 1f, 0);
-    }
+    public abstract void draw(Batch batch, float parentAlpha);
 
     public float getX() {
         return position.x;

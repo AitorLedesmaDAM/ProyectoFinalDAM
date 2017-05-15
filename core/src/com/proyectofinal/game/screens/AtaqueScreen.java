@@ -81,46 +81,24 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         camera.update();
 
+        nivel = new Nivel();
+
         camino = new ArrayList<Camino>();
-            MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
-            Camino camMitad, camDoble, camMitadMitad, caminoMitadMitadMitad, caminoMitadMitadDoble, caminoDobleMitad, caminoDobleDoble;
-            for (int i = 0; i < objects.getCount(); i++) {
-                RectangleMapObject rmo = (RectangleMapObject) objects.get(i);
-                Rectangle rect = rmo.getRectangle();
+        camino = nivel.recojerCamino();
 
-
-                if (i > 0) {
-                    camMitad = new Camino((camino.get(camino.size()-1).getX() + rect.getX()) / 2, (camino.get(camino.size()-1).getY() + rect.getY()) / 2);
-                    camMitadMitad = new Camino((camino.get(camino.size() - 1).getX() + camMitad.getX()) / 2, (camino.get(camino.size() - 1).getY() + camMitad.getY()) / 2);
-                    camDoble = new Camino((camMitad.getX() + rect.getX()) / 2, (camMitad.getY() + rect.getY()) / 2);
-
-                    caminoMitadMitadMitad = new Camino((camino.get(camino.size() - 1).getX() + camMitadMitad.getX()) / 2, (camino.get(camino.size() - 1).getY() + camMitadMitad.getY()) / 2);
-                    caminoMitadMitadDoble = new Camino((camMitad.getX() + camMitadMitad.getX()) / 2 , (camMitad.getY() + camMitadMitad.getY()) / 2);
-                    caminoDobleMitad = new Camino((camMitad.getX() + camDoble.getX()) / 2, (camMitad.getY() + camDoble.getY()) / 2);
-                    caminoDobleDoble = new Camino((camDoble.getX() + rect.getX()) / 2, (camDoble.getY() + rect.getY()) / 2);
-                    camino.add(caminoMitadMitadMitad);
-                    camino.add(camMitadMitad);
-                    camino.add(caminoMitadMitadDoble);
-                    camino.add(camMitad);
-                    camino.add(caminoDobleMitad);
-                    camino.add(camDoble);
-                    camino.add(caminoDobleDoble);
-                }
-                camino.add(new Camino(rect.getX(), rect.getY()));
-        }
 
         Random random = new Random();
         caballeros = new ArrayList<Caballero>(maxCaballeros);
         for (int i = 0; i < maxCaballeros; i++){
-            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-62), random.nextInt(150)+(-75), false));
+            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100), false));
         }
         ninjas = new ArrayList<Ninja>(maxNinjas);
         for (int i = 0; i < maxNinjas; i++){
-            ninjas.add(new Ninja(camino.get(0).getX(),camino.get(0).getY()));
+            ninjas.add(new Ninja(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100), false));
         }
         robots = new ArrayList<Robot>(maxRobots);
         for (int i = 0; i < maxRobots; i++){
-            robots.add(new Robot(camino.get(0).getX(),camino.get(0).getY()));
+            robots.add(new Robot(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100), false));
         }
 
 
@@ -233,11 +211,22 @@ public class AtaqueScreen implements Screen {
             if (ninjas != null) {
                 for (int i = 0; i < ninjas.size(); i++) {
                     ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
+                    if (ninjas.get(i).getVisible()){
+                        if (contador % 2 == 0) {
+                            ninjas.get(i).siguienteCasilla(camino);
+                        }
+                    }
+
                 }
             }
             if (robots != null) {
                 for (int i = 0; i < robots.size(); i++) {
                     robots.get(i).setTiempoDeEstado(robots.get(i).getTiempoDeEstado() + delta);
+                    if (robots.get(i).getVisible()) {
+                        if (contador % 2 == 0) {
+                            robots.get(i).siguienteCasilla(camino);
+                        }
+                    }
                 }
             }
             stage.draw();
@@ -322,7 +311,6 @@ public class AtaqueScreen implements Screen {
 
             if(maxCaballeros > 0){
                 //TODO SOLTAR CABALLERO
-                System.out.println("Estoy en soltar caballero");
                 caballeros.get(contadorCaballeros).casillaActual = 0;
                 caballeros.get(contadorCaballeros).setVisible(true);
                 stage.addActor(caballeros.get(contadorCaballeros));
@@ -333,7 +321,8 @@ public class AtaqueScreen implements Screen {
         }else if(tropa.equals("Ninja2")){
 
             if(maxNinjas > 0){
-                System.out.println("Estoy en soltar Ninja");
+                ninjas.get(contadorNinjas).casillaActual = 0;
+                ninjas.get(contadorNinjas).setVisible(true);
                 stage.addActor(ninjas.get(contadorNinjas));
                 contadorNinjas++;
                 maxNinjas--;
@@ -344,7 +333,8 @@ public class AtaqueScreen implements Screen {
         }else if(tropa.equals("Robot2")){
 
             if(maxRobots > 0){
-                System.out.println("Estoy en soltar Robot");
+                robots.get(contadorRobots).casillaActual = 0;
+                robots.get(contadorRobots).setVisible(true);
                 stage.addActor(robots.get(contadorRobots));
                 contadorRobots++;
                 maxRobots--;
