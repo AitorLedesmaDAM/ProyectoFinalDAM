@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -249,7 +250,20 @@ public class AtaqueScreen implements Screen {
             batch.begin();
 
             batch.end();
+
+            for(int c = 0; c < caballeros.size(); c++) {
+                for(int i = 0 ; i < torre_fuegos.size(); i++) {
+
+                    boolean x = Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect());
+                    if (x){
+                        System.out.println("Mas facil");
+                    }
+
+                }
+            }
+
         }
+
     }
 
 
@@ -264,6 +278,9 @@ public class AtaqueScreen implements Screen {
             debugRenderer.circle(torre_fuegos.get(i).getX() + sizeDiv,torre_fuegos.get(i).getY() + sizeDiv, torre_fuegos.get(i).getRadius());
         }
 
+        for (int i = 0; i < caballeros.size(); i++){
+            debugRenderer.rect(caballeros.get(i).getX(), caballeros.get(i).getY(),caballeros.get(i).getWidth(),caballeros.get(i).getHeight());
+        }
 
         debugRenderer.end();
 

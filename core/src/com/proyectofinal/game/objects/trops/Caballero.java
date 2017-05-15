@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.proyectofinal.game.helpers.AssetManager;
-import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.utils.Settings;
@@ -46,12 +45,11 @@ public class Caballero extends Actor {
         setTouchable(Touchable.enabled);
 
     }
-    /*public void act(float delta)
-    {
-        //position.x += 90*delta;
-        //position.y +=90*delta;
+    public void act(float delta){
 
-    }*/
+        collisionRect.set(position.x,position.y,width,height);
+
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

@@ -57,6 +57,7 @@ public class Torre_Fuego extends Actor {
         }
 
     public float getX() {
+        //System.out.println("x clase torre fuego "+position.x);
         return position.x;
     }
 
