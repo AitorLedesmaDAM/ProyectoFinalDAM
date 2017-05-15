@@ -27,6 +27,7 @@ import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.trops.Caballero;
 import com.proyectofinal.game.objects.trops.Ninja;
 import com.proyectofinal.game.objects.trops.Robot;
+import com.proyectofinal.game.objects.trops.Tropas;
 import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class AtaqueScreen implements Screen {
     ArrayList<Ninja> ninjas;
     ArrayList<Robot> robots;
     public ArrayList<Camino> camino;
+    ArrayList<Tropas> tropas;
+
     private long contador = 0;
 
     ArrayList<Torre_Fuego> torre_fuegos;
@@ -85,6 +88,8 @@ public class AtaqueScreen implements Screen {
 
         camino = new ArrayList<Camino>();
         camino = nivel.recojerCamino();
+        tropas = new ArrayList<Tropas>();
+
 
 
         Random random = new Random();
@@ -244,6 +249,7 @@ public class AtaqueScreen implements Screen {
                     boolean x = Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect());
                     if (x){
                         System.out.println("Mas facil");
+                        tropas.add(caballeros.get(c));
                     }
 
                 }
@@ -256,7 +262,7 @@ public class AtaqueScreen implements Screen {
 
     private void renderDebug() {
 
-        System.out.println("Estoy en pintar!");
+       // System.out.println("Estoy en pintar!");
         debugRenderer.setProjectionMatrix(camera.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
 
@@ -267,6 +273,12 @@ public class AtaqueScreen implements Screen {
 
         for (int i = 0; i < caballeros.size(); i++){
             debugRenderer.rect(caballeros.get(i).getX(), caballeros.get(i).getY(),caballeros.get(i).getWidth(),caballeros.get(i).getHeight());
+        }
+        for (int i = 0; i < ninjas.size(); i++){
+            debugRenderer.rect(ninjas.get(i).getX(), ninjas.get(i).getY(),ninjas.get(i).getWidth(),ninjas.get(i).getHeight());
+        }
+        for (int i = 0; i < robots.size(); i++){
+            debugRenderer.rect(robots.get(i).getX(), robots.get(i).getY(),robots.get(i).getWidth(),robots.get(i).getHeight());
         }
 
         debugRenderer.end();

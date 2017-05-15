@@ -5,9 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.objects.road.Camino;
-import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
@@ -49,12 +47,12 @@ public abstract class Tropas extends Actor{
         setTouchable(Touchable.enabled);
 
     }
-    /*public void act(float delta)
+    public void act(float delta)
     {
-        //position.x += 90*delta;
-        //position.y +=90*delta;
 
-    }*/
+        collisionRect.set(position.x,position.y,width,height);
+
+    }
 
     @Override
     public abstract void draw(Batch batch, float parentAlpha);
