@@ -1,6 +1,7 @@
 package com.proyectofinal.game.objects.trops;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.proyectofinal.game.helpers.AssetManager;
 
 /**
@@ -9,8 +10,15 @@ import com.proyectofinal.game.helpers.AssetManager;
 
 public class Caballero extends Tropas {
 
+
     public Caballero(float x, float y, int desviacionX, int desviacionY, boolean visible) {
         super(x, y, desviacionX, desviacionY, visible);
+
+    }
+
+    @Override
+    public void act(float delta) {
+        setCollisionRect(new Rectangle(getPosition().x,getPosition().y,300,140));
     }
 
     @Override

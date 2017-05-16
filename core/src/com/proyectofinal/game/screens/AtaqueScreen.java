@@ -270,17 +270,18 @@ public class AtaqueScreen implements Screen {
         for (int i = 0; i < torre_fuegos.size(); i++){
             debugRenderer.circle(torre_fuegos.get(i).getX() + sizeDiv,torre_fuegos.get(i).getY() + sizeDiv, torre_fuegos.get(i).getRadius());
         }
-
+        debugRenderer.setColor(Color.GREEN);
         for (int i = 0; i < caballeros.size(); i++){
-            debugRenderer.rect(caballeros.get(i).getX(), caballeros.get(i).getY(),caballeros.get(i).getWidth(),caballeros.get(i).getHeight());
+            debugRenderer.rect(caballeros.get(i).getX(), caballeros.get(i).getY(), caballeros.get(i).getCollisionRect().width,caballeros.get(i).getCollisionRect().height);
         }
+        debugRenderer.setColor(Color.PURPLE);
         for (int i = 0; i < ninjas.size(); i++){
-            debugRenderer.rect(ninjas.get(i).getX(), ninjas.get(i).getY(),ninjas.get(i).getWidth(),ninjas.get(i).getHeight());
+            debugRenderer.rect(ninjas.get(i).getX(), ninjas.get(i).getY(), ninjas.get(i).getCollisionRect().width, ninjas.get(i).getCollisionRect().height);
         }
+        debugRenderer.setColor(Color.BLUE);
         for (int i = 0; i < robots.size(); i++){
-            debugRenderer.rect(robots.get(i).getX(), robots.get(i).getY(),robots.get(i).getWidth(),robots.get(i).getHeight());
+            debugRenderer.rect(robots.get(i).getX(), robots.get(i).getY(),robots.get(i).getCollisionRect().width,robots.get(i).getCollisionRect().height);
         }
-
         debugRenderer.end();
 
     }

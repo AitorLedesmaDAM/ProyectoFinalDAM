@@ -47,12 +47,7 @@ public abstract class Tropas extends Actor{
         setTouchable(Touchable.enabled);
 
     }
-    public void act(float delta)
-    {
-
-        collisionRect.set(position.x,position.y,width,height);
-
-    }
+    public abstract void act(float delta);
 
     @Override
     public abstract void draw(Batch batch, float parentAlpha);
@@ -83,13 +78,23 @@ public abstract class Tropas extends Actor{
         position.y = camino.get(casillaActual).getY() + desviacionY;
     }
 
+    public void setCollisionRect(Rectangle collisionRect) {
+        this.collisionRect = collisionRect;
+    }
 
     public boolean getVisible() {
         return visible;
     }
 
-    @Override
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2 position) {
+        this.position = position;
     }
 }

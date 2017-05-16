@@ -19,6 +19,11 @@ public class Ninja extends Tropas {
     }
 
     @Override
+    public void act(float delta) {
+        setCollisionRect(new Rectangle(getPosition().x,getPosition().y,116,140));
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(AssetManager.ninjaRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 77, 88, 1f, 1f, 0);
     }

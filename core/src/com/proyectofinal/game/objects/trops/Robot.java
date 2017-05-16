@@ -19,6 +19,11 @@ public class Robot extends Tropas {
     }
 
     @Override
+    public void act(float delta) {
+        getCollisionRect().set(new Rectangle(getPosition().x,getPosition().y,116,140));
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(AssetManager.robotRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 142, 140, 1f, 1f, 0);
     }
