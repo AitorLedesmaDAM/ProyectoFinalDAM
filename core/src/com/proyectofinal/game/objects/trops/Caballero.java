@@ -23,7 +23,13 @@ public class Caballero extends Tropas {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(AssetManager.caballeroRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 116, 140, 1f, 1f, 0);
+        if(isAnimacion()){
+            batch.draw(AssetManager.caballeroRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 116, 140, 1f, 1f, 0);
+        }else{
+            batch.draw(AssetManager.caballeroAttack.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 116, 140, 1f, 1f, 0);
+        }
+
+
     }
 }
 

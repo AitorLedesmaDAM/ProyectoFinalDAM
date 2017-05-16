@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
+import com.proyectofinal.game.objects.AtacarTorre;
 import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torre_Fuego;
@@ -204,16 +205,23 @@ public class AtaqueScreen implements Screen {
         if (caballeros != null) {
             for (int i = 0; i < caballeros.size(); i++) {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
-                if (caballeros.get(i).getVisible()){
-                    if (contador % 2 == 0) {
-                    caballeros.get(i).siguienteCasilla(camino);
+                if (caballeros.get(i).getVisible()) {
+                    if (caballeros.get(i).getEstado() == Tropas.Estado.Caminando) {
+                        if (contador % 2 == 0) {
+                            caballeros.get(i).siguienteCasilla(camino);
+                        }
+                    } else if (caballeros.get(i).getEstado() == Tropas.Estado.Atacando) {
+                        if (contador % 2 == 0) {
+
+                            caballeros.get(i).siguienteCasilla(camino);
+                        }
                     }
                 }
             }
             if (ninjas != null) {
                 for (int i = 0; i < ninjas.size(); i++) {
                     ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
-                    if (ninjas.get(i).getVisible()){
+                    if (ninjas.get(i).getVisible()) {
                         if (contador % 2 == 0) {
                             ninjas.get(i).siguienteCasilla(camino);
                         }
@@ -240,20 +248,33 @@ public class AtaqueScreen implements Screen {
 
             batch.end();
 
-            for(int c = 0; c < caballeros.size(); c++) {
-                for(int i = 0 ; i < torre_fuegos.size(); i++) {
+            for (int c = 0; c < caballeros.size(); c++) {
+                for (int i = 0; i < torre_fuegos.size(); i++) {
 
                     boolean x = Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect());
-                    if (x){
+                    if (x) {
                         caballeros.get(c).setEstado(Tropas.Estado.Atacando);
-                        tropasColisionadas.add(caballeros.get(c));
-                    }
+                        AtacarTorre at = new AtacarTorre(caballeros.get(c), torre_fuegos.get(i));
+                        if (contador % 2 == 0) {
+                            ArrayList<Camino> camino = at.caminarHaciaTorre();
+                            System.out.println(camino.size() + " - " + caballeros.get(c).getCasillaActual());
+                            if (!caballeros.get(c).siguienteCasillaAtaque(camino)) {
+                                if (caballeros.get(c).getY() > torre_fuegos.get(i).getPosicionAtaque().y) {
+                                    caballeros.get(c).subirAAtacar(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion());
+                                } else {
+                                    caballeros.get(c).setAnimacion(false);
+                                }
 
+                                //tropasColisionadas.add(caballeros.get(c));
+                            }
+                        }
+
+                    }
                 }
+
             }
 
         }
-
     }
 
 
@@ -265,7 +286,7 @@ public class AtaqueScreen implements Screen {
 
         debugRenderer.setColor(Color.RED);
         for (int i = 0; i < torre_fuegos.size(); i++){
-            debugRenderer.circle(torre_fuegos.get(i).getCollisionCircle().x + torre_fuegos.get(i).getCirculoWidth(),torre_fuegos.get(i).getCollisionCircle().y + torre_fuegos.get(i).getCirculoHeight(), torre_fuegos.get(i).getCollisionCircle().radius);
+            debugRenderer.circle(torre_fuegos.get(i).getCollisionCircle().x,torre_fuegos.get(i).getCollisionCircle().y, torre_fuegos.get(i).getCollisionCircle().radius);
         }
         debugRenderer.setColor(Color.GREEN);
         for (int i = 0; i < caballeros.size(); i++){

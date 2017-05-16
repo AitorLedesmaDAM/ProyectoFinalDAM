@@ -28,6 +28,7 @@ public abstract class Tropas extends Actor{
     public float tiempoDeEstado = 0;
     public int casillaActual = 0;
     private boolean visible;
+    private boolean animacion;
 
     public Tropas(float x, float y, int desviacionX, int desviacionY, boolean visible)
     {
@@ -39,7 +40,7 @@ public abstract class Tropas extends Actor{
         this.desviacionX = desviacionX;
 
         this.visible = visible;
-
+        animacion = true;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
 
@@ -82,6 +83,26 @@ public abstract class Tropas extends Actor{
         }
     }
 
+    public boolean siguienteCasillaAtaque(ArrayList<Camino> camino){
+
+        if (camino.size() - 1 > casillaActual) {
+            casillaActual++;
+            position.x = camino.get(casillaActual).getX() + desviacionX;
+            position.y = camino.get(casillaActual).getY() + desviacionY;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void subirAAtacar(float comienzo, float fin, boolean posicionTorre){
+        if (posicionTorre) {
+            position.y += 1;
+        }else{
+            position.y -= 1;
+        }
+    }
+
     public void setCollisionRect(Rectangle collisionRect) {
         this.collisionRect = collisionRect;
     }
@@ -108,5 +129,17 @@ public abstract class Tropas extends Actor{
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public int getCasillaActual() {
+        return casillaActual;
+    }
+
+    public boolean isAnimacion() {
+        return animacion;
+    }
+
+    public void setAnimacion(boolean animacion) {
+        this.animacion = animacion;
     }
 }
