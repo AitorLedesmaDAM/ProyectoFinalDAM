@@ -268,7 +268,7 @@ public class AtaqueScreen implements Screen {
 
         debugRenderer.setColor(Color.RED);
         for (int i = 0; i < torre_fuegos.size(); i++){
-            debugRenderer.circle(torre_fuegos.get(i).getX() + sizeDiv,torre_fuegos.get(i).getY() + sizeDiv, torre_fuegos.get(i).getRadius());
+            debugRenderer.circle(torre_fuegos.get(i).getCollisionCircle().x + sizeDiv,torre_fuegos.get(i).getCollisionCircle().y + sizeDiv, torre_fuegos.get(i).getCollisionCircle().radius);
         }
         debugRenderer.setColor(Color.GREEN);
         for (int i = 0; i < caballeros.size(); i++){
