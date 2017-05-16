@@ -92,20 +92,16 @@ public class InputHandler implements InputProcessor {
             }
             return true;
         }else if (Settings.pantalla == 3){
-            System.out.println("has pulsado algo!! :D");
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String tropa = actorHit.toString();
-                if (tropa.equals("Caballero2")){
+                if (tropa.equals("Caballero")){
                     ataqueScreen.soltarTropa(tropa);
-                    System.out.println("Sale caballero");
-                }else if (tropa.equals("Ninja2")){
+                }else if (tropa.equals("Ninja")){
                     ataqueScreen.soltarTropa(tropa);
-                    System.out.println("Sale Ninja");
-                }else if (tropa.equals("Robot2")) {
+                }else if (tropa.equals("Robot")) {
                     ataqueScreen.soltarTropa(tropa);
-                    System.out.println("Sale Robot");
                 }
             }
 

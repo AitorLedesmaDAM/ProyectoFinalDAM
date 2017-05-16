@@ -64,7 +64,7 @@ public class AtaqueScreen implements Screen {
 
     public int maxCaballeros, maxNinjas, maxRobots;
     public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0;
-    private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
+    private Container containerCaballero, containerNinja, containerRobot;
 
     public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots){
         this.game = game;
@@ -107,13 +107,8 @@ public class AtaqueScreen implements Screen {
 
 
 
-        System.out.println("nuumero de Caballeros: "+ maxCaballeros);
-        System.out.println("nuumero de Ninjas: "+ maxNinjas);
-        System.out.println("nuumero de Robots: "+ maxRobots);
-
-
         Image caballero = new Image(AssetManager.caballeroSelecAtak);   //Selección de caballero
-        caballero.setName("Caballero2");
+        caballero.setName("Caballero");
         containerCaballero = new Container(caballero);
         containerCaballero.setTransform(true);
         containerCaballero.center();
@@ -121,7 +116,7 @@ public class AtaqueScreen implements Screen {
         containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT /10);
 
         Image ninja = new Image(AssetManager.ninjaSelecAtak);   //Selección del ninja
-        ninja.setName("Ninja2");
+        ninja.setName("Ninja");
         containerNinja = new Container(ninja);
         containerNinja.setTransform(true);
         containerNinja.center();
@@ -129,7 +124,7 @@ public class AtaqueScreen implements Screen {
         containerNinja.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 10+ Settings.TROPA_SELEC_HEIGHT+20);
 
         Image robot = new Image(AssetManager.robotSelecAtak);   //Selección del robot
-        robot.setName("Robot2");
+        robot.setName("Robot");
         containerRobot = new Container(robot);
         containerRobot.setTransform(true);
         containerRobot.center();
@@ -171,8 +166,6 @@ public class AtaqueScreen implements Screen {
             torre_fuegos.add(new Torre_Fuego(rect.getX(), rect.getY(),x , rect.getWidth()/2, rect.getHeight()/2));
         }
 
-        //boolean x = mapa.getLayers().get("TorresObjetos").getProperties().containsKey("orientacion");
-        //System.out.println(x);
         for (int i = 0; i < torre_fuegos.size(); i++) {
             System.out.println(torre_fuegos.get(i).getX()+" - "+torre_fuegos.get(i).getY());
             stage.addActor(torre_fuegos.get(i));
@@ -265,7 +258,6 @@ public class AtaqueScreen implements Screen {
                                     caballeros.get(c).setAnimacion(false);
                                 }
 
-                                //tropasColisionadas.add(caballeros.get(c));
                             }
                         }
 
@@ -280,7 +272,6 @@ public class AtaqueScreen implements Screen {
 
     private void renderDebug() {
 
-       // System.out.println("Estoy en pintar!");
         debugRenderer.setProjectionMatrix(camera.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
 
@@ -338,10 +329,9 @@ public class AtaqueScreen implements Screen {
 
     public void soltarTropa(String tropa) {
 
-        if(tropa.equals("Caballero2")){
+        if(tropa.equals("Caballero")){
 
             if(maxCaballeros > 0){
-                //TODO SOLTAR CABALLERO
                 caballeros.get(contadorCaballeros).casillaActual = 0;
                 caballeros.get(contadorCaballeros).setVisible(true);
                 stage.addActor(caballeros.get(contadorCaballeros));
@@ -349,7 +339,7 @@ public class AtaqueScreen implements Screen {
                 maxCaballeros--;
             }
 
-        }else if(tropa.equals("Ninja2")){
+        }else if(tropa.equals("Ninja")){
 
             if(maxNinjas > 0){
                 ninjas.get(contadorNinjas).casillaActual = 0;
@@ -357,11 +347,9 @@ public class AtaqueScreen implements Screen {
                 stage.addActor(ninjas.get(contadorNinjas));
                 contadorNinjas++;
                 maxNinjas--;
-                //TODO SOLTAR NINJA
-
             }
 
-        }else if(tropa.equals("Robot2")){
+        }else if(tropa.equals("Robot")){
 
             if(maxRobots > 0){
                 robots.get(contadorRobots).casillaActual = 0;
@@ -369,8 +357,6 @@ public class AtaqueScreen implements Screen {
                 stage.addActor(robots.get(contadorRobots));
                 contadorRobots++;
                 maxRobots--;
-                //TODO SOLTAR ROBOT
-
             }
 
         }
