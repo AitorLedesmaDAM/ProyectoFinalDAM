@@ -34,6 +34,8 @@ public abstract class Torres extends Actor {
         this.circuloWidth = circuloWidth;
         this.circuloHeight = circuloHeight;
 
+        Vector2 posicionAtaque = new Vector2(position.x + circuloWidth, position.y + (circuloHeight*2) + 50);
+
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
