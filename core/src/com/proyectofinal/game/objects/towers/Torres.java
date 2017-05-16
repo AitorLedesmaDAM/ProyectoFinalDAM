@@ -12,16 +12,16 @@ import com.proyectofinal.game.utils.Settings;
  * Created by ALUMNEDAM on 15/05/2017.
  */
 
-public class Torres extends Actor {
+public abstract class Torres extends Actor {
     private Vector2 position;
     private int width, height;
     private Circle collisionCircle;
     //Spacecraft space;
     public float tiempoDeEstado = 0;
     boolean orientacion;
-    private float radius;
+    private float radius, circuloWidth, circuloHeight;
 
-    public Torres(float x, float y, boolean orientacion)
+    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
@@ -30,18 +30,20 @@ public class Torres extends Actor {
         this.orientacion = orientacion;
         // Creem el rectangle de col·lisions
         collisionCircle = new Circle();
-        radius = 300;
-
+        radius = 250;
+        this.circuloWidth = circuloWidth;
+        this.circuloHeight = circuloHeight;
 
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
 
     }
+
     public void act(float delta)
     {
         // this.position.x += 60*delta;
-        collisionCircle.set(position.x,position.y,radius);
+        collisionCircle.set(position.x + circuloWidth,position.y + circuloHeight,250);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class Torres extends Actor {
 
         super.draw(batch, parentAlpha);
         if(orientacion == true) {
-            batch.draw(AssetManager.torreF, getX(), getY()-35);
+            batch.draw(AssetManager.torreF, getX(), getY());
         }else{
             batch.draw(AssetManager.torreF2,getX(),getY());
         }
@@ -78,6 +80,14 @@ public class Torres extends Actor {
 
     public float getRadius() {
         return radius;
+    }
+
+    public float getCirculoHeight() {
+        return circuloHeight;
+    }
+
+    public float getCirculoWidth() {
+        return circuloWidth;
     }
 }
 

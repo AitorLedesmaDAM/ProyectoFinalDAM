@@ -47,14 +47,12 @@ public class AtaqueScreen implements Screen {
     Batch batch;
     Viewport viewport;
     private Stage stage;
-    Torre_Fuego torreFuego;
-    private float sizeDiv;
 
     ArrayList<Caballero> caballeros;
     ArrayList<Ninja> ninjas;
     ArrayList<Robot> robots;
     public ArrayList<Camino> camino;
-    ArrayList<Tropas> tropas;
+    ArrayList<Tropas> tropasColisionadas;
 
     private long contador = 0;
 
@@ -88,7 +86,7 @@ public class AtaqueScreen implements Screen {
 
         camino = new ArrayList<Camino>();
         camino = nivel.recojerCamino();
-        tropas = new ArrayList<Tropas>();
+        tropasColisionadas = new ArrayList<Tropas>();
 
 
 
@@ -166,11 +164,10 @@ public class AtaqueScreen implements Screen {
         for (int i = 0; i < objectsT.getCount(); i++) {
             RectangleMapObject rmo = (RectangleMapObject) objectsT.get(i);
             Rectangle rect = rmo.getRectangle();
-            sizeDiv = (rect.getWidth()/2);
             int pos = i + 1;
             boolean x = mapa.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
             System.out.println(x);
-            torre_fuegos.add(new Torre_Fuego(rect.getX(), rect.getY(),x));
+            torre_fuegos.add(new Torre_Fuego(rect.getX(), rect.getY(),x , rect.getWidth()/2, rect.getHeight()/2));
         }
 
         //boolean x = mapa.getLayers().get("TorresObjetos").getProperties().containsKey("orientacion");
@@ -248,8 +245,8 @@ public class AtaqueScreen implements Screen {
 
                     boolean x = Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect());
                     if (x){
-                        System.out.println("Mas facil");
-                        tropas.add(caballeros.get(c));
+                        caballeros.get(c).setEstado(Tropas.Estado.Atacando);
+                        tropasColisionadas.add(caballeros.get(c));
                     }
 
                 }
@@ -268,7 +265,7 @@ public class AtaqueScreen implements Screen {
 
         debugRenderer.setColor(Color.RED);
         for (int i = 0; i < torre_fuegos.size(); i++){
-            debugRenderer.circle(torre_fuegos.get(i).getCollisionCircle().x + sizeDiv,torre_fuegos.get(i).getCollisionCircle().y + sizeDiv, torre_fuegos.get(i).getCollisionCircle().radius);
+            debugRenderer.circle(torre_fuegos.get(i).getCollisionCircle().x + torre_fuegos.get(i).getCirculoWidth(),torre_fuegos.get(i).getCollisionCircle().y + torre_fuegos.get(i).getCirculoHeight(), torre_fuegos.get(i).getCollisionCircle().radius);
         }
         debugRenderer.setColor(Color.GREEN);
         for (int i = 0; i < caballeros.size(); i++){

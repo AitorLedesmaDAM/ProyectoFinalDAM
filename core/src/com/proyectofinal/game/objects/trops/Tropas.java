@@ -16,9 +16,10 @@ import java.util.ArrayList;
 
 public abstract class Tropas extends Actor{
 
-    protected enum Estado {
+    public enum Estado {
         Atacando, Caminando
     }
+    private Estado estado;
     private Vector2 position;
     private int width, height;
     private Rectangle collisionRect;
@@ -45,6 +46,7 @@ public abstract class Tropas extends Actor{
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
+        estado = Estado.Caminando;
 
     }
     public abstract void act(float delta);
@@ -73,9 +75,11 @@ public abstract class Tropas extends Actor{
     }
 
     public void siguienteCasilla(ArrayList<Camino> camino){
-        casillaActual++;
-        position.x = camino.get(casillaActual).getX() + desviacionX;
-        position.y = camino.get(casillaActual).getY() + desviacionY;
+        if (estado == Estado.Caminando) {
+            casillaActual++;
+            position.x = camino.get(casillaActual).getX() + desviacionX;
+            position.y = camino.get(casillaActual).getY() + desviacionY;
+        }
     }
 
     public void setCollisionRect(Rectangle collisionRect) {
@@ -96,5 +100,13 @@ public abstract class Tropas extends Actor{
 
     public void setPosition(Vector2 position) {
         this.position = position;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }
