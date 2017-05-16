@@ -272,15 +272,15 @@ public class AtaqueScreen implements Screen {
         }
         debugRenderer.setColor(Color.GREEN);
         for (int i = 0; i < caballeros.size(); i++){
-            debugRenderer.rect(caballeros.get(i).getX(), caballeros.get(i).getY(), caballeros.get(i).getCollisionRect().width,caballeros.get(i).getCollisionRect().height);
+            debugRenderer.rect(caballeros.get(i).getCollisionRect().x, caballeros.get(i).getCollisionRect().y, caballeros.get(i).getCollisionRect().width,caballeros.get(i).getCollisionRect().height);
         }
         debugRenderer.setColor(Color.PURPLE);
         for (int i = 0; i < ninjas.size(); i++){
-            debugRenderer.rect(ninjas.get(i).getX(), ninjas.get(i).getY(), ninjas.get(i).getCollisionRect().width, ninjas.get(i).getCollisionRect().height);
+            debugRenderer.rect(ninjas.get(i).getCollisionRect().x, ninjas.get(i).getCollisionRect().y, ninjas.get(i).getCollisionRect().width, ninjas.get(i).getCollisionRect().height);
         }
         debugRenderer.setColor(Color.BLUE);
         for (int i = 0; i < robots.size(); i++){
-            debugRenderer.rect(robots.get(i).getX(), robots.get(i).getY(),robots.get(i).getCollisionRect().width,robots.get(i).getCollisionRect().height);
+            debugRenderer.rect(robots.get(i).getCollisionRect().x, robots.get(i).getCollisionRect().y,robots.get(i).getCollisionRect().width,robots.get(i).getCollisionRect().height);
         }
         debugRenderer.end();
 
