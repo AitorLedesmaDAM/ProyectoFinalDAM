@@ -27,7 +27,7 @@ public abstract class Tropas extends Actor{
     //Spacecraft space;
     public float tiempoDeEstado = 0;
     public int casillaActual = 0;
-    private boolean animacion;
+    private boolean animacionCaminar;
 
     public Tropas(float x, float y, int desviacionX, int desviacionY)
     {
@@ -37,7 +37,7 @@ public abstract class Tropas extends Actor{
         position = new Vector2(x, y);
         this.desviacionY = desviacionY;
         this.desviacionX = desviacionX;
-        animacion = true;
+        animacionCaminar = true;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
 
@@ -97,9 +97,13 @@ public abstract class Tropas extends Actor{
 
     public void subirAAtacar(float comienzo, float fin, boolean posicionTorre){
         if (posicionTorre) {
-            position.y += 1;
+            if(comienzo < fin) {
+                position.y += 1;
+            }
         }else{
-            position.y -= 1;
+            if(comienzo > fin) {
+                position.y -= 1;
+            }
         }
     }
 
@@ -127,11 +131,11 @@ public abstract class Tropas extends Actor{
         return casillaActual;
     }
 
-    public boolean isAnimacion() {
-        return animacion;
+    public boolean isanimacionCaminar() {
+        return animacionCaminar;
     }
 
-    public void setAnimacion(boolean animacion) {
-        this.animacion = animacion;
+    public void setanimacionCaminar(boolean animacionCaminar) {
+        this.animacionCaminar = animacionCaminar;
     }
 }

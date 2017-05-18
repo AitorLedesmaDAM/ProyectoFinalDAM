@@ -173,11 +173,11 @@ public class AtaqueScreen implements Screen {
             for (int i = 0; i < caballeros.size(); i++) {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
                 if (caballeros.get(i).getEstado() == Tropas.Estado.Caminando) {
-                    if (contador % 2 == 0) {
+                    if (contador % 3 == 0) {
                         caballeros.get(i).siguienteCasilla(camino);
                     }
                 } else if (caballeros.get(i).getEstado() == Tropas.Estado.Atacando) {
-                    if (contador % 2 == 0) {
+                    if (contador % 3 == 0) {
                         caballeros.get(i).siguienteCasilla(camino);
                     }
                 }
@@ -186,7 +186,7 @@ public class AtaqueScreen implements Screen {
         if (ninjas != null) {
             for (int i = 0; i < ninjas.size(); i++) {
                 ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
-                if (contador % (2) == 0) {
+                if (contador % 2 == 0) {
                     ninjas.get(i).siguienteCasilla(camino);
                 }
 
@@ -218,13 +218,12 @@ public class AtaqueScreen implements Screen {
                     if (contador % 2 == 0) {
                         ArrayList<Camino> camino = at.caminarHaciaTorre();
                         if (!caballeros.get(c).siguienteCasillaAtaque(camino)) {
-                            if (caballeros.get(c).getY() > torre_fuegos.get(i).getPosicionAtaque().y) {
                                 caballeros.get(c).subirAAtacar(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion());
                             } else {
-                                caballeros.get(c).setAnimacion(false);
+                                caballeros.get(c).setanimacionCaminar(false);
                             }
 
-                        }
+
                     }
 
                 }
