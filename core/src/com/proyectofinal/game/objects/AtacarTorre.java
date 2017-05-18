@@ -58,4 +58,10 @@ public class AtacarTorre {
         return todasCasillas;
     }
 
+    public void AtaqueTorre(Torre_Fuego torre_fuego) {
+
+        torre_fuego.getPosicionAtaque();
+
+
+    }
 }
