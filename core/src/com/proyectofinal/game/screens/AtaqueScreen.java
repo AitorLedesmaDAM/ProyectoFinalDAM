@@ -7,12 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -215,7 +212,7 @@ public class AtaqueScreen implements Screen {
                 if (Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect())) {
                     caballeros.get(c).setEstado(Tropas.Estado.Atacando);
                     AtacarTorre at = new AtacarTorre(caballeros.get(c), torre_fuegos.get(i));
-                    if (contador % 2 == 0) {
+                    if (contador % 1 == 0) {
                         ArrayList<Camino> camino = at.caminarHaciaTorre();
                         if (!caballeros.get(c).siguienteCasillaAtaque(camino)) {
                                 caballeros.get(c).subirAAtacar(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion());
