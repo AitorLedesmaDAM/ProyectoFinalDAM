@@ -229,6 +229,29 @@ public class AtaqueScreen implements Screen {
             }
 
         }
+
+
+        for (int c = 0; c < robots.size(); c++) {
+            for (int i = 0; i < torre_fuegos.size(); i++) {
+
+                boolean x = Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), robots.get(c).getCollisionRect());
+                if (x) {
+                    robots.get(c).setEstado(Tropas.Estado.Atacando);
+                    AtacarTorre at = new AtacarTorre(robots.get(c), torre_fuegos.get(1));
+                    if (contador % 2 == 0) {
+
+                        Robot.torreX = torre_fuegos.get(1).getPosicionAtaque().x;
+                        Robot .torreY = torre_fuegos.get(1).getPosicionAtaque().y;
+                        Robot.attack = true;
+
+
+                    }
+
+                }
+            }
+
+        }
+
     }
 
 
@@ -252,6 +275,10 @@ public class AtaqueScreen implements Screen {
         debugRenderer.setColor(Color.BLUE);
         for (int i = 0; i < robots.size(); i++){
             debugRenderer.rect(robots.get(i).getCollisionRect().x, robots.get(i).getCollisionRect().y,robots.get(i).getCollisionRect().width,robots.get(i).getCollisionRect().height);
+        }
+        debugRenderer.setColor(Color.GOLD);
+        for (int i = 0; i < torre_fuegos.size(); i++){
+            debugRenderer.point(torre_fuegos.get(i).getPosicionAtaque().x,torre_fuegos.get(i).getPosicionAtaque().y, 0);
         }
         debugRenderer.end();
 

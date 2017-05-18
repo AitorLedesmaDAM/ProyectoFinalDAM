@@ -21,6 +21,10 @@ public abstract class Torres extends Actor {
     private float radius, circuloWidth, circuloHeight;
     Vector2 posicionAtaque;
 
+
+    public Torres() {
+    }
+
     public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight)
     {
         // Inicialitzem els arguments segons la crida del constructor
@@ -38,6 +42,12 @@ public abstract class Torres extends Actor {
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
+
+        if(!orientacion){
+            posicionAtaque = new Vector2(position.x + circuloWidth, position.y + (circuloHeight*2) + 50);
+        }else{
+            posicionAtaque = new Vector2(position.x + circuloWidth, position.y - (circuloHeight*2) - 50);
+        }
     }
 
 

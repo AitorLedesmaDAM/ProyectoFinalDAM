@@ -10,6 +10,9 @@ import com.proyectofinal.game.helpers.AssetManager;
 
 public class Robot extends Tropas {
 
+    public static boolean attack = false;
+    public static float torreX, torreY;
+
     public Robot(float x, float y, int desviacionX, int desviacionY) {
         super(x, y, desviacionX, desviacionY);
     }
@@ -21,6 +24,33 @@ public class Robot extends Tropas {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(AssetManager.robotRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 142, 140, 1f, 1f, 0);
+        int num = 0;
+
+        if (attack){
+
+
+            batch.draw(AssetManager.robotAttack.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 142, 140, 1f, 1f, 0);
+            /**           for (int i = 0; i < 4; i++){
+             num += 100;
+
+
+             batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getX() + num, getY(), 0, 0, 100, 150, 1f, 1f, 0);
+
+
+             }
+             */
+            //batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getX() + num+100, getY(), 0, 0, 100, 150, 1f, 1f, 0);
+            //batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + num+100, getCollisionRect().y, 0, 0, 100, 150, 1f, 1f, 0);
+
+            batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + num+100, getCollisionRect().y, 0 , 0 , 100, 150, 1f, 1f, Math.abs(torreY - torreX));
+
+
+
+            batch.draw(AssetManager.robotMuzzle.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + num +200, getCollisionRect().y, 0, 0, 100, 150, 1f, 1f, torreY - torreX);
+
+        }else {
+            batch.draw(AssetManager.robotRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 142, 140, 1f, 1f, 0);
+        }
+
     }
 }

@@ -37,6 +37,9 @@ public class AtacarTorre {
     public float posicionTorre(){
         return objectTorre.getX();
     }
+    public float posicionTorreY(){
+        return objectTorre.getY();
+    }
 
     public Camino recogerXTorre(){
         for (Camino caminos : caminoTropas) {
