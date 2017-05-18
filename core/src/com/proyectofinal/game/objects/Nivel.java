@@ -5,6 +5,8 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.objects.road.Camino;
+import com.proyectofinal.game.objects.towers.Torre_Fuego;
+import com.proyectofinal.game.objects.towers.Torres;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,22 @@ import java.util.ArrayList;
 public class Nivel {
 
     public Nivel() {
+    }
+
+    public ArrayList<Torre_Fuego> recojerTorres(){
+        ArrayList<Torre_Fuego> torres = new ArrayList<Torre_Fuego>();
+
+        int pos = 0;
+        MapObjects objectsT = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects();
+
+        for (int i = 0; i < objectsT.getCount(); i++) {
+            RectangleMapObject rmo = (RectangleMapObject) objectsT.get(i);
+            Rectangle rect = rmo.getRectangle();
+            pos++;
+            boolean orientacion = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
+            torres.add(new Torre_Fuego(rect.getX(), rect.getY(),orientacion , rect.getWidth()/2, rect.getHeight()/2));
+        }
+        return torres;
     }
 
     public ArrayList<Camino> recojerCamino() {

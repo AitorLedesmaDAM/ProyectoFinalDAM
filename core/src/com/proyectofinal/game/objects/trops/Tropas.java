@@ -27,10 +27,9 @@ public abstract class Tropas extends Actor{
     //Spacecraft space;
     public float tiempoDeEstado = 0;
     public int casillaActual = 0;
-    private boolean visible;
     private boolean animacion;
 
-    public Tropas(float x, float y, int desviacionX, int desviacionY, boolean visible)
+    public Tropas(float x, float y, int desviacionX, int desviacionY)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
@@ -38,8 +37,6 @@ public abstract class Tropas extends Actor{
         position = new Vector2(x, y);
         this.desviacionY = desviacionY;
         this.desviacionX = desviacionX;
-
-        this.visible = visible;
         animacion = true;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
@@ -50,6 +47,9 @@ public abstract class Tropas extends Actor{
         estado = Estado.Caminando;
 
     }
+
+
+
     public abstract void act(float delta);
 
     @Override
@@ -76,7 +76,7 @@ public abstract class Tropas extends Actor{
     }
 
     public void siguienteCasilla(ArrayList<Camino> camino){
-        if (estado == Estado.Caminando) {
+        if (estado == Estado.Caminando && casillaActual < camino.size() - 1) {
             casillaActual++;
             position.x = camino.get(casillaActual).getX() + desviacionX;
             position.y = camino.get(casillaActual).getY() + desviacionY;
@@ -105,14 +105,6 @@ public abstract class Tropas extends Actor{
 
     public void setCollisionRect(Rectangle collisionRect) {
         this.collisionRect = collisionRect;
-    }
-
-    public boolean getVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
     }
 
     public Vector2 getPosition() {

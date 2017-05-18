@@ -10,8 +10,8 @@ import com.proyectofinal.game.helpers.AssetManager;
 
 public class Ninja extends Tropas {
 
-    public Ninja(float x, float y, int desviacionX, int desviacionY, boolean visible) {
-        super(x, y, desviacionX, desviacionY, visible);
+    public Ninja(float x, float y, int desviacionX, int desviacionY) {
+        super(x, y, desviacionX, desviacionY);
     }
 
     @Override

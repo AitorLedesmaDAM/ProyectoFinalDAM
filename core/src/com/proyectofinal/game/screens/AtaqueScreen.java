@@ -54,6 +54,7 @@ public class AtaqueScreen implements Screen {
     ArrayList<Robot> robots;
     public ArrayList<Camino> camino;
     ArrayList<Tropas> tropasColisionadas;
+    Random random = new Random();
 
     private long contador = 0;
 
@@ -76,7 +77,7 @@ public class AtaqueScreen implements Screen {
         debugRenderer = new ShapeRenderer();
 
         mapa = AssetManager.tiledMap;
-        renderer = new OrthogonalTiledMapRenderer(mapa);
+        renderer = AssetManager.renderer;
 
         camera = AssetManager.camera;
         camera.setToOrtho(false,3200,1600);
@@ -85,25 +86,12 @@ public class AtaqueScreen implements Screen {
 
         nivel = new Nivel();
 
-        camino = new ArrayList<Camino>();
         camino = nivel.recojerCamino();
         tropasColisionadas = new ArrayList<Tropas>();
 
-
-
-        Random random = new Random();
         caballeros = new ArrayList<Caballero>(maxCaballeros);
-        for (int i = 0; i < maxCaballeros; i++){
-            caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100), false));
-        }
         ninjas = new ArrayList<Ninja>(maxNinjas);
-        for (int i = 0; i < maxNinjas; i++){
-            ninjas.add(new Ninja(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100), false));
-        }
         robots = new ArrayList<Robot>(maxRobots);
-        for (int i = 0; i < maxRobots; i++){
-            robots.add(new Robot(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100), false));
-        }
 
 
 
@@ -154,27 +142,13 @@ public class AtaqueScreen implements Screen {
 
 
         //bucle para saber las posiciones de los objetos torre
-        torre_fuegos = new ArrayList<Torre_Fuego>();
-        MapObjects objectsT = mapa.getLayers().get("TorresObjetos").getObjects();
-
-        for (int i = 0; i < objectsT.getCount(); i++) {
-            RectangleMapObject rmo = (RectangleMapObject) objectsT.get(i);
-            Rectangle rect = rmo.getRectangle();
-            int pos = i + 1;
-            boolean x = mapa.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
-            System.out.println(x);
-            torre_fuegos.add(new Torre_Fuego(rect.getX(), rect.getY(),x , rect.getWidth()/2, rect.getHeight()/2));
-        }
+        torre_fuegos = nivel.recojerTorres();
 
         for (int i = 0; i < torre_fuegos.size(); i++) {
-            System.out.println(torre_fuegos.get(i).getX()+" - "+torre_fuegos.get(i).getY());
             stage.addActor(torre_fuegos.get(i));
         }
 
-
         Gdx.input.setInputProcessor(new InputHandler(this));
-
-
     }
 
     @Override
@@ -198,72 +172,62 @@ public class AtaqueScreen implements Screen {
         if (caballeros != null) {
             for (int i = 0; i < caballeros.size(); i++) {
                 caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
-                if (caballeros.get(i).getVisible()) {
-                    if (caballeros.get(i).getEstado() == Tropas.Estado.Caminando) {
-                        if (contador % 2 == 0) {
-                            caballeros.get(i).siguienteCasilla(camino);
-                        }
-                    } else if (caballeros.get(i).getEstado() == Tropas.Estado.Atacando) {
-                        if (contador % 2 == 0) {
-
-                            caballeros.get(i).siguienteCasilla(camino);
-                        }
+                if (caballeros.get(i).getEstado() == Tropas.Estado.Caminando) {
+                    if (contador % 2 == 0) {
+                        caballeros.get(i).siguienteCasilla(camino);
+                    }
+                } else if (caballeros.get(i).getEstado() == Tropas.Estado.Atacando) {
+                    if (contador % 2 == 0) {
+                        caballeros.get(i).siguienteCasilla(camino);
                     }
                 }
             }
-            if (ninjas != null) {
-                for (int i = 0; i < ninjas.size(); i++) {
-                    ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
-                    if (ninjas.get(i).getVisible()) {
-                        if (contador % 2 == 0) {
-                            ninjas.get(i).siguienteCasilla(camino);
-                        }
-                    }
+        }
+        if (ninjas != null) {
+            for (int i = 0; i < ninjas.size(); i++) {
+                ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
+                if (contador % (2) == 0) {
+                    ninjas.get(i).siguienteCasilla(camino);
+                }
 
+            }
+        }
+        if (robots != null) {
+            for (int i = 0; i < robots.size(); i++) {
+                robots.get(i).setTiempoDeEstado(robots.get(i).getTiempoDeEstado() + delta);
+                if (contador % 3 == 0) {
+                    robots.get(i).siguienteCasilla(camino);
                 }
             }
-            if (robots != null) {
-                for (int i = 0; i < robots.size(); i++) {
-                    robots.get(i).setTiempoDeEstado(robots.get(i).getTiempoDeEstado() + delta);
-                    if (robots.get(i).getVisible()) {
-                        if (contador % 2 == 0) {
-                            robots.get(i).siguienteCasilla(camino);
-                        }
-                    }
-                }
-            }
-            stage.draw();
-            stage.act(delta);
+        }
+        stage.draw();
+        stage.act(delta);
 
-            if (debug) renderDebug();
+        if (debug) renderDebug();
 
-            batch.begin();
+        batch.begin();
 
-            batch.end();
+        batch.end();
 
-            for (int c = 0; c < caballeros.size(); c++) {
-                for (int i = 0; i < torre_fuegos.size(); i++) {
+        for (int c = 0; c < caballeros.size(); c++) {
+            for (int i = 0; i < torre_fuegos.size(); i++) {
 
-                    boolean x = Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect());
-                    if (x) {
-                        caballeros.get(c).setEstado(Tropas.Estado.Atacando);
-                        AtacarTorre at = new AtacarTorre(caballeros.get(c), torre_fuegos.get(i));
-                        if (contador % 2 == 0) {
-                            ArrayList<Camino> camino = at.caminarHaciaTorre();
-                            System.out.println(camino.size() + " - " + caballeros.get(c).getCasillaActual());
-                            if (!caballeros.get(c).siguienteCasillaAtaque(camino)) {
-                                if (caballeros.get(c).getY() > torre_fuegos.get(i).getPosicionAtaque().y) {
-                                    caballeros.get(c).subirAAtacar(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion());
-                                } else {
-                                    caballeros.get(c).setAnimacion(false);
-                                }
-
+                if (Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect())) {
+                    caballeros.get(c).setEstado(Tropas.Estado.Atacando);
+                    AtacarTorre at = new AtacarTorre(caballeros.get(c), torre_fuegos.get(i));
+                    if (contador % 2 == 0) {
+                        ArrayList<Camino> camino = at.caminarHaciaTorre();
+                        if (!caballeros.get(c).siguienteCasillaAtaque(camino)) {
+                            if (caballeros.get(c).getY() > torre_fuegos.get(i).getPosicionAtaque().y) {
+                                caballeros.get(c).subirAAtacar(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion());
+                            } else {
+                                caballeros.get(c).setAnimacion(false);
                             }
+
                         }
-
                     }
-                }
 
+                }
             }
 
         }
@@ -318,7 +282,6 @@ public class AtaqueScreen implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("Disposed");
         batch.dispose();
         renderer.dispose();
     }
@@ -330,35 +293,26 @@ public class AtaqueScreen implements Screen {
     public void soltarTropa(String tropa) {
 
         if(tropa.equals("Caballero")){
-
             if(maxCaballeros > 0){
-                caballeros.get(contadorCaballeros).casillaActual = 0;
-                caballeros.get(contadorCaballeros).setVisible(true);
+                caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100)));
                 stage.addActor(caballeros.get(contadorCaballeros));
                 contadorCaballeros++;
                 maxCaballeros--;
             }
-
         }else if(tropa.equals("Ninja")){
-
             if(maxNinjas > 0){
-                ninjas.get(contadorNinjas).casillaActual = 0;
-                ninjas.get(contadorNinjas).setVisible(true);
+                ninjas.add(new Ninja(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100)));
                 stage.addActor(ninjas.get(contadorNinjas));
                 contadorNinjas++;
                 maxNinjas--;
             }
-
         }else if(tropa.equals("Robot")){
-
             if(maxRobots > 0){
-                robots.get(contadorRobots).casillaActual = 0;
-                robots.get(contadorRobots).setVisible(true);
+                robots.add(new Robot(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-115), random.nextInt(150)+(-90)));
                 stage.addActor(robots.get(contadorRobots));
                 contadorRobots++;
                 maxRobots--;
             }
-
         }
 
 

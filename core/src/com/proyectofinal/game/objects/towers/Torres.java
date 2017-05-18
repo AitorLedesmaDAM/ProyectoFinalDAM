@@ -16,7 +16,6 @@ public abstract class Torres extends Actor {
     private Vector2 position;
     private int width, height;
     private Circle collisionCircle;
-    //Spacecraft space;
     public float tiempoDeEstado = 0;
     boolean orientacion;
     private float radius, circuloWidth, circuloHeight;
@@ -39,14 +38,12 @@ public abstract class Torres extends Actor {
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
-
     }
 
 
 
     public void act(float delta)
     {
-        // this.position.x += 60*delta;
         collisionCircle.set(position.x + circuloWidth,position.y + circuloHeight,250);
     }
 
@@ -62,7 +59,6 @@ public abstract class Torres extends Actor {
     }
 
     public float getX() {
-        //System.out.println("x clase torre fuego "+position.x);
         return position.x;
     }
 
@@ -72,26 +68,6 @@ public abstract class Torres extends Actor {
 
     public Circle getCollisionCircle() {
         return collisionCircle;
-    }
-
-    public float getTiempoDeEstado() {
-        return tiempoDeEstado;
-    }
-
-    public void setTiempoDeEstado(float tiempoDeEstado) {
-        this.tiempoDeEstado = tiempoDeEstado;
-    }
-
-    public float getRadius() {
-        return radius;
-    }
-
-    public float getCirculoHeight() {
-        return circuloHeight;
-    }
-
-    public float getCirculoWidth() {
-        return circuloWidth;
     }
 
     public Vector2 getPosicionAtaque() {

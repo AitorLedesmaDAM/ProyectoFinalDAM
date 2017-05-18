@@ -43,7 +43,6 @@ public class InputHandler implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.B) {
             AtaqueScreen.debug = !AtaqueScreen.debug;
-            System.out.println("hola");
         }
         return false;
     }
