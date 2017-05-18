@@ -71,10 +71,10 @@ public class AssetManager {
         robotSelec = new Sprite(new Texture(Gdx.files.internal("tropas/robotSelec_prueba.png")));
         robotSelec.flip(false, true);
 
-        torreF = new Sprite(new Texture(Gdx.files.internal("texturas/torreFuego.png")));
+        torreF = new Sprite(new Texture(Gdx.files.internal("torres/torreFuego.png")));
         torreF.flip(true, false);
 
-        torreF2 = new Sprite(new Texture(Gdx.files.internal("texturas/torreFuego2.png")));
+        torreF2 = new Sprite(new Texture(Gdx.files.internal("torres/torreFuego2.png")));
         torreF2.flip(true, false);
 
         textureBtnCont = new Texture(Gdx.files.internal("otros/ContinuarBtn1.png"));
