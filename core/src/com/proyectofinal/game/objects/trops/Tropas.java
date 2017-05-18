@@ -105,6 +105,7 @@ public abstract class Tropas extends Actor{
                 position.y -= 1;
             }
         }
+        System.out.println("sad");
     }
 
     public void setCollisionRect(Rectangle collisionRect) {
