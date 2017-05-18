@@ -215,12 +215,14 @@ public class AtaqueScreen implements Screen {
                     if (contador % 1 == 0) {
                         ArrayList<Camino> camino = at.caminarHaciaTorre();
                         if (!caballeros.get(c).siguienteCasillaAtaque(camino)) {
-                                caballeros.get(c).subirAAtacar(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion());
-                            } else {
-                                caballeros.get(c).setanimacionCaminar(false);
-                            }
+                           // if (caballeros.get(c).getY() > torre_fuegos.get(i).getPosicionAtaque().y) {
+                                if (!caballeros.get(c).llegarATorre(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion())){
+                                    caballeros.get(c).setanimacionCaminar(false);
+                                }
 
+                            //}
 
+                        }
                     }
 
                 }

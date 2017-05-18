@@ -30,6 +30,7 @@ public class Nivel {
             Rectangle rect = rmo.getRectangle();
             pos++;
             boolean orientacion = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
+            System.out.println(orientacion);
             torres.add(new Torre_Fuego(rect.getX(), rect.getY(),orientacion , rect.getWidth()/2, rect.getHeight()/2));
         }
         return torres;
