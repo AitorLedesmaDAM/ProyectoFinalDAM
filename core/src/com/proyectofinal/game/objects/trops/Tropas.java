@@ -95,17 +95,19 @@ public abstract class Tropas extends Actor{
         }
     }
 
-    public void subirAAtacar(float comienzo, float fin, boolean posicionTorre){
+    public boolean llegarATorre(float comienzo, float fin, boolean posicionTorre){
         if (posicionTorre) {
             if(comienzo < fin) {
                 position.y += 1;
+                return true;
             }
         }else{
             if(comienzo > fin) {
                 position.y -= 1;
+                return true;
             }
         }
-        System.out.println("sad");
+            return false;
     }
 
     public void setCollisionRect(Rectangle collisionRect) {

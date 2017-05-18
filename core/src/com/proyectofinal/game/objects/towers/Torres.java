@@ -51,7 +51,7 @@ public abstract class Torres extends Actor {
     public void draw(Batch batch, float parentAlpha) {
 
         super.draw(batch, parentAlpha);
-        if(orientacion == true) {
+        if(orientacion) {
             batch.draw(AssetManager.torreF, getX(), getY());
         }else{
             batch.draw(AssetManager.torreF2,getX(),getY());

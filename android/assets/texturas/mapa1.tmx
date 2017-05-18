@@ -183,14 +183,10 @@
   <object id="111" name="camino107" type="camino" x="2944.43" y="864.06" width="31" height="31.6667"/>
  </objectgroup>
  <objectgroup name="TorresObjetos">
-  <object id="123" name="torre2" type="torre" x="845.459" y="993.939" width="184.848" height="160.606">
+  <object id="123" name="torre1" type="torre" x="845.459" y="993.939" width="184.848" height="160.606"/>
+  <object id="124" name="torre2" type="torre" x="1260.61" y="354.546" width="163.636" height="151.515">
    <properties>
     <property name="cara" type="int" value="1"/>
-   </properties>
-  </object>
-  <object id="124" name="torre1" type="torre" x="1260.61" y="354.546" width="163.636" height="151.515">
-   <properties>
-    <property name="espalda" type="int" value="0"/>
    </properties>
   </object>
   <object id="125" name="torre3" type="torre" x="1703.03" y="812.121" width="193.939" height="172.727">
