@@ -31,6 +31,7 @@ public class SeleccionScreen implements Screen{
 
     private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
 
+
     public SeleccionScreen(TowerAttack game, Batch batch, Viewport _viewport, String lvl, int _maxTropasContador) {
         this.game = game;
         Settings.pantalla = 2;
@@ -198,7 +199,7 @@ public class SeleccionScreen implements Screen{
 
     public void siguientePantalla(){
         if (contadorTropas < 25) {
-            game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
+           game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
             dispose();
         }
     }

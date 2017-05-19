@@ -57,6 +57,7 @@ public class AtaqueScreen implements Screen {
     private long contador = 0, torreContador = 0;
 
     ArrayList<Torre_Fuego> torre_fuegos;
+    ArrayList<Caballero> caballerosEnTorre;
 
     public static boolean debug = false;
     private ShapeRenderer debugRenderer;
@@ -92,6 +93,7 @@ public class AtaqueScreen implements Screen {
         robots = new ArrayList<Robot>(maxRobots);
 
 
+        caballerosEnTorre = new ArrayList<Caballero>();
 
         Image caballero = new Image(AssetManager.caballeroSelecAtak);   //Selección de caballero
         caballero.setName("Caballero");
@@ -201,11 +203,31 @@ public class AtaqueScreen implements Screen {
 
                 if (Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect())) {
 
+
+                    if(caballerosEnTorre.indexOf(caballeros.get(c)) == -1) {
+                        System.out.println("Introduzco");
+                        caballerosEnTorre.add(caballeros.get(c));
+
+                    }
+
                     torreContador ++;
-                    if (torreContador == 300){
+                    if (torreContador == 700){
                         torre_fuegos.get(i).getCollisionCircle().set(new Circle(10,10,5));
                         torre_fuegos.get(i).remove();
                         torreContador = 0;
+                        for (int y = 0; y < caballerosEnTorre.size(); y++) {
+    
+                            System.out.println("Estoy en cambiar a caminar");
+                            caballerosEnTorre.get(y).setEstado(Tropas.Estado.Caminando);
+
+                        }
+
+                        for (int comprue = 0; comprue < caballeros.size(); comprue++){
+                            caballeros.get(comprue).setEstado(Tropas.Estado.Caminando);
+                        }
+
+                        caballerosEnTorre.removeAll(caballeros);
+
                     }
                     if(contador % 60 == 0){
                         caballeros.get(c).setVida(caballeros.get(c).getVida()-1);
@@ -233,7 +255,6 @@ public class AtaqueScreen implements Screen {
                     robots.get(c).setEstado(Tropas.Estado.Atacando);
                     AtacarTorre at = new AtacarTorre(robots.get(c), torre_fuegos.get(1));
                     if (contador % 3 == 0) {
-
 
                         Robot.torreX = torre_fuegos.get(1).getPosicionAtaque().x;
                         Robot .torreY = torre_fuegos.get(1).getPosicionAtaque().y;

@@ -80,6 +80,7 @@ public abstract class Tropas extends Actor{
             casillaActual++;
             position.x = camino.get(casillaActual).getX() + desviacionX;
             position.y = camino.get(casillaActual).getY() + desviacionY;
+            animacionCaminar = true;
         }
     }
 

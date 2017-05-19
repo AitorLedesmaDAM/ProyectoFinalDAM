@@ -1,6 +1,5 @@
 package com.proyectofinal.game.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.proyectofinal.game.helpers.AssetManager;
-import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -70,19 +68,20 @@ public class FinalScreen implements Screen {
         stage.addActor(contenedorTitulo); //se anade el container de titulo
 
         //Botones
+        if (ganado) {
+            Image sig = new Image(AssetManager.btnSig); //Seleccion del botón de siguiente
+            sig.setName("Siguente");
+            containerBtSig = new Container(sig);
+            containerBtSig.setTransform(false);
+            containerBtSig.center();
+            containerBtSig.setSize(400, 200);
+            // containerBtSig.setPosition(Settings.GAME_WIDTH / 3 - 490 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4);
 
-        Image sig = new Image(AssetManager.btnSig); //Seleccion del botón de siguiente
-        sig.setName("Siguente");
-        containerBtSig = new Container(sig);
-        containerBtSig.setTransform(false);
-        containerBtSig.center();
-        containerBtSig.setSize(400, 200);
-       // containerBtSig.setPosition(Settings.GAME_WIDTH / 3 - 490 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4);
-
-        containerBtSig.setPosition(Settings.GAME_WIDTH / 2 + 300 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
+            containerBtSig.setPosition(Settings.GAME_WIDTH / 2 + 300, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
 
 
-        stage.addActor(containerBtSig);// se anade
+            stage.addActor(containerBtSig);// se anade
+        }
 
         Image reniciar = new Image(AssetManager.btnReiniciar); //Seleccion del botón de Reiniciar
         reniciar.setName("Reniciar");
