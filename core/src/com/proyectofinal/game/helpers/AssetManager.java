@@ -22,7 +22,7 @@ public class AssetManager {
 
     //Textura de la imagen de fondo
     public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig;
-    public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack;
+    public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle;
 
     public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak,torreF,torreF2, btnReiniciar, btnSalir, btnSig;
 
@@ -119,6 +119,17 @@ public class AssetManager {
         TextureRegion[] regionRobotAtaque = TextureRegion.split(new Texture("tropas/robot_shoot.png"), 567, 556)[0];
         robotAttack = new Animation(0.12f, regionRobotAtaque);
         robotAttack.setPlayMode(Animation.PlayMode.LOOP);
+
+        TextureRegion[] regionRobotBullet = TextureRegion.split(new Texture("tropas/robot_bullet.png"), 172, 139)[0];
+        robotBullet = new Animation(0.12f, regionRobotBullet);
+        robotBullet.setPlayMode(Animation.PlayMode.LOOP);
+
+
+        TextureRegion[] regionRobotMuzzle = TextureRegion.split(new Texture("tropas/robot_muzzle.png"), 19, 241)[0];
+        robotMuzzle = new Animation(0.12f, regionRobotMuzzle);
+        robotMuzzle.setPlayMode(Animation.PlayMode.LOOP);
+
+
 
         //Fuente
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");

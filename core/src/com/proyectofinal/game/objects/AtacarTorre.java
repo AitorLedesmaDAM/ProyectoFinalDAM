@@ -37,6 +37,9 @@ public class AtacarTorre {
     public float posicionTorre(){
         return objectTorre.getX();
     }
+    public float posicionTorreY(){
+        return objectTorre.getY();
+    }
 
     public Camino recogerXTorre(){
         for (Camino caminos : caminoTropas) {
@@ -47,12 +50,11 @@ public class AtacarTorre {
         return null;
     }
 
-    public ArrayList<Camino> caminarHaciaTorre(){
-        int casillaTropa = objectTropa.getCasillaActual();
+    public ArrayList<Camino> caminarHaciaTorre(){;
         Camino camino = recogerXTorre();
         int casillaTorre = caminoTropas.indexOf(camino);
         ArrayList<Camino> todasCasillas = new ArrayList<Camino>();
-        for (int i = casillaTropa; i < casillaTorre; i++){
+        for (int i = 0; i < casillaTorre; i++){
             todasCasillas.add(caminoTropas.get(i));
         }
         return todasCasillas;

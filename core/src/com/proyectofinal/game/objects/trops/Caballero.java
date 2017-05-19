@@ -13,6 +13,8 @@ public class Caballero extends Tropas {
 
     public Caballero(float x, float y, int desviacionX, int desviacionY) {
         super(x, y, desviacionX, desviacionY);
+        setVida(10);
+
 
     }
 

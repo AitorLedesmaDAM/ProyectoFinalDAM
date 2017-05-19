@@ -21,7 +21,7 @@ public abstract class Tropas extends Actor{
     }
     private Estado estado;
     private Vector2 position;
-    private int width, height;
+    private int width, height, danyo, vida;
     private Rectangle collisionRect;
     private int desviacionY, desviacionX;
     //Spacecraft space;
@@ -98,12 +98,12 @@ public abstract class Tropas extends Actor{
     public boolean llegarATorre(float comienzo, float fin, boolean posicionTorre){
         if (posicionTorre) {
             if(comienzo < fin) {
-                position.y += 1;
+                position.y += 2;
                 return true;
             }
         }else{
             if(comienzo > fin) {
-                position.y -= 1;
+                position.y -= 2;
                 return true;
             }
         }
@@ -140,5 +140,21 @@ public abstract class Tropas extends Actor{
 
     public void setanimacionCaminar(boolean animacionCaminar) {
         this.animacionCaminar = animacionCaminar;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public int getDanyo() {
+        return danyo;
+    }
+
+    public void setDanyo(int danyo) {
+        this.danyo = danyo;
     }
 }

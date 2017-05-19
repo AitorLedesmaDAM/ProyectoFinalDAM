@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.proyectofinal.game.TowerAttack;
+import com.proyectofinal.game.objects.trops.Robot;
 import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.screens.MenuScreen;
 import com.proyectofinal.game.screens.SeleccionScreen;
@@ -44,6 +45,14 @@ public class InputHandler implements InputProcessor {
         if (keycode == Input.Keys.B) {
             AtaqueScreen.debug = !AtaqueScreen.debug;
         }
+
+        if (keycode == Input.Keys.C) {
+
+            Robot.attack = !Robot.attack;
+            System.out.println("C: pulsado");
+
+        }
+
         return false;
     }
 
