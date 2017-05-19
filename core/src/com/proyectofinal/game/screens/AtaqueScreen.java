@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -53,7 +54,7 @@ public class AtaqueScreen implements Screen {
     ArrayList<Tropas> tropasColisionadas;
     Random random = new Random();
 
-    private long contador = 0;
+    private long contador = 0, torreContador = 0;
 
     ArrayList<Torre_Fuego> torre_fuegos;
 
@@ -173,10 +174,6 @@ public class AtaqueScreen implements Screen {
                     if (contador % 3 == 0) {
                         caballeros.get(i).siguienteCasilla(camino);
                     }
-                } else if (caballeros.get(i).getEstado() == Tropas.Estado.Atacando) {
-                    if (contador % 3 == 0) {
-                        caballeros.get(i).siguienteCasilla(camino);
-                    }
                 }
             }
         }
@@ -197,39 +194,36 @@ public class AtaqueScreen implements Screen {
                 }
             }
         }
-        stage.draw();
-        stage.act(delta);
 
-        if (debug) renderDebug();
-
-        batch.begin();
-
-        batch.end();
 
         for (int c = 0; c < caballeros.size(); c++) {
             for (int i = 0; i < torre_fuegos.size(); i++) {
 
                 if (Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect())) {
-                    caballeros.get(c).setEstado(Tropas.Estado.Atacando);
-                    AtacarTorre at = new AtacarTorre(caballeros.get(c), torre_fuegos.get(i));
-                    if (contador % 1 == 0) {
-                        ArrayList<Camino> camino = at.caminarHaciaTorre();
-                        if (!caballeros.get(c).siguienteCasillaAtaque(camino)) {
-                           // if (caballeros.get(c).getY() > torre_fuegos.get(i).getPosicionAtaque().y) {
-                                if (!caballeros.get(c).llegarATorre(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion())){
-                                    caballeros.get(c).setanimacionCaminar(false);
-                                }
 
-                            //}
-
+                    torreContador ++;
+                    if (torreContador == 300){
+                        torre_fuegos.get(i).getCollisionCircle().set(new Circle(10,10,5));
+                        torre_fuegos.get(i).remove();
+                        torreContador = 0;
+                    }
+                    if(contador % 60 == 0){
+                        caballeros.get(c).setVida(caballeros.get(c).getVida()-1);
+                        if (caballeros.get(c).getVida() <= 0){
+                            caballeros.get(c).remove();
                         }
                     }
-
+                    caballeros.get(c).setEstado(Tropas.Estado.Atacando);
+                    AtacarTorre at = new AtacarTorre(caballeros.get(c), torre_fuegos.get(i));
+                    ArrayList<Camino> camino = at.caminarHaciaTorre();
+                    if (contador % 3 == 0) {
+                        if (!caballeros.get(c).siguienteCasillaAtaque(camino) && !caballeros.get(c).llegarATorre(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion())) {
+                                caballeros.get(c).setanimacionCaminar(false);
+                        }
+                    }
                 }
             }
-
         }
-
 
         for (int c = 0; c < robots.size(); c++) {
             for (int i = 0; i < torre_fuegos.size(); i++) {
@@ -238,7 +232,8 @@ public class AtaqueScreen implements Screen {
                 if (x) {
                     robots.get(c).setEstado(Tropas.Estado.Atacando);
                     AtacarTorre at = new AtacarTorre(robots.get(c), torre_fuegos.get(1));
-                    if (contador % 2 == 0) {
+                    if (contador % 3 == 0) {
+
 
                         Robot.torreX = torre_fuegos.get(1).getPosicionAtaque().x;
                         Robot .torreY = torre_fuegos.get(1).getPosicionAtaque().y;
@@ -251,6 +246,14 @@ public class AtaqueScreen implements Screen {
             }
 
         }
+        stage.draw();
+        stage.act(delta);
+
+        if (debug) renderDebug();
+
+        batch.begin();
+
+        batch.end();
 
     }
 
@@ -278,7 +281,7 @@ public class AtaqueScreen implements Screen {
         }
         debugRenderer.setColor(Color.GOLD);
         for (int i = 0; i < torre_fuegos.size(); i++){
-            debugRenderer.point(torre_fuegos.get(i).getPosicionAtaque().x,torre_fuegos.get(i).getPosicionAtaque().y, 0);
+            debugRenderer.rect(torre_fuegos.get(i).getPosicionAtaque().x,torre_fuegos.get(i).getPosicionAtaque().y, 50, 50);
         }
         debugRenderer.end();
 
