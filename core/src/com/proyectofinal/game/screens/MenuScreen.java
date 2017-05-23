@@ -30,18 +30,20 @@ public class MenuScreen implements Screen {
 
         camera = AssetManager.camera;
 
-        // Creem el viewport amb les mateixes dimensions que la càmera
+        // Creamos el Viewport con las mismas dimensiones que la cCamara
         viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
 
-        // Creem l'stage i assginem el viewport
+        // Creamos el Stage y le asignamos el Viewport
         stage = new Stage(viewport);
 
-        // Afegim el fons
+        // Añadimos el Fondo
         stage.addActor(new Image(AssetManager.background));
 
+        // Ponemos los estilos de texto a los LabelStyle
         textStyle = AssetManager.textStyle;
         textStyleTitulo = AssetManager.textStyleTitulo;
 
+        // Añadimos los Labels con el texto que queremos y el estilo de letra
         textLbl = new Label("1", textStyle);
         textLbl2 = new Label("2", textStyle);
         textLbl3 = new Label("3", textStyle);
@@ -52,7 +54,7 @@ public class MenuScreen implements Screen {
         textLbl8 = new Label("8", textStyle);
         titulo = new Label("TowerAttack", textStyleTitulo);
 
-        // Creem el contenidor necessari per aplicar-li les accions
+        // Creamos el Contenedor necesario para aplicarle las acciones
         container1 = new Container(textLbl);
         container2 = new Container(textLbl2);
         container3 = new Container(textLbl3);
@@ -63,6 +65,7 @@ public class MenuScreen implements Screen {
         container8 = new Container(textLbl8);
         contenedorTitulo = new Container(titulo);
 
+        // Asignamos la posicion de cada Contenedor en la pantalla
         container1.setTransform(true);
         container1.center();
         container1.setPosition((Settings.GAME_WIDTH / 5),Settings.GAME_HEIGHT/2);
@@ -98,7 +101,8 @@ public class MenuScreen implements Screen {
         contenedorTitulo.setTransform(true);
         contenedorTitulo.center();
         contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2,Settings.GAME_HEIGHT/6);
-
+        
+        // Añadimos los Contenedores como Actores al Stage
         stage.addActor(contenedorTitulo);
         stage.addActor(container1);
         stage.addActor(container2);
@@ -109,6 +113,7 @@ public class MenuScreen implements Screen {
         stage.addActor(container7);
         stage.addActor(container8);
 
+        // Hacemos que los Contenedores se puedan pulsar
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
@@ -116,18 +121,27 @@ public class MenuScreen implements Screen {
     public void show() {
 
     }
-
+    
+/**
+* Metodo para cambiar de pantalla al hacer click
+* pasandole por parametros el nivel que se a pulsado y el maximo de tropas
+* que se permiten en ese nivel
+*/
     public void siguientePantalla(String lvl, int maxTropas){
         game.setScreen(new SeleccionScreen(game,stage.getBatch(), stage.getViewport(), lvl, maxTropas));
         dispose();
     }
 
+    
     @Override
     public void render(float delta) {
         stage.draw();
         stage.act(delta);
     }
-
+    
+    /**
+    * Metodo para redimensionar el viewport y la camara
+    */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
