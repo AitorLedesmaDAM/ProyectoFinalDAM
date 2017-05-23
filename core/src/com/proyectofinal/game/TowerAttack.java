@@ -27,6 +27,7 @@ public class TowerAttack extends Game {
 	*/
 	@Override
 	public void dispose() {
+		
 		super.dispose();
 		AssetManager.dispose();
 	}
