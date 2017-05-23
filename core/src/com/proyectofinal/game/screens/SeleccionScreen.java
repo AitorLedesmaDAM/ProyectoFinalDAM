@@ -36,24 +36,21 @@ public class SeleccionScreen implements Screen{
         this.game = game;
         Settings.pantalla = 2;
 
-
-
         camera = AssetManager.camera;
 
-        //Creamos dos estilos de texto
+        // Ponemos los estilos de texto a los LabelStyle
         textStyle = AssetManager.textStyle;
         textStylePequenio = AssetManager.textStylePequenio;
 
-        //Máximo de tropas posibles
+        // Pasamos el maximo de tropas posibles de lo que se pasa por parametros a variables locales
         maxTropasContador = _maxTropasContador;
         contadorTropas = _maxTropasContador;
 
-        //Creamos todos los contenedores de datos para la segunda pantalla
-
+        // Creamos todos los Contenedores de datos para la segunda pantalla
         miniMapa = new Container(new Image(AssetManager.mapa1));    //Imagen del mapa
         miniMapa.setTransform(true);
         miniMapa.center();
-        miniMapa.setSize(Settings.MINIMAPA_WIDTH, Settings.MINIMAPA_HEIGHT); //HACER CONSTANTES DE LOS TAMAÑOS EN SETTINGS
+        miniMapa.setSize(Settings.MINIMAPA_WIDTH, Settings.MINIMAPA_HEIGHT);    //Tamaño de la Imagen
         miniMapa.setPosition(Settings.GAME_WIDTH - Settings.MINIMAPA_WIDTH, 0);
 
         contador = new Label("" + contadorTropas, textStyle);   //Contador de tropas
@@ -92,7 +89,7 @@ public class SeleccionScreen implements Screen{
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
         containerRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH/3, Settings.GAME_HEIGHT / 2);
 
-        Image continuar = new Image(AssetManager.btnContinuar); //Seleccion del botón
+        Image continuar = new Image(AssetManager.btnContinuar);   //Seleccion del botón
         continuar.setName("Continuar");
         containerBoton = new Container(continuar);
         containerBoton.setTransform(false);
@@ -102,7 +99,7 @@ public class SeleccionScreen implements Screen{
         containerBoton.setVisible(false);
 
 
-        //Contenedores de los costes de cada tropa
+        // Contenedores de los costes de cada tropa
         costeCaballero = new Label("coste: 1", textStylePequenio);
         containerCosteCaballero = new Container(costeCaballero);
         containerCosteCaballero.center();
@@ -119,16 +116,16 @@ public class SeleccionScreen implements Screen{
         containerCosteRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH/3 + Settings.TROPA_SELEC_WIDTH/2,Settings.GAME_HEIGHT / 2 + Settings.TROPA_SELEC_HEIGHT + 30);
 
 
-
-        // Creem el viewport amb les mateixes dimensions que la càmera
+        // Creamos el Viewport con las mismas dimensiones que la Camara
         viewport = _viewport;
 
-
-        // Creem l'stage i assginem el viewport
+        // Creamos el Stage y le asignamos el Viewport
         stage = new Stage(viewport, batch);
 
-        // Afegim el fons
+        // Añadimos el Fondo
         stage.addActor(new Image(AssetManager.background));
+        
+        // Añadimos los Contenedores como Actores al Stage
         stage.addActor(miniMapa);
         stage.addActor(containerTropasMax);
         stage.addActor(containerTextocontainerTropasMax);
@@ -140,11 +137,15 @@ public class SeleccionScreen implements Screen{
         stage.addActor(containerCosteNinja);
         stage.addActor(containerCosteRobot);
 
-
+        // Hacemos que los Contenedores se puedan pulsar
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
-
+    /**
+    * Metodo para restar de las tropas maximas el valor de la tropa seleccionada
+    * y en caso de pasar de la mitad de tropas maximas Selecionadas
+    * se active el boton de continuar
+    */
     public void modMaxTropas(int resta){
 
         if (contadorTropas - resta > -1) {
@@ -196,9 +197,13 @@ public class SeleccionScreen implements Screen{
     public void dispose() {
 
     }
-
+    
+    /**
+    * Metodo para cambiar de pantalla al hacer click en continuar
+    */
     public void siguientePantalla(){
         if (contadorTropas < 25) {
+            // Se le pasara a la siguiente pantalla el numero de cada tropa seleccionada
            game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
             dispose();
         }
@@ -208,15 +213,23 @@ public class SeleccionScreen implements Screen{
         return stage;
     }
 
-
+    /**
+    * Metodo que sumara uno cada vez a la variable numCaballero
+    */
     public void sumarCaballero(int i) {
         numCaballero = numCaballero + i;
     }
 
+    /**
+    * Metodo que sumara uno cada vez a la variable numNinja
+    */
     public void sumarNinja(int i) {
         numNinja = numNinja + i;
     }
 
+    /**
+    * Metodo que sumara uno cada vez a la variable numRobot
+    */
     public void sumarRobot(int i) {
         numRobot = numRobot + i;
     }
