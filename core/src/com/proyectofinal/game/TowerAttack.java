@@ -11,17 +11,20 @@ import com.proyectofinal.game.screens.MenuScreen;
 
 public class TowerAttack extends Game {
 	public static int puntos = 0;
+	/**
+	*metodo para cargar los recursos y definir la pantalla inicial
+	*/
 	@Override
 	public void create() {
 
-		// A l'iniciar el joc carreguem els recursos
 		AssetManager.load();
-		// I definim la pantalla d'splash com a pantalla
 		setScreen(new MenuScreen(this));
 
 	}
 
-	// Cridem per descartar els recursos carregats.
+	/**
+	* metodos para descartar los recursos ya cargados
+	*/
 	@Override
 	public void dispose() {
 		super.dispose();
