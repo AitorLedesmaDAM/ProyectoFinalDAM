@@ -10,6 +10,7 @@ import com.proyectofinal.game.objects.trops.Robot;
 import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.screens.MenuScreen;
 import com.proyectofinal.game.screens.SeleccionScreen;
+import com.proyectofinal.game.utils.Preferences;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -93,6 +94,7 @@ public class InputHandler implements InputProcessor {
                     selecScreen.modMaxTropas(3);
                     selecScreen.sumarRobot(1);
                 }else if (tropa.equals("Continuar")){
+                    AssetManager.musicStart.dispose();
                     selecScreen.siguientePantalla();
                 }else{
 

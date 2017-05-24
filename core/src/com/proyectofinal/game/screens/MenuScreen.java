@@ -32,6 +32,7 @@ public class MenuScreen implements Screen {
     public MenuScreen(TowerAttack game) {
         this.game = game;
         Settings.pantalla = 1;
+        AssetManager.musicStart.play();
 
         camera = AssetManager.camera;
 
