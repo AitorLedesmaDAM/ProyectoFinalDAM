@@ -27,8 +27,10 @@ public class FinalScreen implements Screen {
     private Container containerBtSalir, containerBtSig, containerBtReniciar;
 
 
-
-    //Constructor
+    /**
+    * Constructor
+    * Le pasamos un boolean para definir el mensaje y los botones
+    */
 
     public FinalScreen(Boolean ganado) {
 
@@ -37,75 +39,85 @@ public class FinalScreen implements Screen {
 
         camera = AssetManager.camera;
 
-        // Creem el viewport amb les mateixes dimensions que la càmera
+        // Creamos el Viewport con las mismas dimensiones que la Camara
         viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
 
-        // Creem l'stage i assginem el viewport
+        // Creamos el Stage y le asignamos el viewport
         stage = new Stage(viewport);
 
-        // Afegim el fons
+        // Añadimos el Fondo
         stage.addActor(new Image(AssetManager.background));
 
-        //textStyle = AssetManager.textStyle;
+        /// Ponemos los estilos de texto a los LabelStyle
         textStyleTitulo = AssetManager.textStyleTitulo;
 
-        String msg; //Mensaje si ha ganado o perdido.
+        // Mostramos un mensaje diferente si ha ganado o perdido.
+        String msg; 
         if (ganado){
             msg= "Has Ganado ";
         }else {
             msg = "Has Perdido!!! ";
         }
 
+        // Ponemos el mensaje en un Label y lo añadimos a un Contenedor
         titulo = new Label(msg, textStyleTitulo);
-
         contenedorTitulo = new Container(titulo);
 
-
+        // Definimos la posicion del contenedor
         contenedorTitulo.setTransform(true);
         contenedorTitulo.center();
         contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2 ,Settings.GAME_HEIGHT / 6 + 100);
 
-        stage.addActor(contenedorTitulo); //se anade el container de titulo
+        // Añadimos el ContenedorTitulo como Actor al Stage
+        stage.addActor(contenedorTitulo);
 
-        //Botones
+        // Definimos los botones que segun el boolean que se recibe por parametros
         if (ganado) {
-            Image sig = new Image(AssetManager.btnSig); //Seleccion del botón de siguiente
+            // Añadimos el boton siguente a un Contenedor
+            Image sig = new Image(AssetManager.btnSig); 
             sig.setName("Siguente");
             containerBtSig = new Container(sig);
             containerBtSig.setTransform(false);
             containerBtSig.center();
             containerBtSig.setSize(400, 200);
             // containerBtSig.setPosition(Settings.GAME_WIDTH / 3 - 490 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4);
-
+            
+            // Definimos su posicion
             containerBtSig.setPosition(Settings.GAME_WIDTH / 2 + 300, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
-
-
-            stage.addActor(containerBtSig);// se anade
+            
+            // Añadimos el ContainerBtSig como Actor al Stage
+            stage.addActor(containerBtSig);
         }
 
-        Image reniciar = new Image(AssetManager.btnReiniciar); //Seleccion del botón de Reiniciar
+         // Añadimos el boton Reiniciar a un Contenedor
+        Image reniciar = new Image(AssetManager.btnReiniciar); 
         reniciar.setName("Reniciar");
         containerBtReniciar = new Container(reniciar);
         containerBtReniciar.setTransform(false);
         containerBtReniciar.center();
         containerBtReniciar.setSize(400, 200);
+        
+        // Definimos su posicion
         containerBtReniciar.setPosition(Settings.GAME_WIDTH / 2 - 200 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
 
+        // Añadimos el ContainerBtReiniciar como Actor al Stage
+        stage.addActor(containerBtReniciar); 
 
-        stage.addActor(containerBtReniciar); //se anade
-
-
-        Image salir = new Image(AssetManager.btnSalir); //Seleccion del botón de salir
+        
+        // Añadimos el boton Salir a un Contenedor
+        Image salir = new Image(AssetManager.btnSalir);
         salir.setName("Salir");
         containerBtSalir = new Container(salir);
         containerBtSalir.setTransform(false);
         containerBtSalir.center();
         containerBtSalir.setSize(400, 200);
         //containerBtSalir.setPosition(Settings.GAME_WIDTH - 450, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4);
+        
+        // Definimos su posicion
         containerBtSalir.setPosition(Settings.GAME_WIDTH / 2 - 700 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
 
-
-        stage.addActor(containerBtSalir); // se anade
+        // Añadimos el ContainerBtSalir como Actor al Stage
+        stage.addActor(containerBtSalir);
 
 
         //Gdx.input.setInputProcessor(new InputHandler(this));
