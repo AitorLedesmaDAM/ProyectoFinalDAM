@@ -10,8 +10,9 @@ import com.proyectofinal.game.helpers.AssetManager;
 
 public class Ninja extends Tropas {
 
-    public Ninja(float x, float y, int desviacionX, int desviacionY) {
-        super(x, y, desviacionX, desviacionY);
+
+    public Ninja(int desviacionX, int desviacionY, int vida, int danyo, int velocidad) {
+        super(desviacionX, desviacionY, vida, danyo, velocidad);
     }
 
     @Override
@@ -21,6 +22,10 @@ public class Ninja extends Tropas {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(AssetManager.ninjaRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 77, 88, 1f, 1f, 0);
+        if(isanimacionCaminar()) {
+            batch.draw(AssetManager.ninjaRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 77, 88, 1f, 1f, 0);
+        }else{
+            batch.draw(AssetManager.ninjaAttack.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 110, 100, 1f, 1f, 0);
+        }
     }
 }

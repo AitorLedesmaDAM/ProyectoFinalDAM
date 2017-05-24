@@ -22,7 +22,7 @@ public class AssetManager {
 
     //Textura de la imagen de fondo
     public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig;
-    public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle;
+    public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre;
 
     public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak,torreF,torreF2, btnReiniciar, btnSalir, btnSig;
 
@@ -38,8 +38,6 @@ public class AssetManager {
     public static OrthogonalTiledMapRenderer renderer;
 
     public static void load() {
-    //    Settings.GAME_WIDTH = Gdx.graphics.getWidth();
-    //    Settings.GAME_HEIGHT = Gdx.graphics.getHeight();
 
         // Carreguem les textures en sprites
         caballeroSelecAtak = new Sprite(new Texture(Gdx.files.internal("tropas/caballeroSelec_prueba.png")));
@@ -109,7 +107,7 @@ public class AssetManager {
         TextureRegion[] regionNinjaRun = TextureRegion.split(new Texture("tropas/ninja_run.png"), 363, 458)[0];
         ninjaRun = new Animation(0.10f, regionNinjaRun);
         ninjaRun.setPlayMode(Animation.PlayMode.LOOP);
-        TextureRegion[] regionNinjaAtaque = TextureRegion.split(new Texture("tropas/ninja_attack.png"), 365, 495)[0];
+        TextureRegion[] regionNinjaAtaque = TextureRegion.split(new Texture("tropas/ninja_attack.png"), 496, 458)[0];
         ninjaAttack = new Animation(0.10f, regionNinjaAtaque);
         ninjaAttack.setPlayMode(Animation.PlayMode.LOOP);
 
@@ -128,6 +126,10 @@ public class AssetManager {
         TextureRegion[] regionRobotMuzzle = TextureRegion.split(new Texture("tropas/robot_muzzle.png"), 19, 241)[0];
         robotMuzzle = new Animation(0.12f, regionRobotMuzzle);
         robotMuzzle.setPlayMode(Animation.PlayMode.LOOP);
+
+        TextureRegion[] regionfuegoTorre = TextureRegion.split(new Texture("torres/fuego_torre.png"), 192, 192)[0];
+        fuegoTorre = new Animation(0.12f, regionfuegoTorre);
+        fuegoTorre.setPlayMode(Animation.PlayMode.LOOP);
 
 
 

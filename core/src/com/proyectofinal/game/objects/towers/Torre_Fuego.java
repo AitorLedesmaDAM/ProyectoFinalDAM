@@ -9,5 +9,7 @@ public class Torre_Fuego extends Torres {
 
     public Torre_Fuego(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight) {
         super(x, y, orientacion, circuloWidth, circuloHeight);
+        setVida(250);
+        setDanyo(1);
     }
 }

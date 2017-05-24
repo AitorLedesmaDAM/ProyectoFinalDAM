@@ -14,16 +14,13 @@ import com.proyectofinal.game.utils.Settings;
 
 public abstract class Torres extends Actor {
     private Vector2 position;
-    private int width, height;
+    private int width, height, vida, danyo;
     private Circle collisionCircle;
     public float tiempoDeEstado = 0;
     boolean orientacion;
     private float radius, circuloWidth, circuloHeight;
     Vector2 posicionAtaque;
 
-
-    public Torres() {
-    }
 
     public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight)
     {
@@ -37,7 +34,6 @@ public abstract class Torres extends Actor {
         radius = 250;
         this.circuloWidth = circuloWidth;
         this.circuloHeight = circuloHeight;
-        //posicionAtaque = new Vector2(position.x + circuloWidth, position.y + (circuloHeight*2) + 50);
 
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
@@ -46,7 +42,7 @@ public abstract class Torres extends Actor {
         if(!orientacion){
             posicionAtaque = new Vector2(position.x + circuloWidth, position.y + (circuloHeight*2) + 25);
         }else{
-            posicionAtaque = new Vector2(position.x + circuloWidth, position.y - 25);
+            posicionAtaque = new Vector2(position.x + circuloWidth, position.y - 50);
         }
     }
 
@@ -86,6 +82,22 @@ public abstract class Torres extends Actor {
 
     public boolean isOrientacion() {
         return orientacion;
+    }
+
+    public int getDanyo() {
+        return danyo;
+    }
+
+    public void setDanyo(int danyo) {
+        this.danyo = danyo;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
     }
 }
 

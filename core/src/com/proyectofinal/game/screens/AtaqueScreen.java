@@ -23,6 +23,8 @@ import com.proyectofinal.game.objects.AtacarTorre;
 import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torre_Fuego;
+import com.proyectofinal.game.objects.towers.Torres;
+import com.proyectofinal.game.objects.towers.attack.Fuego;
 import com.proyectofinal.game.objects.trops.Caballero;
 import com.proyectofinal.game.objects.trops.Ninja;
 import com.proyectofinal.game.objects.trops.Robot;
@@ -38,6 +40,7 @@ import java.util.Random;
 
 public class AtaqueScreen implements Screen {
 
+    Tropas tropas;
     TiledMap mapa;
     OrthogonalTiledMapRenderer renderer;
     private Nivel nivel;
@@ -46,27 +49,29 @@ public class AtaqueScreen implements Screen {
     Batch batch;
     Viewport viewport;
     private Stage stage;
+    private Fuego fuego;
 
-    ArrayList<Caballero> caballeros;
-    ArrayList<Ninja> ninjas;
-    ArrayList<Robot> robots;
-    public ArrayList<Camino> camino;
-    ArrayList<Tropas> tropasColisionadas;
-    Random random = new Random();
+    private ArrayList<Tropas> tropasEnMapa;
+    ArrayList < Caballero > caballeros;
+    ArrayList < Ninja > ninjas;
+    ArrayList < Robot > robots;
+    public ArrayList < Camino > camino;
+    ArrayList < Tropas > tropasColisionadas;
 
     private long contador = 0, torreContador = 0;
 
-    ArrayList<Torre_Fuego> torre_fuegos;
-    ArrayList<Caballero> caballerosEnTorre;
+    ArrayList < Torre_Fuego > torres_Fuego;
+    ArrayList < Caballero > caballerosEnTorre;
 
     public static boolean debug = false;
     private ShapeRenderer debugRenderer;
 
     public int maxCaballeros, maxNinjas, maxRobots;
-    public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0;
+    public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0, contadorTropas = 0, contadorTropasMuertas = 0;
+    private boolean compruebaAtaqueTorre = true;
     private Container containerCaballero, containerNinja, containerRobot;
 
-    public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots){
+    public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots) {
         this.game = game;
         Settings.pantalla = 3;
         this.maxCaballeros = maxCaballeros;
@@ -75,78 +80,80 @@ public class AtaqueScreen implements Screen {
 
         debugRenderer = new ShapeRenderer();
 
+        tropas = new Tropas();
+
         mapa = AssetManager.tiledMap;
         renderer = AssetManager.renderer;
 
         camera = AssetManager.camera;
-        camera.setToOrtho(false,3200,1600);
+        camera.setToOrtho(false, 3200, 1600);
         renderer.setView(camera);
         camera.update();
 
         nivel = new Nivel();
 
+        tropasEnMapa = new ArrayList<Tropas>();
+
+
         camino = nivel.recojerCamino();
-        tropasColisionadas = new ArrayList<Tropas>();
+        tropasColisionadas = new ArrayList < Tropas > ();
 
-        caballeros = new ArrayList<Caballero>(maxCaballeros);
-        ninjas = new ArrayList<Ninja>(maxNinjas);
-        robots = new ArrayList<Robot>(maxRobots);
+        caballeros = new ArrayList < Caballero > (maxCaballeros);
+        ninjas = new ArrayList < Ninja > (maxNinjas);
+        robots = new ArrayList < Robot > (maxRobots);
 
+        caballerosEnTorre = new ArrayList < Caballero > ();
 
-        caballerosEnTorre = new ArrayList<Caballero>();
-
-        Image caballero = new Image(AssetManager.caballeroSelecAtak);   //Selección de caballero
+        Image caballero = new Image(AssetManager.caballeroSelecAtak); //Selección de caballero
         caballero.setName("Caballero");
         containerCaballero = new Container(caballero);
         containerCaballero.setTransform(true);
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT /10);
+        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH * 2, Settings.GAME_HEIGHT / 10);
 
-        Image ninja = new Image(AssetManager.ninjaSelecAtak);   //Selección del ninja
+        Image ninja = new Image(AssetManager.ninjaSelecAtak); //Selección del ninja
         ninja.setName("Ninja");
         containerNinja = new Container(ninja);
         containerNinja.setTransform(true);
         containerNinja.center();
         containerNinja.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 10+ Settings.TROPA_SELEC_HEIGHT+20);
+        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH * 2, Settings.GAME_HEIGHT / 10 + Settings.TROPA_SELEC_HEIGHT + 20);
 
-        Image robot = new Image(AssetManager.robotSelecAtak);   //Selección del robot
+        Image robot = new Image(AssetManager.robotSelecAtak); //Selección del robot
         robot.setName("Robot");
         containerRobot = new Container(robot);
         containerRobot.setTransform(true);
         containerRobot.center();
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerRobot.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 10+ Settings.TROPA_SELEC_HEIGHT *2 +40);
-
+        containerRobot.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH * 2, Settings.GAME_HEIGHT / 10 + Settings.TROPA_SELEC_HEIGHT * 2 + 40);
 
         // Creem el viewport amb les mateixes dimensions que la càmera
         viewport = new StretchViewport(3200, 1600, camera);
-
 
         // Creem l'stage i assginem el viewport
         stage = new Stage(viewport);
 
         batch = stage.getBatch();
 
-
         if (maxCaballeros > 0) {
             stage.addActor(containerCaballero);
         }
-        if (maxNinjas > 0){
+        if (maxNinjas > 0) {
             stage.addActor(containerNinja);
         }
-        if (maxRobots > 0){
+        if (maxRobots > 0) {
             stage.addActor(containerRobot);
         }
 
-
         //bucle para saber las posiciones de los objetos torre
-        torre_fuegos = nivel.recojerTorres();
+        torres_Fuego = nivel.recojerTorres();
 
-        for (int i = 0; i < torre_fuegos.size(); i++) {
-            stage.addActor(torre_fuegos.get(i));
+        for (int i = 0; i < torres_Fuego.size(); i++) {
+            stage.addActor(torres_Fuego.get(i));
         }
+
+        fuego = new Fuego(0,0,1);
 
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
@@ -159,6 +166,7 @@ public class AtaqueScreen implements Screen {
     @Override
     public void render(float delta) {
         contador++;
+        compruebaAtaqueTorre = true;
 
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -168,105 +176,175 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         renderer.render();
 
-
-        if (caballeros != null) {
-            for (int i = 0; i < caballeros.size(); i++) {
-                caballeros.get(i).setTiempoDeEstado(caballeros.get(i).getTiempoDeEstado() + delta);
-                if (caballeros.get(i).getEstado() == Tropas.Estado.Caminando) {
-                    if (contador % 3 == 0) {
-                        caballeros.get(i).siguienteCasilla(camino);
+        if (tropasEnMapa != null){
+            for (int i = 0; i < tropasEnMapa.size(); i++) {
+                Tropas tropaActual = tropasEnMapa.get(i);
+                tropaActual.setTiempoDeEstado(tropaActual.getTiempoDeEstado() + delta);
+                if (tropaActual.getEstado() == Tropas.Estado.Caminando){
+                    if (contador % tropaActual.getVelocidad() == 0){
+                        tropaActual.siguienteCasilla(camino);
                     }
                 }
             }
         }
-        if (ninjas != null) {
-            for (int i = 0; i < ninjas.size(); i++) {
-                ninjas.get(i).setTiempoDeEstado(ninjas.get(i).getTiempoDeEstado() + delta);
-                if (contador % 2 == 0) {
-                    ninjas.get(i).siguienteCasilla(camino);
-                }
 
-            }
-        }
-        if (robots != null) {
-            for (int i = 0; i < robots.size(); i++) {
-                robots.get(i).setTiempoDeEstado(robots.get(i).getTiempoDeEstado() + delta);
-                if (contador % 3 == 0) {
-                    robots.get(i).siguienteCasilla(camino);
-                }
-            }
-        }
+        for (int torres = 0; torres < torres_Fuego.size(); torres++) {
+            for (int atacantes = 0; atacantes < tropasEnMapa.size(); atacantes++){
+                Tropas tropaActual = tropasEnMapa.get(atacantes);
+                Torres torreActual = torres_Fuego.get(torres);
 
+                if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
+                    if (tropasColisionadas.indexOf(tropaActual) == -1){
+                        tropaActual.setEstaAtacando(true);
+                        tropasColisionadas.add(tropaActual);
+                        fuego.setX(tropasColisionadas.get(0).getX());
+                        fuego.setY(tropasColisionadas.get(0).getY());
+                        fuego.setVisible(true);
+                    }
+                    torreContador++;
 
-        for (int c = 0; c < caballeros.size(); c++) {
-            for (int i = 0; i < torre_fuegos.size(); i++) {
+                    if (contador % 60 == 0 && contadorTropasMuertas < tropasColisionadas.size() && compruebaAtaqueTorre) {
+                        compruebaAtaqueTorre = false;
 
-                if (Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), caballeros.get(c).getCollisionRect())) {
+                        tropasColisionadas.get(contadorTropasMuertas).setVida(tropasColisionadas.get(contadorTropasMuertas).getVida() - 1);
+                        if (tropasColisionadas.get(contadorTropasMuertas).getVida() < 0) {
+                            tropasColisionadas.get(contadorTropasMuertas).setDanyo(0);
+                            tropasColisionadas.get(contadorTropasMuertas).remove();
+                            tropasEnMapa.get(tropasEnMapa.indexOf(tropasColisionadas.get(contadorTropasMuertas))).remove();
+                            contadorTropasMuertas++;
+                        }
 
+                        for (int danyoTorre = 0; danyoTorre < tropasColisionadas.size(); danyoTorre++){
+                            torreActual.setVida(torreActual.getVida() - tropasColisionadas.get(danyoTorre).getDanyo());
 
-                    if(caballerosEnTorre.indexOf(caballeros.get(c)) == -1) {
-                        System.out.println("Introduzco");
-                        caballerosEnTorre.add(caballeros.get(c));
-
+                            if(torreActual.getVida() <= 0){
+                                torres_Fuego.get(torres).getCollisionCircle().set(new Circle(10, 10, 5));
+                                torres_Fuego.get(torres).remove();
+                                for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
+                                    tropasColisionadas.get(tropas).setEstaAtacando(false);
+                                }
+                            }
+                        }
                     }
 
-                    torreContador ++;
-                    if (torreContador == 700){
-                        torre_fuegos.get(i).getCollisionCircle().set(new Circle(10,10,5));
-                        torre_fuegos.get(i).remove();
+                    tropaActual.setEstado(Tropas.Estado.Atacando);
+                    AtacarTorre at = new AtacarTorre(tropaActual, torreActual);
+                    ArrayList < Camino > camino = at.caminarHaciaTorre();
+                    if (contador % tropaActual.getVelocidad() == 0) {
+                        if (!tropaActual.siguienteCasillaAtaque(camino) && !tropaActual.llegarATorre(tropaActual.getY(), torreActual.getPosicionAtaque().y, torreActual.isOrientacion())) {
+                            tropaActual.setanimacionCaminar(false);
+                        }
+                    }
+
+                } else {
+                    if (tropasColisionadas.size() > 0) {
+                            for (int j = 0; j < tropasColisionadas.size(); j++) {
+                                if (!tropasColisionadas.get(j).isEstaAtacando()){
+                                    if (!tropasColisionadas.get(j).salirDeTorre() && contador % tropasColisionadas.get(j).getVelocidad() == 0) {
+                                        tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
+                                        tropasColisionadas.remove(j);
+                                    }
+                                }else{
+                                    if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
+                                        tropasColisionadas.get(j).siguienteCasilla(camino);
+                                    }
+                                }
+                        }
+                    }else{
+                        fuego.setVisible(false);
+                    }
+                }
+
+
+            }
+        }
+
+        /*
+        for (int torres = 0; torres < torres_Fuego.size(); torres++) {
+
+            for (int caballero = 0; caballero < caballeros.size(); caballero++) {
+
+                if (Intersector.overlaps(torres_Fuego.get(torres).getCollisionCircle(), caballeros.get(caballero).getCollisionRect())) {
+
+                    fuego.setX(torres_Fuego.get(torres).getCollisionCircle().x);
+                    fuego.setY(torres_Fuego.get(torres).getCollisionCircle().y);
+                    fuego.setVisible(true);
+
+                    if (caballerosEnTorre.indexOf(caballeros.get(caballero)) == -1) {
+                        caballeros.get(caballero).setEstaAtacando(true);
+                        caballerosEnTorre.add(caballeros.get(caballero));
+                    }
+                    torreContador++;
+
+                    for (int caballeroHaciendoDanyo = 0; caballeroHaciendoDanyo < caballerosEnTorre.size(); caballeroHaciendoDanyo++){
+                        if (caballerosEnTorre.get(caballeroHaciendoDanyo).isanimacionCaminar()){
+                            ca
+                        }
+                    }
+
+                    if (torreContador == 7000) {
+                        torres_Fuego.get(torres).getCollisionCircle().set(new Circle(10, 10, 5));
+                        torres_Fuego.get(torres).remove();
+                        for (int j = 0; j < caballerosEnTorre.size(); j++) {
+                            caballerosEnTorre.get(j).setEstaAtacando(false);
+                        }
                         torreContador = 0;
-                        for (int y = 0; y < caballerosEnTorre.size(); y++) {
-    
-                            System.out.println("Estoy en cambiar a caminar");
-                            caballerosEnTorre.get(y).setEstado(Tropas.Estado.Caminando);
-
-                        }
-
-                        for (int comprue = 0; comprue < caballeros.size(); comprue++){
-                            caballeros.get(comprue).setEstado(Tropas.Estado.Caminando);
-                        }
-
-                        caballerosEnTorre.removeAll(caballeros);
-
                     }
-                    if(contador % 60 == 0){
-                        caballeros.get(c).setVida(caballeros.get(c).getVida()-1);
-                        if (caballeros.get(c).getVida() <= 0){
-                            caballeros.get(c).remove();
+
+                    if (contador % 60 == 0) {
+                        caballeros.get(caballero).setVida(caballeros.get(caballero).getVida() - 1);
+                        if (caballeros.get(caballero).getVida() <= 0) {
+                            caballeros.get(caballero).remove();
                         }
                     }
-                    caballeros.get(c).setEstado(Tropas.Estado.Atacando);
-                    AtacarTorre at = new AtacarTorre(caballeros.get(c), torre_fuegos.get(i));
-                    ArrayList<Camino> camino = at.caminarHaciaTorre();
+                    caballeros.get(caballero).setEstado(Tropas.Estado.Atacando);
+                    AtacarTorre at = new AtacarTorre(caballeros.get(caballero), torres_Fuego.get(torres));
+                    ArrayList < Camino > camino = at.caminarHaciaTorre();
                     if (contador % 3 == 0) {
-                        if (!caballeros.get(c).siguienteCasillaAtaque(camino) && !caballeros.get(c).llegarATorre(caballeros.get(c).getY(), torre_fuegos.get(i).getPosicionAtaque().y, torre_fuegos.get(i).isOrientacion())) {
-                                caballeros.get(c).setanimacionCaminar(false);
+                        if (!caballeros.get(caballero).siguienteCasillaAtaque(camino) && !caballeros.get(caballero).llegarATorre(caballeros.get(caballero).getY(), torres_Fuego.get(torres).getPosicionAtaque().y, torres_Fuego.get(torres).isOrientacion())) {
+                            caballeros.get(caballero).setanimacionCaminar(false);
                         }
+                    }
+
+                } else {
+                    if (caballerosEnTorre.size() > 0) {
+                        if (contador % 3 == 0) {
+                            for (int j = 0; j < caballerosEnTorre.size(); j++) {
+                                if (caballerosEnTorre.get(j).isEstaAtacando() == false) {
+                                    if (!caballerosEnTorre.get(j).salirDeTorre()) {
+                                        caballerosEnTorre.get(j).setEstado(Tropas.Estado.Caminando);
+                                        caballerosEnTorre.remove(j);
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        fuego.setVisible(false);
                     }
                 }
             }
-        }
+        }*/
 
-        for (int c = 0; c < robots.size(); c++) {
-            for (int i = 0; i < torre_fuegos.size(); i++) {
+      /*  for (int c = 0; c < robots.size(); c++) {
+            for (int i = 0; i < torres_Fuego.size(); i++) {
 
-                boolean x = Intersector.overlaps(torre_fuegos.get(i).getCollisionCircle(), robots.get(c).getCollisionRect());
+                boolean x = Intersector.overlaps(torres_Fuego.get(i).getCollisionCircle(), robots.get(c).getCollisionRect());
                 if (x) {
                     robots.get(c).setEstado(Tropas.Estado.Atacando);
-                    AtacarTorre at = new AtacarTorre(robots.get(c), torre_fuegos.get(1));
+                    AtacarTorre at = new AtacarTorre(robots.get(c), torres_Fuego.get(1));
                     if (contador % 3 == 0) {
 
-                        Robot.torreX = torre_fuegos.get(1).getPosicionAtaque().x;
-                        Robot .torreY = torre_fuegos.get(1).getPosicionAtaque().y;
+                        Robot.torreX = torres_Fuego.get(1).getPosicionAtaque().x;
+                        Robot.torreY = torres_Fuego.get(1).getPosicionAtaque().y;
                         Robot.attack = true;
-
 
                     }
 
                 }
             }
 
-        }
+        }*/
+
         stage.draw();
         stage.act(delta);
 
@@ -278,31 +356,30 @@ public class AtaqueScreen implements Screen {
 
     }
 
-
     private void renderDebug() {
 
         debugRenderer.setProjectionMatrix(camera.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
 
         debugRenderer.setColor(Color.RED);
-        for (int i = 0; i < torre_fuegos.size(); i++){
-            debugRenderer.circle(torre_fuegos.get(i).getCollisionCircle().x,torre_fuegos.get(i).getCollisionCircle().y, torre_fuegos.get(i).getCollisionCircle().radius);
+        for (int i = 0; i < torres_Fuego.size(); i++) {
+            debugRenderer.circle(torres_Fuego.get(i).getCollisionCircle().x, torres_Fuego.get(i).getCollisionCircle().y, torres_Fuego.get(i).getCollisionCircle().radius);
         }
         debugRenderer.setColor(Color.GREEN);
-        for (int i = 0; i < caballeros.size(); i++){
-            debugRenderer.rect(caballeros.get(i).getCollisionRect().x, caballeros.get(i).getCollisionRect().y, caballeros.get(i).getCollisionRect().width,caballeros.get(i).getCollisionRect().height);
+        for (int i = 0; i < tropasEnMapa.size(); i++) {
+            debugRenderer.rect(tropasEnMapa.get(i).getCollisionRect().x, tropasEnMapa.get(i).getCollisionRect().y, tropasEnMapa.get(i).getCollisionRect().width, tropasEnMapa.get(i).getCollisionRect().height);
         }
         debugRenderer.setColor(Color.PURPLE);
-        for (int i = 0; i < ninjas.size(); i++){
-            debugRenderer.rect(ninjas.get(i).getCollisionRect().x, ninjas.get(i).getCollisionRect().y, ninjas.get(i).getCollisionRect().width, ninjas.get(i).getCollisionRect().height);
+        for (int i = 0; i < tropasColisionadas.size(); i++) {
+            debugRenderer.rect(tropasColisionadas.get(i).getCollisionRect().x-1, tropasColisionadas.get(i).getCollisionRect().y-1, tropasColisionadas.get(i).getCollisionRect().width+2, tropasColisionadas.get(i).getCollisionRect().height+2);
         }
         debugRenderer.setColor(Color.BLUE);
-        for (int i = 0; i < robots.size(); i++){
-            debugRenderer.rect(robots.get(i).getCollisionRect().x, robots.get(i).getCollisionRect().y,robots.get(i).getCollisionRect().width,robots.get(i).getCollisionRect().height);
+        for (int i = 0; i < robots.size(); i++) {
+            debugRenderer.rect(robots.get(i).getCollisionRect().x, robots.get(i).getCollisionRect().y, robots.get(i).getCollisionRect().width, robots.get(i).getCollisionRect().height);
         }
         debugRenderer.setColor(Color.GOLD);
-        for (int i = 0; i < torre_fuegos.size(); i++){
-            debugRenderer.rect(torre_fuegos.get(i).getPosicionAtaque().x,torre_fuegos.get(i).getPosicionAtaque().y, 50, 50);
+        for (int i = 0; i < torres_Fuego.size(); i++) {
+            debugRenderer.rect(torres_Fuego.get(i).getPosicionAtaque().x, torres_Fuego.get(i).getPosicionAtaque().y, 50, 50);
         }
         debugRenderer.end();
 
@@ -341,29 +418,28 @@ public class AtaqueScreen implements Screen {
 
     public void soltarTropa(String tropa) {
 
-        if(tropa.equals("Caballero")){
-            if(maxCaballeros > 0){
-                caballeros.add(new Caballero(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100)));
-                stage.addActor(caballeros.get(contadorCaballeros));
-                contadorCaballeros++;
+        if (tropa.equals("Caballero")) {
+            if (maxCaballeros > 0) {
+                //caballeros.add(new Caballero(camino.get(0).getX(), camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150) + (-100)));
+                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Caballero));
+                stage.addActor(tropasEnMapa.get(tropasEnMapa.size() - 1));
                 maxCaballeros--;
             }
-        }else if(tropa.equals("Ninja")){
-            if(maxNinjas > 0){
-                ninjas.add(new Ninja(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150)+(-100)));
-                stage.addActor(ninjas.get(contadorNinjas));
-                contadorNinjas++;
+        } else if (tropa.equals("Ninja")) {
+            if (maxNinjas > 0) {
+                //ninjas.add(new Ninja(camino.get(0).getX(), camino.get(0).getY(), random.nextInt(125) + (-87), random.nextInt(150) + (-100)));
+                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Ninja));
+                stage.addActor(tropasEnMapa.get(tropasEnMapa.size() - 1));
                 maxNinjas--;
             }
-        }else if(tropa.equals("Robot")){
-            if(maxRobots > 0){
-                robots.add(new Robot(camino.get(0).getX(),camino.get(0).getY(), random.nextInt(125) + (-115), random.nextInt(150)+(-90)));
-                stage.addActor(robots.get(contadorRobots));
-                contadorRobots++;
+        } else if (tropa.equals("Robot")) {
+            if (maxRobots > 0) {
+                //robots.add(new Robot(camino.get(0).getX(), camino.get(0).getY(), random.nextInt(125) + (-115), random.nextInt(150) + (-90)));
+                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Robot));
+                stage.addActor(tropasEnMapa.get(tropasEnMapa.size() - 1));
                 maxRobots--;
             }
         }
-
 
     }
 }

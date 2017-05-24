@@ -19,7 +19,7 @@ public class Nivel {
     public Nivel() {
     }
 
-    public ArrayList<Torre_Fuego> recojerTorres(){
+    public static ArrayList<Torre_Fuego> recojerTorres(){
         ArrayList<Torre_Fuego> torres = new ArrayList<Torre_Fuego>();
 
         int pos = 0;
@@ -36,7 +36,7 @@ public class Nivel {
         return torres;
     }
 
-    public ArrayList<Camino> recojerCamino() {
+    public static ArrayList<Camino> recojerCamino() {
 
         ArrayList<Camino> camino = new ArrayList<Camino>();
 

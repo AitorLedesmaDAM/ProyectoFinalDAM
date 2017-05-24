@@ -13,9 +13,10 @@ public class Robot extends Tropas {
     public static boolean attack = false;
     public static float torreX, torreY;
 
-    public Robot(float x, float y, int desviacionX, int desviacionY) {
-        super(x, y, desviacionX, desviacionY);
+    public Robot(int desviacionX, int desviacionY, int vida, int danyo, int velocidad) {
+        super(desviacionX, desviacionY, vida, danyo, velocidad);
     }
+
 
     @Override
     public void act(float delta) {

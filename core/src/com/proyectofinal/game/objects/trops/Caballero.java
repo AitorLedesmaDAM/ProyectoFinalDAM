@@ -11,10 +11,8 @@ import com.proyectofinal.game.helpers.AssetManager;
 public class Caballero extends Tropas {
 
 
-    public Caballero(float x, float y, int desviacionX, int desviacionY) {
-        super(x, y, desviacionX, desviacionY);
-        setVida(10);
-
+    public Caballero(int desviacionX, int desviacionY, int vida, int danyo, int velocidad) {
+        super(desviacionX, desviacionY, vida, danyo, velocidad);
 
     }
 

@@ -2,6 +2,7 @@ package com.proyectofinal.game.objects;
 
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torre_Fuego;
+import com.proyectofinal.game.objects.towers.Torres;
 import com.proyectofinal.game.objects.trops.Tropas;
 
 import java.util.ArrayList;
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 public class AtacarTorre {
 
     Tropas objectTropa;
-    Torre_Fuego objectTorre;
+    Torres objectTorre;
     Nivel nivel;
     ArrayList<Camino> caminoTropas;
 
-    public AtacarTorre(Tropas tropa, Torre_Fuego torre) {
+    public AtacarTorre(Tropas tropa, Torres torre) {
         this.objectTropa = tropa;
         this.objectTorre = torre;
         nivel = new Nivel();

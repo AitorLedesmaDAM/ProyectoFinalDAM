@@ -5,41 +5,55 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by ALUMNEDAM on 05/05/2017.
  */
 
-public abstract class Tropas extends Actor{
+public class Tropas extends Actor{
 
     public enum Estado {
         Atacando, Caminando
     }
+
+    public static enum Tipo{
+        Caballero, Ninja, Robot
+    }
+
+    private Tipo tipo;
     private Estado estado;
     private Vector2 position;
-    private int width, height, danyo, vida;
+    private int width, height, danyo, vida, velocidad;
     private Rectangle collisionRect;
     private int desviacionY, desviacionX;
-    //Spacecraft space;
     public float tiempoDeEstado = 0;
-    public int casillaActual = 0;
-    private boolean animacionCaminar;
+    public int casillaActual = 0, casillasParaLlegarATorre = 0;
+    private boolean animacionCaminar, estaAtacando, colisionadoConTorre;
+    private Random random = new Random();
 
-    public Tropas(float x, float y, int desviacionX, int desviacionY)
-    {
+    public Tropas(int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
         this.height = Settings.TROPA_HEIGHT;
-        position = new Vector2(x, y);
+        position = new Vector2(Nivel.recojerCamino().get(0).getX(), Nivel.recojerCamino().get(0).getY());
         this.desviacionY = desviacionY;
         this.desviacionX = desviacionX;
         animacionCaminar = true;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
+
+        this.vida = vida;
+        this.danyo = danyo;
+        this.velocidad = velocidad;
+
+        this.colisionadoConTorre = false;
+
 
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
@@ -48,12 +62,36 @@ public abstract class Tropas extends Actor{
 
     }
 
+    public Tropas(){
+
+    }
+
+    public Tropas crearTropa(Tipo tipo){
+        Tropas tropa = null;
+        switch (tipo){
+            case Caballero:
+                tropa = new Caballero(random.nextInt(125) + (-87), random.nextInt(150) + (-100), 10, 2, 3);
+                break;
+
+            case Ninja:
+                tropa = new Ninja(random.nextInt(125) + (-87), random.nextInt(150) + (-100), 5, 5, 2);
+                break;
+
+            case Robot:
+                tropa = new Robot(random.nextInt(125) + (-115), random.nextInt(150) + (-90), 7, 4, 3);
+                break;
+            default:
+                return tropa;
+        }
+        return tropa;
+    }
 
 
-    public abstract void act(float delta);
+
+  /*  public abstract void act(float delta);
 
     @Override
-    public abstract void draw(Batch batch, float parentAlpha);
+    public  void draw(Batch batch, float parentAlpha);*/
 
     public float getX() {
         return position.x;
@@ -100,15 +138,31 @@ public abstract class Tropas extends Actor{
         if (posicionTorre) {
             if(comienzo < fin) {
                 position.y += 2;
+                casillasParaLlegarATorre++;
                 return true;
             }
         }else{
             if(comienzo > fin) {
                 position.y -= 2;
+                casillasParaLlegarATorre--;
                 return true;
             }
         }
             return false;
+    }
+
+    public boolean salirDeTorre(){
+         if (casillasParaLlegarATorre < 0){
+             casillasParaLlegarATorre++;
+             position.y += 2;
+             return true;
+         }else if (casillasParaLlegarATorre > 0){
+             casillasParaLlegarATorre--;
+             position.y -= 2;
+             return false;
+         }else{
+             return false;
+         }
     }
 
     public void setCollisionRect(Rectangle collisionRect) {
@@ -157,5 +211,29 @@ public abstract class Tropas extends Actor{
 
     public void setDanyo(int danyo) {
         this.danyo = danyo;
+    }
+
+    public boolean isEstaAtacando() {
+        return estaAtacando;
+    }
+
+    public void setEstaAtacando(boolean estaAtacando) {
+        this.estaAtacando = estaAtacando;
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public boolean isColisionadoConTorre() {
+        return colisionadoConTorre;
+    }
+
+    public void setColisionadoConTorre(boolean colisionadoConTorre) {
+        this.colisionadoConTorre = colisionadoConTorre;
     }
 }
