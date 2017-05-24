@@ -20,9 +20,9 @@ public class Nivel {
     public Nivel() {
     }
 
-    public static ArrayList<Torres> recojerTorresF(){
+    public static ArrayList<Torres> recojerTorres(){
         ArrayList<Torres> torres = new ArrayList<Torres>();
-        String tipo;
+        int vida, danyo, radio;
         int pos = 0;
         MapObjects objectsT = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects();
 
@@ -31,17 +31,22 @@ public class Nivel {
             Rectangle rect = rmo.getRectangle();
             pos++;
             boolean orientacion = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
-            System.out.println(orientacion);
             
             if(AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("TorreR")){
 
-                tipo = "Rayo";
-                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, tipo));
+                vida = 100;
+                danyo = 4;
+                radio = 300;
+
+                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
 
             }else {
 
-                tipo = "Fuego";
-                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, tipo));
+                vida = 150;
+                danyo = 2;
+                radio = 300;
+
+                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
             }
             }
         return torres;

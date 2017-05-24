@@ -24,9 +24,6 @@ import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torres;
 import com.proyectofinal.game.objects.towers.attack.Fuego;
-import com.proyectofinal.game.objects.trops.Caballero;
-import com.proyectofinal.game.objects.trops.Ninja;
-import com.proyectofinal.game.objects.trops.Robot;
 import com.proyectofinal.game.objects.trops.Tropas;
 import com.proyectofinal.game.utils.Settings;
 
@@ -134,7 +131,7 @@ public class AtaqueScreen implements Screen {
         }
 
         //bucle para saber las posiciones de los objetos torre
-        torres = nivel.recojerTorresF();
+        torres = nivel.recojerTorres();
 
         for (int i = 0; i < torres.size(); i++) {
             stage.addActor(torres.get(i));
@@ -205,7 +202,7 @@ public class AtaqueScreen implements Screen {
 
                             if (torreActual.getVida() <= 0) {
                                 torres.get(defensoras).getCollisionCircle().set(new Circle(10, 10, 5));
-                                torres.get(defensoras).remove();
+                                torres.get(defensoras).setViva(false);
                                 for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
                                     tropasColisionadas.get(tropas).setEstaAtacando(false);
                                 }

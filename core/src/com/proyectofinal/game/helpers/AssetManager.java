@@ -28,7 +28,8 @@ public class AssetManager {
     public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre;
 
     //Sprites
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak,torreF,torreF2, btnReiniciar, btnSalir, btnSig, torreR, torreR2;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig;
+    public static Sprite torreF, torreF2, torreFMuerta, torreF2Muerta, torreR, torreR2, torreRMuerta, torreR2Muerta;
 
     //Bitmap para difeentes fuentes
     public static BitmapFont fontGrande, font, fontPequenia;
@@ -95,11 +96,20 @@ public class AssetManager {
         torreF2 = new Sprite(new Texture(Gdx.files.internal("torres/torreFuego2.png")));
         torreF2.flip(true, false);
 
+        torreFMuerta = new Sprite(new Texture(Gdx.files.internal("torres/torreFuego_muerta.png")));
+        torreFMuerta.flip(true, false);
+
+        torreF2Muerta = new Sprite(new Texture(Gdx.files.internal("torres/torreFuego2_muerta.png")));
+        torreF2Muerta.flip(true, false);
+
         torreR = new Sprite(new Texture(Gdx.files.internal("torres/torreRayo.png")));
         torreR.flip(true, false);
 
-        torreR2 = new Sprite(new Texture(Gdx.files.internal("torres/torreRayo2.png")));
-        torreR2.flip(true, false);
+        torreRMuerta = new Sprite(new Texture(Gdx.files.internal("torres/torreRayo_muerta.png")));
+        torreRMuerta.flip(true, false);
+
+        torreR2Muerta = new Sprite(new Texture(Gdx.files.internal("torres/torreRayo2_muerta.png")));
+        torreR2Muerta.flip(true, false);
 
 
         //Texturas de botones, para continuar , siguiente reiniciar y salir

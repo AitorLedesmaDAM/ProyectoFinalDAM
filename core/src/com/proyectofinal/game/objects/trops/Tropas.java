@@ -22,7 +22,7 @@ public class Tropas extends Actor{
         Atacando, Caminando
     }
 
-    public static enum Tipo{
+    public enum Tipo{
         Caballero, Ninja, Robot
     }
 
