@@ -49,23 +49,19 @@ public class AtaqueScreen implements Screen {
     private Stage stage;
     private Fuego fuego;
 
-    private ArrayList<Tropas> tropasEnMapa;
-    ArrayList < Caballero > caballeros;
-    ArrayList < Ninja > ninjas;
-    ArrayList < Robot > robots;
+    private ArrayList < Tropas > tropasEnMapa;
     public ArrayList < Camino > camino;
     ArrayList < Tropas > tropasColisionadas;
 
-    private long contador = 0, torreContador = 0;
+    private long contador = 0;
 
-    ArrayList<Torres> torres_Fuego;
-    ArrayList < Caballero > caballerosEnTorre;
+    ArrayList < Torres > torres;
 
     public static boolean debug = false;
     private ShapeRenderer debugRenderer;
 
     public int maxCaballeros, maxNinjas, maxRobots;
-    public int contadorCaballeros = 0, contadorNinjas = 0, contadorRobots = 0, contadorTropas = 0, contadorTropasMuertas = 0;
+    public int contadorTropasMuertas = 0;
     private boolean compruebaAtaqueTorre = true;
     private Container containerCaballero, containerNinja, containerRobot;
 
@@ -90,17 +86,10 @@ public class AtaqueScreen implements Screen {
 
         nivel = new Nivel();
 
-        tropasEnMapa = new ArrayList<Tropas>();
-
+        tropasEnMapa = new ArrayList < Tropas > ();
 
         camino = nivel.recojerCamino();
         tropasColisionadas = new ArrayList < Tropas > ();
-
-        caballeros = new ArrayList < Caballero > (maxCaballeros);
-        ninjas = new ArrayList < Ninja > (maxNinjas);
-        robots = new ArrayList < Robot > (maxRobots);
-
-        caballerosEnTorre = new ArrayList < Caballero > ();
 
         Image caballero = new Image(AssetManager.caballeroSelecAtak); //Selección de caballero
         caballero.setName("Caballero");
@@ -145,13 +134,13 @@ public class AtaqueScreen implements Screen {
         }
 
         //bucle para saber las posiciones de los objetos torre
-        torres_Fuego = nivel.recojerTorresF();
+        torres = nivel.recojerTorresF();
 
-        for (int i = 0; i < torres_Fuego.size(); i++) {
-            stage.addActor(torres_Fuego.get(i));
+        for (int i = 0; i < torres.size(); i++) {
+            stage.addActor(torres.get(i));
         }
 
-        fuego = new Fuego(0,0,1);
+        fuego = new Fuego(0, 0, 1);
 
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
@@ -174,32 +163,31 @@ public class AtaqueScreen implements Screen {
         renderer.setView(camera);
         renderer.render();
 
-        if (tropasEnMapa != null){
+        if (tropasEnMapa != null) {
             for (int i = 0; i < tropasEnMapa.size(); i++) {
                 Tropas tropaActual = tropasEnMapa.get(i);
                 tropaActual.setTiempoDeEstado(tropaActual.getTiempoDeEstado() + delta);
-                if (tropaActual.getEstado() == Tropas.Estado.Caminando){
-                    if (contador % tropaActual.getVelocidad() == 0){
+                if (tropaActual.getEstado() == Tropas.Estado.Caminando) {
+                    if (contador % tropaActual.getVelocidad() == 0) {
                         tropaActual.siguienteCasilla(camino);
                     }
                 }
             }
         }
 
-        for (int torres = 0; torres < torres_Fuego.size(); torres++) {
-            for (int atacantes = 0; atacantes < tropasEnMapa.size(); atacantes++){
+        for (int defensoras = 0; defensoras < torres.size(); defensoras++) {
+            for (int atacantes = 0; atacantes < tropasEnMapa.size(); atacantes++) {
                 Tropas tropaActual = tropasEnMapa.get(atacantes);
-                Torres torreActual = torres_Fuego.get(torres);
+                Torres torreActual = torres.get(defensoras);
 
                 if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
-                    if (tropasColisionadas.indexOf(tropaActual) == -1){
+                    if (tropasColisionadas.indexOf(tropaActual) == -1) {
                         tropaActual.setEstaAtacando(true);
                         tropasColisionadas.add(tropaActual);
                         fuego.setX(tropasColisionadas.get(0).getX());
                         fuego.setY(tropasColisionadas.get(0).getY());
                         fuego.setVisible(true);
                     }
-                    torreContador++;
 
                     if (contador % 60 == 0 && contadorTropasMuertas < tropasColisionadas.size() && compruebaAtaqueTorre) {
                         compruebaAtaqueTorre = false;
@@ -212,12 +200,12 @@ public class AtaqueScreen implements Screen {
                             contadorTropasMuertas++;
                         }
 
-                        for (int danyoTorre = 0; danyoTorre < tropasColisionadas.size(); danyoTorre++){
+                        for (int danyoTorre = 0; danyoTorre < tropasColisionadas.size(); danyoTorre++) {
                             torreActual.setVida(torreActual.getVida() - tropasColisionadas.get(danyoTorre).getDanyo());
 
-                            if(torreActual.getVida() <= 0){
-                                torres_Fuego.get(torres).getCollisionCircle().set(new Circle(10, 10, 5));
-                                torres_Fuego.get(torres).remove();
+                            if (torreActual.getVida() <= 0) {
+                                torres.get(defensoras).getCollisionCircle().set(new Circle(10, 10, 5));
+                                torres.get(defensoras).remove();
                                 for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
                                     tropasColisionadas.get(tropas).setEstaAtacando(false);
                                 }
@@ -236,23 +224,22 @@ public class AtaqueScreen implements Screen {
 
                 } else {
                     if (tropasColisionadas.size() > 0) {
-                            for (int j = 0; j < tropasColisionadas.size(); j++) {
-                                if (!tropasColisionadas.get(j).isEstaAtacando()){
-                                    if (!tropasColisionadas.get(j).salirDeTorre() && contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                        tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
-                                        tropasColisionadas.remove(j);
-                                    }
-                                }else{
-                                    if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                        tropasColisionadas.get(j).siguienteCasilla(camino);
-                                    }
+                        for (int j = 0; j < tropasColisionadas.size(); j++) {
+                            if (!tropasColisionadas.get(j).isEstaAtacando()) {
+                                if (!tropasColisionadas.get(j).salirDeTorre() && contador % tropasColisionadas.get(j).getVelocidad() == 0) {
+                                    tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
+                                    tropasColisionadas.remove(j);
                                 }
+                            } else {
+                                if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
+                                    tropasColisionadas.get(j).siguienteCasilla(camino);
+                                }
+                            }
                         }
-                    }else{
+                    } else {
                         fuego.setVisible(false);
                     }
                 }
-
 
             }
         }
@@ -323,25 +310,25 @@ public class AtaqueScreen implements Screen {
             }
         }*/
 
-      /*  for (int c = 0; c < robots.size(); c++) {
-            for (int i = 0; i < torres_Fuego.size(); i++) {
+        /*  for (int c = 0; c < robots.size(); c++) {
+              for (int i = 0; i < torres_Fuego.size(); i++) {
 
-                boolean x = Intersector.overlaps(torres_Fuego.get(i).getCollisionCircle(), robots.get(c).getCollisionRect());
-                if (x) {
-                    robots.get(c).setEstado(Tropas.Estado.Atacando);
-                    AtacarTorre at = new AtacarTorre(robots.get(c), torres_Fuego.get(1));
-                    if (contador % 3 == 0) {
+                  boolean x = Intersector.overlaps(torres_Fuego.get(i).getCollisionCircle(), robots.get(c).getCollisionRect());
+                  if (x) {
+                      robots.get(c).setEstado(Tropas.Estado.Atacando);
+                      AtacarTorre at = new AtacarTorre(robots.get(c), torres_Fuego.get(1));
+                      if (contador % 3 == 0) {
 
-                        Robot.torreX = torres_Fuego.get(1).getPosicionAtaque().x;
-                        Robot.torreY = torres_Fuego.get(1).getPosicionAtaque().y;
-                        Robot.attack = true;
+                          Robot.torreX = torres_Fuego.get(1).getPosicionAtaque().x;
+                          Robot.torreY = torres_Fuego.get(1).getPosicionAtaque().y;
+                          Robot.attack = true;
 
-                    }
+                      }
 
-                }
-            }
+                  }
+              }
 
-        }*/
+          }*/
 
         stage.draw();
         stage.act(delta);
@@ -360,8 +347,8 @@ public class AtaqueScreen implements Screen {
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
 
         debugRenderer.setColor(Color.RED);
-        for (int i = 0; i < torres_Fuego.size(); i++) {
-            debugRenderer.circle(torres_Fuego.get(i).getCollisionCircle().x, torres_Fuego.get(i).getCollisionCircle().y, torres_Fuego.get(i).getCollisionCircle().radius);
+        for (int i = 0; i < torres.size(); i++) {
+            debugRenderer.circle(torres.get(i).getCollisionCircle().x, torres.get(i).getCollisionCircle().y, torres.get(i).getCollisionCircle().radius);
         }
         debugRenderer.setColor(Color.GREEN);
         for (int i = 0; i < tropasEnMapa.size(); i++) {
@@ -369,15 +356,11 @@ public class AtaqueScreen implements Screen {
         }
         debugRenderer.setColor(Color.PURPLE);
         for (int i = 0; i < tropasColisionadas.size(); i++) {
-            debugRenderer.rect(tropasColisionadas.get(i).getCollisionRect().x-1, tropasColisionadas.get(i).getCollisionRect().y-1, tropasColisionadas.get(i).getCollisionRect().width+2, tropasColisionadas.get(i).getCollisionRect().height+2);
-        }
-        debugRenderer.setColor(Color.BLUE);
-        for (int i = 0; i < robots.size(); i++) {
-            debugRenderer.rect(robots.get(i).getCollisionRect().x, robots.get(i).getCollisionRect().y, robots.get(i).getCollisionRect().width, robots.get(i).getCollisionRect().height);
+            debugRenderer.rect(tropasColisionadas.get(i).getCollisionRect().x - 1, tropasColisionadas.get(i).getCollisionRect().y - 1, tropasColisionadas.get(i).getCollisionRect().width + 2, tropasColisionadas.get(i).getCollisionRect().height + 2);
         }
         debugRenderer.setColor(Color.GOLD);
-        for (int i = 0; i < torres_Fuego.size(); i++) {
-            debugRenderer.rect(torres_Fuego.get(i).getPosicionAtaque().x, torres_Fuego.get(i).getPosicionAtaque().y, 50, 50);
+        for (int i = 0; i < torres.size(); i++) {
+            debugRenderer.rect(torres.get(i).getPosicionAtaque().x, torres.get(i).getPosicionAtaque().y, 50, 50);
         }
         debugRenderer.end();
 
