@@ -20,15 +20,16 @@ public abstract class Torres extends Actor {
     boolean orientacion;
     private float radius, circuloWidth, circuloHeight;
     Vector2 posicionAtaque;
+    public String tipo;
 
-
-    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight)
+    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, String tipo)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
         this.height = Settings.TROPA_HEIGHT;
         position = new Vector2(x, y);
         this.orientacion = orientacion;
+        this.tipo = tipo;
         // Creem el rectangle de col·lisions
         collisionCircle = new Circle();
         radius = 250;
@@ -57,11 +58,23 @@ public abstract class Torres extends Actor {
     public void draw(Batch batch, float parentAlpha) {
 
         super.draw(batch, parentAlpha);
-        if(orientacion) {
-            batch.draw(AssetManager.torreF, getX(), getY());
+        if(tipo.equals("Hielo")){
+
+            if(orientacion) {
+                batch.draw(AssetManager.torreR, getX(), getY());
+            }else{
+                batch.draw(AssetManager.torreR2,getX(),getY());
+            }
+
         }else{
-            batch.draw(AssetManager.torreF2,getX(),getY());
+            if(orientacion) {
+                batch.draw(AssetManager.torreF, getX(), getY());
+            }else{
+                batch.draw(AssetManager.torreF2,getX(),getY());
+            }
         }
+
+
     }
 
     public float getX() {

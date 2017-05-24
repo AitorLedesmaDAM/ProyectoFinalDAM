@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torre_Fuego;
+import com.proyectofinal.game.objects.towers.Torre_Hielo;
 import com.proyectofinal.game.objects.towers.Torres;
 
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ public class Nivel {
     public Nivel() {
     }
 
-    public static ArrayList<Torre_Fuego> recojerTorres(){
-        ArrayList<Torre_Fuego> torres = new ArrayList<Torre_Fuego>();
-
+    public static ArrayList<Torres> recojerTorresF(){
+        ArrayList<Torres> torres = new ArrayList<Torres>();
+        String tipo;
         int pos = 0;
         MapObjects objectsT = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects();
 
@@ -31,8 +32,18 @@ public class Nivel {
             pos++;
             boolean orientacion = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
             System.out.println(orientacion);
-            torres.add(new Torre_Fuego(rect.getX(), rect.getY(),orientacion , rect.getWidth()/2, rect.getHeight()/2));
-        }
+            
+            if(AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("TorreH")){
+
+                tipo = "Hielo";
+                torres.add(new Torre_Hielo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, tipo));
+
+            }else {
+
+                tipo = "Fuego";
+                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, tipo));
+            }
+            }
         return torres;
     }
 

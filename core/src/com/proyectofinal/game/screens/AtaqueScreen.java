@@ -22,7 +22,6 @@ import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.objects.AtacarTorre;
 import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
-import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.towers.Torres;
 import com.proyectofinal.game.objects.towers.attack.Fuego;
 import com.proyectofinal.game.objects.trops.Caballero;
@@ -32,7 +31,6 @@ import com.proyectofinal.game.objects.trops.Tropas;
 import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by ALUMNEDAM on 25/04/2017.
@@ -60,7 +58,7 @@ public class AtaqueScreen implements Screen {
 
     private long contador = 0, torreContador = 0;
 
-    ArrayList < Torre_Fuego > torres_Fuego;
+    ArrayList<Torres> torres_Fuego;
     ArrayList < Caballero > caballerosEnTorre;
 
     public static boolean debug = false;
@@ -147,7 +145,7 @@ public class AtaqueScreen implements Screen {
         }
 
         //bucle para saber las posiciones de los objetos torre
-        torres_Fuego = nivel.recojerTorres();
+        torres_Fuego = nivel.recojerTorresF();
 
         for (int i = 0; i < torres_Fuego.size(); i++) {
             stage.addActor(torres_Fuego.get(i));

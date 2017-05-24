@@ -196,6 +196,7 @@
   </object>
   <object id="126" name="torre4" type="torre" x="2400" y="593.939" width="196.97" height="169.697">
    <properties>
+    <property name="TorreH" type="int" value="1"/>
     <property name="cara" type="int" value="1"/>
    </properties>
   </object>

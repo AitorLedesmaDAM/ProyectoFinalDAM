@@ -7,8 +7,8 @@ package com.proyectofinal.game.objects.towers;
 public class Torre_Fuego extends Torres {
 
 
-    public Torre_Fuego(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight) {
-        super(x, y, orientacion, circuloWidth, circuloHeight);
+    public Torre_Fuego(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, String tipo) {
+        super(x, y, orientacion, circuloWidth, circuloHeight, tipo);
         setVida(250);
         setDanyo(1);
     }
