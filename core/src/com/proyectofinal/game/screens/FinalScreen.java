@@ -80,7 +80,6 @@ public class FinalScreen implements Screen {
             containerBtSig.setTransform(false);
             containerBtSig.center();
             containerBtSig.setSize(400, 200);
-            // containerBtSig.setPosition(Settings.GAME_WIDTH / 3 - 490 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4);
             
             // Definimos su posicion
             containerBtSig.setPosition(Settings.GAME_WIDTH / 2 + 300, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);

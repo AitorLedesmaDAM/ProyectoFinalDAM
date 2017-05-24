@@ -40,11 +40,7 @@ public class Robot extends Tropas {
 
              }
              */
-            //batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getX() + num+100, getY(), 0, 0, 100, 150, 1f, 1f, 0);
-            //batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + num+100, getCollisionRect().y, 0, 0, 100, 150, 1f, 1f, 0);
-
             batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + num+100, getCollisionRect().y, 0 , 0 , 100, 150, 1f, 1f, Math.abs(torreY - torreX));
-
 
 
             batch.draw(AssetManager.robotMuzzle.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + num +200, getCollisionRect().y, 0, 0, 100, 150, 1f, 1f, torreY - torreX);
