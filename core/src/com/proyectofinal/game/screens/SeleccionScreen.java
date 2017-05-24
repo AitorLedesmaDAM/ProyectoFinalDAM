@@ -18,6 +18,7 @@ import com.proyectofinal.game.utils.Settings;
 
 public class SeleccionScreen implements Screen{
 
+    // Atributos
     private Stage stage;
     private TowerAttack game;
     OrthographicCamera camera;
@@ -31,7 +32,15 @@ public class SeleccionScreen implements Screen{
 
     private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
 
-
+    /**
+    * Constructor
+    * Le pasamos por parametros 
+    ** game
+    ** batch
+    ** viewport
+    ** lvl : Nivel que se a elejido jugar
+    ** maxTropasContador : El numero de tropas maximas permitidas para ese nivel
+    */
     public SeleccionScreen(TowerAttack game, Batch batch, Viewport _viewport, String lvl, int _maxTropasContador) {
         this.game = game;
         Settings.pantalla = 2;
