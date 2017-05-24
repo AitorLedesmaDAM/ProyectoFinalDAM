@@ -15,6 +15,7 @@ import com.proyectofinal.game.utils.Settings;
 
 public class MenuScreen implements Screen {
 
+    // Atributos
     private TowerAttack game;
     StretchViewport viewport;
     OrthographicCamera camera;
@@ -24,6 +25,10 @@ public class MenuScreen implements Screen {
     private Label textLbl, textLbl2, textLbl3, textLbl4, textLbl5, textLbl6, textLbl7, textLbl8, titulo;
     private Container container1, container2, container3,container4, container5, container6, container7, container8, contenedorTitulo;
 
+    /**
+    * Constructor
+    * Le pasamos el game por parametros
+    */
     public MenuScreen(TowerAttack game) {
         this.game = game;
         Settings.pantalla = 1;
