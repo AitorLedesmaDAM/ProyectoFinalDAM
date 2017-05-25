@@ -25,7 +25,7 @@ public class AssetManager {
     //Atibutos como Texturas.
     public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig;
     //Atributos de Animaciones
-    public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre;
+    public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre, rayoTorre;
 
     //Sprites
     public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig;
@@ -200,9 +200,13 @@ public class AssetManager {
         robotMuzzle = new Animation(0.12f, regionRobotMuzzle);
         robotMuzzle.setPlayMode(Animation.PlayMode.LOOP);
 
-        TextureRegion[] regionfuegoTorre = TextureRegion.split(new Texture("torres/fuego_torre.png"), 192, 192)[0];
-        fuegoTorre = new Animation(0.12f, regionfuegoTorre);
+        TextureRegion[] regionFuegoTorre = TextureRegion.split(new Texture("torres/fuego_torre.png"), 192, 192)[0];
+        fuegoTorre = new Animation(0.12f, regionFuegoTorre);
         fuegoTorre.setPlayMode(Animation.PlayMode.LOOP);
+
+        TextureRegion[] regionRayoTorre = TextureRegion.split(new Texture("torres/rayo_torre.png"), 192, 192)[0];
+        rayoTorre = new Animation(0.12f, regionRayoTorre);
+        rayoTorre.setPlayMode(Animation.PlayMode.LOOP);
 
 
 

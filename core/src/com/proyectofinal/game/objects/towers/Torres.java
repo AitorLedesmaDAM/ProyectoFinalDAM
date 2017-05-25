@@ -15,12 +15,11 @@ public class Torres extends Actor {
     private int width, height, vida, danyo;
     private Circle collisionCircle;
     public float tiempoDeEstado = 0;
-    boolean orientacion, viva;
+    boolean orientacion, viva, overlaps;
     private float radius, circuloWidth, circuloHeight;
     Vector2 posicionAtaque;
-    public boolean orientacionBala;
 
-    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo, boolean orientacionB)
+    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
@@ -35,7 +34,8 @@ public class Torres extends Actor {
         radius = radio;
         this.circuloWidth = circuloWidth;
         this.circuloHeight = circuloHeight;
-        this.orientacionBala = orientacionB;
+
+        overlaps = false;
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
@@ -98,6 +98,14 @@ public class Torres extends Actor {
 
     public void setViva(boolean viva) {
         this.viva = viva;
+    }
+
+    public boolean isOverlaps() {
+        return overlaps;
+    }
+
+    public void setOverlaps(boolean overlaps) {
+        this.overlaps = overlaps;
     }
 }
 

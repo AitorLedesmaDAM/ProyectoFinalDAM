@@ -194,6 +194,10 @@ public class AtaqueScreen implements Screen {
                         fuego.setVisible(true);
                     }
 
+                    if (tropasColisionadas.size() > 0){
+                        torreActual.setOverlaps(true);
+                    }
+
                     if (contador % 60 == 0 && contadorTropasMuertas < tropasColisionadas.size() && compruebaAtaqueTorre) {
                         compruebaAtaqueTorre = false;
 
@@ -209,8 +213,9 @@ public class AtaqueScreen implements Screen {
                             torreActual.setVida(torreActual.getVida() - tropasColisionadas.get(danyoTorre).getDanyo());
 
                             if (torreActual.getVida() <= 0) {
-                                torres.get(defensoras).getCollisionCircle().set(new Circle(10, 10, 5));
-                                torres.get(defensoras).setViva(false);
+                                torreActual.getCollisionCircle().set(new Circle(10, 10, 5));
+                                torreActual.setViva(false);
+                                torreActual.setOverlaps(false);
                                 for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
                                     tropasColisionadas.get(tropas).setEstaAtacando(false);
                                 }
