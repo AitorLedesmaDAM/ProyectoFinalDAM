@@ -1,11 +1,9 @@
 package com.proyectofinal.game.objects.towers;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -20,8 +18,9 @@ public class Torres extends Actor {
     boolean orientacion, viva;
     private float radius, circuloWidth, circuloHeight;
     Vector2 posicionAtaque;
+    public boolean orientacionBala;
 
-    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo)
+    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo, boolean orientacionB)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
@@ -36,7 +35,7 @@ public class Torres extends Actor {
         radius = radio;
         this.circuloWidth = circuloWidth;
         this.circuloHeight = circuloHeight;
-
+        this.orientacionBala = orientacionB;
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);

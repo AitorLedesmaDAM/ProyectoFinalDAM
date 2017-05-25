@@ -10,8 +10,8 @@ import com.proyectofinal.game.helpers.AssetManager;
 public class Torre_Fuego extends Torres {
 
 
-    public Torre_Fuego(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo) {
-        super(x, y, orientacion, circuloWidth, circuloHeight, radio, vida, danyo);
+    public Torre_Fuego(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo, boolean orientaBala) {
+        super(x, y, orientacion, circuloWidth, circuloHeight, radio, vida, danyo, orientaBala);
     }
 
     @Override

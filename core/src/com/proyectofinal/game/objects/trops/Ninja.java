@@ -22,6 +22,7 @@ public class Ninja extends Tropas {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        this.setName("Ninjas");
         if(isanimacionCaminar()) {
             batch.draw(AssetManager.ninjaRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 77, 88, 1f, 1f, 0);
         }else{

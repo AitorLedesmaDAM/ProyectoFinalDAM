@@ -1,6 +1,5 @@
 package com.proyectofinal.game.objects.trops;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -36,6 +35,7 @@ public class Tropas extends Actor{
     public int casillaActual = 0, casillasParaLlegarATorre = 0;
     private boolean animacionCaminar, estaAtacando, colisionadoConTorre;
     private Random random = new Random();
+    public boolean orientacionBala;
 
     public Tropas(int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
         // Inicialitzem els arguments segons la crida del constructor
@@ -195,6 +195,10 @@ public class Tropas extends Actor{
 
     public void setanimacionCaminar(boolean animacionCaminar) {
         this.animacionCaminar = animacionCaminar;
+    }
+
+    public boolean orientacionBala(){
+    return orientacionBala;
     }
 
     public int getVida() {

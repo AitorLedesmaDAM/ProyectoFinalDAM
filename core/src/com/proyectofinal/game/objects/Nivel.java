@@ -31,24 +31,25 @@ public class Nivel {
             Rectangle rect = rmo.getRectangle();
             pos++;
             boolean orientacion = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
-            
+            boolean orientaBala = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("AtaqueBajo");
+
             if(AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("TorreR")){
 
                 vida = 100;
                 danyo = 4;
-                radio = 250;
+                radio = 300;
 
-                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
+                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, orientaBala));
 
             }else {
 
                 vida = 150;
                 danyo = 2;
-                radio = 250;
+                radio = 300;
 
-                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
+                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, orientaBala));
             }
-            }
+        }
         return torres;
     }
 
