@@ -157,7 +157,7 @@ public class MenuScreen implements Screen {
 * pasandole por parametros el nivel que se a pulsado y el maximo de tropas
 * que se permiten en ese nivel
 */
-    public void siguientePantalla(String lvl, int maxTropas){
+    public void siguientePantalla(int lvl, int maxTropas){
         game.setScreen(new SeleccionScreen(game,stage.getBatch(), stage.getViewport(), lvl, maxTropas));
         dispose();
     }

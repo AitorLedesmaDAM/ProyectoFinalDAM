@@ -297,7 +297,8 @@ public class AtaqueScreen implements Screen {
 
         }else{
 
-            game.setScreen(new FinalScreen(ganado));
+            //dispose();
+            game.setScreen(new FinalScreen(game,1, ganado, batch));
 
         }
     }

@@ -29,6 +29,7 @@ public class InputHandler implements InputProcessor {
     private Stage stage;
     private Vector2 stageCoord;
     private Container containerMusic, containerMusicMute;
+    private int lvlInt;
 
     Musica m = new Musica();
 
@@ -85,8 +86,10 @@ public class InputHandler implements InputProcessor {
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String lvl = actorHit.toString().replaceAll("Label: ", "");
+
                 if (lvl.equals("1")){
-                    menuScreen.siguientePantalla(lvl, 50);
+                    lvlInt = Integer.parseInt(lvl.toString());
+                    menuScreen.siguientePantalla(lvlInt, 50);
                 }
                 if (lvl.equals("Music") || lvl.equals("MusicMute")){
                     Settings.music = !Settings.music;
@@ -146,12 +149,11 @@ public class InputHandler implements InputProcessor {
             if (actorHit != null) {
                 String opt = actorHit.toString();
                 if (opt.equals("Siguente")) {
-
+                    finalScreen.botonSiguiente();
                 } else if (opt.equals("Reniciar")) {
-
+                    finalScreen.botonReiniciar();
                 } else if (opt.equals("Salir")) {
-
-
+                    finalScreen.botonSalir();
                 }
             }
 

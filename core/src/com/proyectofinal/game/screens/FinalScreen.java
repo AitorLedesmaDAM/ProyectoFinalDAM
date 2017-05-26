@@ -3,11 +3,13 @@ package com.proyectofinal.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.utils.Settings;
@@ -22,21 +24,25 @@ public class FinalScreen implements Screen {
     StretchViewport viewport;
     OrthographicCamera camera;
     private Stage stage;
+    private Batch batch;
+    private int lvl;
 
     private static Label.LabelStyle textStyleTitulo;
     private Label  titulo;
     private Container contenedorTitulo;
     private Container containerBtSalir, containerBtSig, containerBtReniciar;
-
+    private TowerAttack game;
 
     /**
     * Constructor
     * Le pasamos un boolean para definir el mensaje y los botones
     */
 
-    public FinalScreen(Boolean ganado) {
+    public FinalScreen(TowerAttack game, int nivelActual, Boolean ganado, Batch batch) {
 
-
+        this.game = game;
+        this.lvl = nivelActual;
+        this.batch = batch;
         Settings.pantalla = 4;
 
         camera = AssetManager.camera;
@@ -166,5 +172,21 @@ public class FinalScreen implements Screen {
     }
     public Stage getStage() {
         return stage;
+    }
+
+    public void botonSiguiente() {
+
+        game.setScreen(new SeleccionScreen(game, batch, viewport, lvl+1 , 50));
+    }
+
+    public void botonReiniciar() {
+
+        game.setScreen(new SeleccionScreen(game, batch, viewport, lvl , 50));
+    }
+
+    public void botonSalir() {
+
+        game.setScreen(new MenuScreen(game));
+
     }
 }

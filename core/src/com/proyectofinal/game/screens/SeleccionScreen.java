@@ -51,7 +51,7 @@ public class SeleccionScreen implements Screen{
     ** lvl : Nivel que se a elejido jugar
     ** maxTropasContador : El numero de tropas maximas permitidas para ese nivel
     */
-    public SeleccionScreen(TowerAttack game, Batch batch, Viewport _viewport, String lvl, int _maxTropasContador) {
+    public SeleccionScreen(TowerAttack game, Batch batch, Viewport _viewport, int lvl, int _maxTropasContador) {
         this.game = game;
         Settings.pantalla = 2;
 
@@ -85,13 +85,6 @@ public class SeleccionScreen implements Screen{
         containerTextocontainerTropasMax.setTransform(true);
         containerTextocontainerTropasMax.center();
         containerTextocontainerTropasMax.setPosition(400,150);
-
-
-
-
-
-
-
 
 
         Image caballero = new Image(AssetManager.caballeroSelec);   //Selección de caballero
