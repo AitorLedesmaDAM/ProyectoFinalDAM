@@ -64,13 +64,6 @@ public class SeleccionScreen implements Screen{
         // Pasamos el maximo de tropas posibles de lo que se pasa por parametros a variables locales
         maxTropasContador = _maxTropasContador;
         contadorTropas = _maxTropasContador;
-/**
-        if (Settings.music) {
-            AssetManager.musicStart.play();
-        }
-
-*/
-
 
 
 
@@ -174,38 +167,15 @@ public class SeleccionScreen implements Screen{
         stage.addActor(containerCosteRobot);
 
 
-/**
-        if (Settings.music) {
-
-            Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
-            musicIcono.setName("Music");
-            containerMusic = new Container(musicIcono);
-            containerMusic.setTransform(true);
-            containerMusic.center();
-            containerMusic.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
-            containerMusic.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
-            stage.addActor(containerMusic);
-
-
-        }
-        if (!Settings.music ){
-            Image musicIcono = new Image(AssetManager.musicMute);   //Selección de musica
-            musicIcono.setName("MusicMute");
-            containerMusicMute = new Container(musicIcono);
-            containerMusicMute.setTransform(true);
-            containerMusicMute.center();
-            containerMusicMute.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
-            containerMusicMute.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
-            stage.addActor(containerMusicMute);
-
-
-        }
-
-*/
+        canviarMusica();
 
 
         // Hacemos que los Contenedores se puedan pulsar
         Gdx.input.setInputProcessor(new InputHandler(this));
+    }
+
+    public void canviarMusica(){
+        m.iconoMusica(stage);
     }
 
 
@@ -239,7 +209,6 @@ public class SeleccionScreen implements Screen{
         stage.draw();
         stage.act(delta);
 
-        m.iconoMusica(stage);
 
     }
 

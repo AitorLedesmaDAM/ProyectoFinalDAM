@@ -64,18 +64,7 @@ public class MenuScreen implements Screen {
         textStyle = AssetManager.textStyle;
         textStyleTitulo = AssetManager.textStyleTitulo;
 
-
-        Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
-        musicIcono.setName("Music");
-        containerMusic = new Container(musicIcono);
-        containerMusic.setTransform(true);
-        containerMusic.center();
-        containerMusic.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
-        containerMusic.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
-        stage.addActor(containerMusic);
-
-
-
+        canviarMusica();
 
         // Añadimos los Labels con el texto que queremos y el estilo de letra
         textLbl = new Label("1", textStyle);

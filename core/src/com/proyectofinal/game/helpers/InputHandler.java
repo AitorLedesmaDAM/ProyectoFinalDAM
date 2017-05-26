@@ -89,47 +89,10 @@ public class InputHandler implements InputProcessor {
                     menuScreen.siguientePantalla(lvl, 50);
                 }
                 if (lvl.equals("Music") || lvl.equals("MusicMute")){
+                    Settings.music = !Settings.music;
                     menuScreen.canviarMusica();
                 }
-                
 
-
-
-        /**        String musica = actorHit.toString();
-
-                if (Settings.music && musica.equals("Music")) {
-
-
-                    AssetManager.musicStart.dispose();
-                    Image musicIcono = new Image(AssetManager.musicMute);   //Selección de musica
-                    musicIcono.setName("MusicMute");
-                    containerMusicMute = new Container(musicIcono);
-                    containerMusicMute.setTransform(true);
-                    containerMusicMute.center();
-                    containerMusicMute.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
-                    containerMusicMute.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
-                    stage.addActor(containerMusicMute);
-                    Settings.music = !Settings.music;
-
-                }
-                if (Settings.music==false && musica.equals("MusicMute")){
-
-                    stage.addAction(Actions.removeActor(containerMusicMute));
-                    AssetManager.musicStart.play();
-                    Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
-                    musicIcono.setName("Music");
-                    containerMusic = new Container(musicIcono);
-                    containerMusic.setTransform(true);
-                    containerMusic.center();
-                    containerMusic.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
-                    containerMusic.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
-                    stage.addActor(containerMusic);
-                    Settings.music = !Settings.music;
-                    stage.addAction(Actions.removeActor(containerMusicMute));
-
-                }
-
-*/
             }
             return true;
         } else if (Settings.pantalla == 2) {
@@ -152,46 +115,10 @@ public class InputHandler implements InputProcessor {
                 }else{
 
                 }
-
-/**
-                String musica = actorHit.toString();
-
-                if (Settings.music && musica.equals("Music")) {
-
-
-
-                    AssetManager.musicStart.dispose();
-                    Image musicIcono = new Image(AssetManager.musicMute);   //Selección de musica
-                    musicIcono.setName("MusicMute");
-                    containerMusicMute = new Container(musicIcono);
-                    containerMusicMute.setTransform(true);
-                    containerMusicMute.center();
-                    containerMusicMute.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
-                    containerMusicMute.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
-                    stage.addActor(containerMusicMute);
+                if (tropa.equals("Music") || tropa.equals("MusicMute")){
                     Settings.music = !Settings.music;
-
-
-                }else if (Settings.music==false && musica.equals("MusicMute")){
-
-                    stage.addAction(Actions.removeActor(containerMusicMute));
-                    AssetManager.musicStart.play();
-                    Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
-                    musicIcono.setName("Music");
-                    containerMusic = new Container(musicIcono);
-                    containerMusic.setTransform(true);
-                    containerMusic.center();
-                    containerMusic.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
-                    containerMusic.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
-                    stage.addActor(containerMusic);
-                    Settings.music = !Settings.music;
-
+                    selecScreen.canviarMusica();
                 }
-
-*/
-
-
-
 
 
 
