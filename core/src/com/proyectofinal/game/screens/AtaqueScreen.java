@@ -49,7 +49,6 @@ public class AtaqueScreen implements Screen {
     Viewport viewport;
     private Stage stage;
     private Fuego fuego;
-    public boolean orientacionRobot;
 
     private ArrayList < Tropas > tropasEnMapa;
     public ArrayList < Camino > camino;
@@ -74,7 +73,6 @@ public class AtaqueScreen implements Screen {
         this.maxNinjas = maxNinjas;
         this.maxRobots = maxRobots;
 
-        orientacionRobot = true;
 
         debugRenderer = new ShapeRenderer();
 
@@ -236,7 +234,7 @@ public class AtaqueScreen implements Screen {
 
                     tropaActual.setEstado(Tropas.Estado.Atacando);
 
-                    if(!tropasEnMapa.get(atacantes).getName().equals("Robots")){
+                    if(!tropaActual.getName().equals("Robots")){
                         //System.out.println("entro en caminar hacia torre");
                         AtacarTorre at = new AtacarTorre(tropaActual, torreActual);
                         ArrayList < Camino > camino = at.caminarHaciaTorre();
@@ -246,14 +244,8 @@ public class AtaqueScreen implements Screen {
                             }
                         }
                     }else{
-                        // System.out.println(orientacionRobot);
-                        if(orientacionRobot){
-                            tropaActual.orientacionBala = true;
-                        }else{
-                            tropaActual.orientacionBala = false;
-                        }
                         tropaActual.setanimacionCaminar(false);
-
+                        tropaActual.ataque(tropaActual.getPosition(), torreActual.getPosicionAtaque());
                     }
 
                 } else {
@@ -287,10 +279,6 @@ public class AtaqueScreen implements Screen {
 
         batch.end();
 
-    }
-
-    public boolean isOrientacionRobot() {
-        return orientacionRobot;
     }
 
     private void renderDebug() {

@@ -25,7 +25,6 @@ public class Tropas extends Actor{
         Caballero, Ninja, Robot
     }
 
-    private Tipo tipo;
     private Estado estado;
     private Vector2 position;
     private int width, height, danyo, vida, velocidad;
@@ -35,7 +34,7 @@ public class Tropas extends Actor{
     public int casillaActual = 0, casillasParaLlegarATorre = 0;
     private boolean animacionCaminar, estaAtacando, colisionadoConTorre;
     private Random random = new Random();
-    public boolean orientacionBala;
+    public boolean ataqueCuerpoaCuerpo, ejecutaAtaque;
 
     public Tropas(int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
         // Inicialitzem els arguments segons la crida del constructor
@@ -47,6 +46,8 @@ public class Tropas extends Actor{
         animacionCaminar = true;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
+        ataqueCuerpoaCuerpo = true;
+        ejecutaAtaque = false;
 
         this.vida = vida;
         this.danyo = danyo;
@@ -87,6 +88,9 @@ public class Tropas extends Actor{
     }
 
 
+    public void ataque(Vector2 origen, Vector2 destino){
+        ejecutaAtaque = true;
+    }
 
   /*  public abstract void act(float delta);
 
@@ -197,8 +201,8 @@ public class Tropas extends Actor{
         this.animacionCaminar = animacionCaminar;
     }
 
-    public boolean orientacionBala(){
-    return orientacionBala;
+    public boolean isAtaqueCuerpoaCuerpo() {
+        return ataqueCuerpoaCuerpo;
     }
 
     public int getVida() {

@@ -47,6 +47,10 @@ public class Torres extends Actor {
         }
     }
 
+    public void atacar(){
+
+    }
+
 
 
     public void act(float delta)
