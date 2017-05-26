@@ -3,12 +3,9 @@ package com.proyectofinal.game.helpers;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.objects.trops.Robot;
 import com.proyectofinal.game.screens.AtaqueScreen;
@@ -16,7 +13,6 @@ import com.proyectofinal.game.screens.FinalScreen;
 import com.proyectofinal.game.screens.MenuScreen;
 import com.proyectofinal.game.screens.SeleccionScreen;
 import com.proyectofinal.game.utils.Musica;
-import com.proyectofinal.game.utils.Preferences;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -52,8 +48,8 @@ public class InputHandler implements InputProcessor {
     }
 
     public InputHandler(FinalScreen finalScreen) {
-        this.ataqueScreen = ataqueScreen;
-        stage = ataqueScreen.getStage();
+        this.finalScreen = finalScreen;
+        stage = finalScreen.getStage();
     }
 
     @Override
@@ -95,6 +91,7 @@ public class InputHandler implements InputProcessor {
                 if (lvl.equals("Music") || lvl.equals("MusicMute")){
                     menuScreen.canviarMusica();
                 }
+                
 
 
 
