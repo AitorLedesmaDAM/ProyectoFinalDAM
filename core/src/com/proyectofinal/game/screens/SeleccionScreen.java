@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -276,9 +275,7 @@ public class SeleccionScreen implements Screen{
     public void siguientePantalla(){
         if (contadorTropas < 25) {
             // Se le pasara a la siguiente pantalla el numero de cada tropa seleccionada
-           //game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
-
-            game.setScreen(new FinalScreen(true));
+           game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
 
             dispose();
         }
