@@ -31,7 +31,6 @@ public class Rayo extends Actor {
         super.draw(batch, parentAlpha);
         if (visible) {
             batch.draw(AssetManager.rayoTorre.getKeyFrame(getTiempoDeEstado()), x, y, 0, 0, radio, radio, 1f, 1f, 0);
-            System.out.println(y/6);
         }
     }
 

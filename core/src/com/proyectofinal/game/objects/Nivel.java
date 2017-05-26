@@ -8,6 +8,7 @@ import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.towers.Torre_Rayo;
 import com.proyectofinal.game.objects.towers.Torres;
+import com.proyectofinal.game.objects.trops.Tropas;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,14 @@ import java.util.ArrayList;
 
 public class Nivel {
 
+    Tropas tropas;
+    boolean finalJuego;
+
     public Nivel() {
+        tropas = new Tropas();
     }
+
+
 
     public static ArrayList<Torres> recojerTorres(){
         ArrayList<Torres> torres = new ArrayList<Torres>();
@@ -88,6 +95,26 @@ public class Nivel {
             camino.add(new Camino(rect.getX(), rect.getY()));
         }
         return camino;
+    }
+
+    public boolean comproFinal(ArrayList<Camino> c, int casillaActual){
+
+        //ArrayList<Camino> camino = new ArrayList<Camino>();
+       // ArrayList<Camino> c = recojerCamino();
+
+        MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
+
+        System.out.println(c.size());
+        System.out.println(tropas);
+
+        if(c.size() -1 == casillaActual){
+            System.out.println("Fin del juego!");
+            finalJuego = true;
+        }else{
+            finalJuego = false;
+        }
+
+        return finalJuego;
     }
 }
 

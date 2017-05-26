@@ -38,6 +38,8 @@ public class FinalScreen implements Screen {
         Settings.pantalla = 4;
 
         camera = AssetManager.camera;
+        camera.setToOrtho(true);
+        camera.update();
 
         // Creamos el Viewport con las mismas dimensiones que la Camara
         viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);

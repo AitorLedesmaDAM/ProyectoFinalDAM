@@ -2,11 +2,8 @@ package com.proyectofinal.game.utils;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.proyectofinal.game.helpers.AssetManager;
 
 /**
  * Created by ALUMNEDAM on 26/05/2017.
@@ -21,7 +18,7 @@ public class Musica {
 
         actores = stage.getActors();
         System.out.println(actores.size);
-        for (int i = 0; i < actores.size; i++){
+       /* for (int i = 0; i < actores.size; i++){
             System.out.println(actores.get(i).getName());
 
         }
@@ -63,7 +60,7 @@ public class Musica {
             containerMusicMute.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
             stage.addAction(Actions.removeActor(containerMusic));
             stage.addActor(containerMusicMute);
-      }
+      }*/
 
 
 

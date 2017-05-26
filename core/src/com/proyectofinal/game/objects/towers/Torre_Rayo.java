@@ -15,7 +15,7 @@ public class Torre_Rayo extends Torres {
 
     public Torre_Rayo(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo) {
         super(x, y, orientacion, circuloWidth, circuloHeight, radio, vida, danyo);
-        rayo = new Rayo(x-radio,y-radio, radio);
+        rayo = new Rayo(x - radio + circuloWidth,y - radio + circuloHeight,radio);
     }
 
     @Override
