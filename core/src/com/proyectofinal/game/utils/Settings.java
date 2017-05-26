@@ -14,6 +14,9 @@ public class Settings {
     public static final int MINIMAPA_WIDTH = 650;
     public static final int MINIMAPA_HEIGHT = 350;
 
+    public static final int MUSICICONO_WIDTH = 100;
+    public static final int MUSICICONO_HEIGHT = 100;
+
     //medidas botones seleccion de tropas de SeleccionScreen y AtaqueScreen
     public static final int TROPA_SELEC_WIDTH = 250;
     public static final int TROPA_SELEC_HEIGHT = 300;
@@ -26,5 +29,6 @@ public class Settings {
 
     public static int pantalla = 0;
 
+    public static boolean music = true;
 
 }

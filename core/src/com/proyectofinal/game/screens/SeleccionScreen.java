@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
+import com.proyectofinal.game.utils.Musica;
 import com.proyectofinal.game.utils.Settings;
 
 public class SeleccionScreen implements Screen{
@@ -30,7 +32,16 @@ public class SeleccionScreen implements Screen{
     private Label contador, textoTropas, costeCaballero, costeNinja, costeRobot;
     private int maxTropasContador, contadorTropas;
 
-    private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero, containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja, containerRobot, containerBoton;
+    private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero,
+            containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja,
+            containerRobot, containerBoton, containerMusic, containerMusicMute;
+
+    Musica m = new Musica();
+
+    public SeleccionScreen(){
+
+    }
+
 
     /**
     * Constructor
@@ -54,6 +65,15 @@ public class SeleccionScreen implements Screen{
         // Pasamos el maximo de tropas posibles de lo que se pasa por parametros a variables locales
         maxTropasContador = _maxTropasContador;
         contadorTropas = _maxTropasContador;
+/**
+        if (Settings.music) {
+            AssetManager.musicStart.play();
+        }
+
+*/
+
+
+
 
         // Creamos todos los Contenedores de datos para la segunda pantalla
         miniMapa = new Container(new Image(AssetManager.mapa1));    //Imagen del mapa
@@ -66,13 +86,21 @@ public class SeleccionScreen implements Screen{
         containerTropasMax = new Container(contador);
         containerTropasMax.setTransform(true);
         containerTropasMax.center();
-        containerTropasMax.setPosition(350, 175);
+        containerTropasMax.setPosition(350, 250);
 
         textoTropas = new Label("Tropas máximas restantes: ", textStylePequenio);   //Texto encima del contador
         containerTextocontainerTropasMax = new Container(textoTropas);
         containerTextocontainerTropasMax.setTransform(true);
         containerTextocontainerTropasMax.center();
-        containerTextocontainerTropasMax.setPosition(400,50);
+        containerTextocontainerTropasMax.setPosition(400,150);
+
+
+
+
+
+
+
+
 
         Image caballero = new Image(AssetManager.caballeroSelec);   //Selección de caballero
         caballero.setName("Caballero");
@@ -146,9 +174,41 @@ public class SeleccionScreen implements Screen{
         stage.addActor(containerCosteNinja);
         stage.addActor(containerCosteRobot);
 
+
+/**
+        if (Settings.music) {
+
+            Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
+            musicIcono.setName("Music");
+            containerMusic = new Container(musicIcono);
+            containerMusic.setTransform(true);
+            containerMusic.center();
+            containerMusic.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
+            containerMusic.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
+            stage.addActor(containerMusic);
+
+
+        }
+        if (!Settings.music ){
+            Image musicIcono = new Image(AssetManager.musicMute);   //Selección de musica
+            musicIcono.setName("MusicMute");
+            containerMusicMute = new Container(musicIcono);
+            containerMusicMute.setTransform(true);
+            containerMusicMute.center();
+            containerMusicMute.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
+            containerMusicMute.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
+            stage.addActor(containerMusicMute);
+
+
+        }
+
+*/
+
+
         // Hacemos que los Contenedores se puedan pulsar
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
+
 
     /**
     * Metodo para restar de las tropas maximas el valor de la tropa seleccionada
@@ -179,6 +239,9 @@ public class SeleccionScreen implements Screen{
 
         stage.draw();
         stage.act(delta);
+
+        m.iconoMusica(stage);
+
     }
 
     @Override
@@ -213,7 +276,10 @@ public class SeleccionScreen implements Screen{
     public void siguientePantalla(){
         if (contadorTropas < 25) {
             // Se le pasara a la siguiente pantalla el numero de cada tropa seleccionada
-           game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
+           //game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
+
+            game.setScreen(new FinalScreen(true));
+
             dispose();
         }
     }

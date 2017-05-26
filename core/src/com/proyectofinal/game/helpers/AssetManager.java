@@ -23,12 +23,12 @@ import com.proyectofinal.game.utils.Settings;
 public class AssetManager {
 
     //Atibutos como Texturas.
-    public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig;
+    public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig, textureMusic, textureMusicMute ;
     //Atributos de Animaciones
     public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre, rayoTorre;
 
     //Sprites
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig, musicIcono, musicMute;
     public static Sprite torreF, torreF2, torreFMuerta, torreF2Muerta, torreR, torreR2, torreRMuerta, torreR2Muerta;
 
     //Bitmap para difeentes fuentes
@@ -129,6 +129,13 @@ public class AssetManager {
         btnSig = new Sprite(textureBtnSig);
         btnSig.flip(false, true);
 
+        textureMusic = new Texture(Gdx.files.internal("otros/musicIcono.png"));
+        musicIcono = new Sprite(textureMusic);
+        musicIcono.flip(false, true);
+
+        textureMusicMute = new Texture(Gdx.files.internal("otros/musicIconoMute.png"));
+        musicMute = new Sprite(textureMusicMute);
+        musicMute.flip(false, true);
 
         //Musica
         musicStart = Gdx.audio.newMusic(Gdx.files.internal("musica/start.mp3"));

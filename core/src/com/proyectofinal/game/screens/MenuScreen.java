@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
+import com.proyectofinal.game.utils.Musica;
 import com.proyectofinal.game.utils.Settings;
 
 public class MenuScreen implements Screen {
@@ -25,6 +26,15 @@ public class MenuScreen implements Screen {
     private Label textLbl, textLbl2, textLbl3, textLbl4, textLbl5, textLbl6, textLbl7, textLbl8, titulo;
     private Container container1, container2, container3,container4, container5, container6, container7, container8, contenedorTitulo;
 
+    public Container containerMusic;
+
+    Musica m = new Musica();
+
+    public MenuScreen(){
+
+    }
+
+
     /**
     * Constructor
     * Le pasamos el game por parametros
@@ -32,8 +42,13 @@ public class MenuScreen implements Screen {
     public MenuScreen(TowerAttack game) {
         this.game = game;
         Settings.pantalla = 1;
-        AssetManager.musicStart.play();
 
+/**
+        //Image mIcono = new Image(AssetManager.musicIcono);
+        if (Settings.music) {
+            AssetManager.musicStart.play();
+        }
+*/
         camera = AssetManager.camera;
 
         // Creamos el Viewport con las mismas dimensiones que la cCamara
@@ -48,6 +63,19 @@ public class MenuScreen implements Screen {
         // Ponemos los estilos de texto a los LabelStyle
         textStyle = AssetManager.textStyle;
         textStyleTitulo = AssetManager.textStyleTitulo;
+
+
+        Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
+        musicIcono.setName("Music");
+        containerMusic = new Container(musicIcono);
+        containerMusic.setTransform(true);
+        containerMusic.center();
+        containerMusic.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
+        containerMusic.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
+        stage.addActor(containerMusic);
+
+
+
 
         // Añadimos los Labels con el texto que queremos y el estilo de letra
         textLbl = new Label("1", textStyle);
@@ -119,8 +147,15 @@ public class MenuScreen implements Screen {
         stage.addActor(container7);
         stage.addActor(container8);
 
+        //stage.addActor(containerMusic);
+
+
         // Hacemos que los Contenedores se puedan pulsar
         Gdx.input.setInputProcessor(new InputHandler(this));
+    }
+
+    public void canviarMusica(){
+        m.iconoMusica(stage);
     }
 
     @Override
