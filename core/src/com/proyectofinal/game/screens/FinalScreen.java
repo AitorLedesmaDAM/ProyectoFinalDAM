@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
+import com.proyectofinal.game.utils.Musica;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -32,6 +33,8 @@ public class FinalScreen implements Screen {
     private Container contenedorTitulo;
     private Container containerBtSalir, containerBtSig, containerBtReniciar;
     private TowerAttack game;
+
+    Musica m = new Musica();
 
     /**
     * Constructor
@@ -128,8 +131,13 @@ public class FinalScreen implements Screen {
         // Añadimos el ContainerBtSalir como Actor al Stage
         stage.addActor(containerBtSalir);
 
+        canviarMusica();
 
         Gdx.input.setInputProcessor(new InputHandler(this));
+    }
+
+    public void canviarMusica(){
+        m.iconoMusica(stage);
     }
 
     @Override

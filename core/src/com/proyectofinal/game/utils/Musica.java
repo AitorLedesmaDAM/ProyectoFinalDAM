@@ -25,7 +25,11 @@ public class Musica {
 
         if (Settings.music){
 
-            AssetManager.musicStart.play();
+            if (Settings.pantalla == 1 || Settings.pantalla == 2) {
+                AssetManager.musicStart.play();
+            }else{
+                AssetManager.musicEnd.play();
+            }
             Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
 
             musicIcono.setName("Music");
@@ -41,7 +45,11 @@ public class Musica {
         if (Settings.music==false ){
 
 
-            AssetManager.musicStart.dispose();
+            if (Settings.pantalla == 1 || Settings.pantalla == 2) {
+                AssetManager.musicStart.dispose();
+            }else{
+                AssetManager.musicEnd.dispose();
+            }
             Image musicIcono = new Image(AssetManager.musicMute);   //Selección de musica
             musicIcono.setName("MusicMute");
             containerMusicMute = new Container(musicIcono);
@@ -61,3 +69,46 @@ public class Musica {
 
 
 }
+
+
+/**
+ public void iconoMusica(Stage stage){
+
+ actores = stage.getActors();
+ System.out.println(actores.size);
+
+
+ if (Settings.music){
+
+ AssetManager.musicStart.play();
+ Image musicIcono = new Image(AssetManager.musicIcono);   //Selección de musica
+
+ musicIcono.setName("Music");
+ containerMusic = new Container(musicIcono);
+ containerMusic.setTransform(true);
+ containerMusic.center();
+ containerMusic.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
+ containerMusic.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
+ stage.addActor(containerMusic);
+ stage.addAction(Actions.removeActor(containerMusicMute));
+
+ }
+ if (Settings.music==false ){
+
+
+ AssetManager.musicStart.dispose();
+ Image musicIcono = new Image(AssetManager.musicMute);   //Selección de musica
+ musicIcono.setName("MusicMute");
+ containerMusicMute = new Container(musicIcono);
+ containerMusicMute.setTransform(true);
+ containerMusicMute.center();
+ containerMusicMute.setSize(Settings.MUSICICONO_WIDTH, Settings.MUSICICONO_HEIGHT);
+ containerMusicMute.setPosition(Settings.MUSICICONO_WIDTH - 50, 20);
+
+ //stage.addAction(Actions.removeActor(containerMusic));
+ stage.addActor(containerMusicMute);
+ stage.addAction(Actions.removeActor(containerMusic));
+
+ }
+
+ }*/

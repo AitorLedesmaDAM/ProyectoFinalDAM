@@ -139,20 +139,20 @@ public class AssetManager {
 
         //Musica
         musicStart = Gdx.audio.newMusic(Gdx.files.internal("musica/start.mp3"));
-        musicStart.setVolume(0.5f);
+        musicStart.setVolume(1f);
         musicStart.setLooping(true);
 
         musicEnd = Gdx.audio.newMusic(Gdx.files.internal("musica/end.mp3"));
-        musicEnd.setVolume(0.2f);
+        musicEnd.setVolume(1f);
         musicEnd.setLooping(true);
 
 
         soundAttack = Gdx.audio.newSound(Gdx.files.internal("musica/attack.mp3"));
-        soundAttack.setVolume(1, 0.2f);
+        soundAttack.setVolume(1, 0.8f);
         soundAttack.setLooping(1, true);
 
         soundFireball = Gdx.audio.newSound(Gdx.files.internal("musica/fireball.wav"));
-        soundFireball.setVolume(2, 0.2f);
+        soundFireball.setVolume(2, 0.8f);
         soundFireball.setLooping(2, true);
 
 
@@ -161,15 +161,15 @@ public class AssetManager {
         soundWalk.setLooping(3, true);
 
         soundDead = Gdx.audio.newSound(Gdx.files.internal("musica/dead.wav"));
-        soundDead.setVolume(4, 0.2f);
+        soundDead.setVolume(4, 0.8f);
         soundDead.setLooping(4, true);
 
         soundDead1 = Gdx.audio.newSound(Gdx.files.internal("musica/dead1.wav"));
-        soundDead1.setVolume(5, 0.2f);
+        soundDead1.setVolume(5, 0.8f);
         soundDead1.setLooping(5, true);
 
         soundDead2 = Gdx.audio.newSound(Gdx.files.internal("musica/dead2.wav"));
-        soundDead2.setVolume(6, 0.2f);
+        soundDead2.setVolume(6, 0.8f);
         soundDead2.setLooping(6, true);
 
 

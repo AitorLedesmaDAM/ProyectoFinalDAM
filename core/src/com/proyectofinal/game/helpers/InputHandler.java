@@ -155,6 +155,11 @@ public class InputHandler implements InputProcessor {
                 } else if (opt.equals("Salir")) {
                     finalScreen.botonSalir();
                 }
+
+                if (opt.equals("Music") || opt.equals("MusicMute")){
+                    Settings.music = !Settings.music;
+                    finalScreen.canviarMusica();
+                }
             }
 
 
