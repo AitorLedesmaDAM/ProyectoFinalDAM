@@ -39,7 +39,7 @@ public class Nivel {
                 danyo = 4;
                 radio = 300;
 
-                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, orientaBala));
+                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
 
             }else {
 
@@ -47,7 +47,7 @@ public class Nivel {
                 danyo = 2;
                 radio = 300;
 
-                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, orientaBala));
+                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
             }
         }
         return torres;

@@ -32,9 +32,9 @@ public class Robot extends Tropas {
         //System.out.println(attack);
         //System.out.println(orientacionBala());
         if (!isanimacionCaminar()){
+            if(attack){
 
-
-            if(!orientacionBala()) {
+           // if(!orientacionBala()) {
                 batch.draw(AssetManager.robotAttack.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 142, 140, 1f, 1f, 0);
                 batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + num+150, getCollisionRect().y, 0 , 0 , 100, 150, 1f, 1f, Math.abs(torreY + torreX));
                 batch.draw(AssetManager.robotMuzzle.getKeyFrame(getTiempoDeEstado()), getCollisionRect().x + 400 , getCollisionRect().y, 0, 0, 100, 150, 1f, 1f, (float)Math.atan2(getX() - 0, getY() - 0));

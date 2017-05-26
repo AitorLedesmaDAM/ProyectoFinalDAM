@@ -11,12 +11,12 @@ import com.proyectofinal.game.objects.towers.attack.Rayo;
 public class Torre_Rayo extends Torres {
     private Rayo rayo;
 
+    public float tiempoDeEstado = 0;
+
     public Torre_Rayo(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo) {
         super(x, y, orientacion, circuloWidth, circuloHeight, radio, vida, danyo);
-        rayo = new Rayo(x,y);
-
+        rayo = new Rayo(x-radio,y-radio, radio);
     }
-
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -45,5 +45,14 @@ public class Torre_Rayo extends Torres {
                 rayo.setVisible(false);
             }
         }
+        rayo.draw(batch, parentAlpha);
+
+    }
+
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        rayo.setTiempoDeEstado(rayo.getTiempoDeEstado()+(delta/2));
     }
 }

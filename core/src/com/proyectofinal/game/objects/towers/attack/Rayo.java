@@ -12,11 +12,17 @@ public class Rayo extends Actor {
     private float x,y;
     public float tiempoDeEstado = 0;
     private boolean visible;
+    private float radio;
 
-    public Rayo (float x, float y){
-        this.x = x;
+    public Rayo (float x, float y, float radio){
+        this.x = x ;
         this.y = y;
-        visible = false;
+        //visible = false;
+        this.radio = radio * 2;
+    }
+
+    public Rayo(){
+
     }
 
     @Override
@@ -24,7 +30,8 @@ public class Rayo extends Actor {
 
         super.draw(batch, parentAlpha);
         if (visible) {
-            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x, y, 0, 0, 100, 100, 1f, 1f, 0);
+            batch.draw(AssetManager.rayoTorre.getKeyFrame(getTiempoDeEstado()), x, y, 0, 0, radio, radio, 1f, 1f, 0);
+            System.out.println(y/6);
         }
     }
 

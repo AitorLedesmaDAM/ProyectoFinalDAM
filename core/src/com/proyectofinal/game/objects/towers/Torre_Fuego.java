@@ -2,16 +2,20 @@ package com.proyectofinal.game.objects.towers;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.proyectofinal.game.helpers.AssetManager;
+import com.proyectofinal.game.objects.towers.attack.Fuego;
+import com.proyectofinal.game.objects.towers.attack.Rayo;
 
 /**
  * Created by ALUMNEDAM on 05/05/2017.
  */
 
 public class Torre_Fuego extends Torres {
-
+    private Fuego fuego;
+    public float tiempoDeEstado = 0;
 
     public Torre_Fuego(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo) {
         super(x, y, orientacion, circuloWidth, circuloHeight, radio, vida, danyo);
+        fuego = new Fuego(x - radio + circuloWidth,y - radio + circuloHeight,radio);
     }
 
     @Override
@@ -19,16 +23,41 @@ public class Torre_Fuego extends Torres {
         if(orientacion) {
             if (viva) {
                 batch.draw(AssetManager.torreF, getX(), getY());
-            }else{
+                if(overlaps) {
+
+                        fuego.setVisible(true);
+                    }else{
+                        fuego.setVisible(false);
+                    }
+
+                }else{
                 batch.draw(AssetManager.torreFMuerta, getX(), getY());
+                fuego.setVisible(false);
             }
         }else{
             if (viva){
                 batch.draw(AssetManager.torreF2,getX(),getY());
-            }else{
+                if(overlaps) {
+
+                        fuego.setVisible(true);
+                    }else{
+                        fuego.setVisible(false);
+                    }
+
+
+                }else{
                 batch.draw(AssetManager.torreF2Muerta,getX(),getY());
+                fuego.setVisible(false);
             }
 
         }
+        fuego.draw(batch, parentAlpha);
     }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        fuego.setTiempoDeEstado(fuego.getTiempoDeEstado()+(delta/2));
+    }
+
 }

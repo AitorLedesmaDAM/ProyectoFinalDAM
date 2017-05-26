@@ -22,6 +22,7 @@ import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.objects.AtacarTorre;
 import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
+import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.towers.Torres;
 import com.proyectofinal.game.objects.towers.attack.Fuego;
 import com.proyectofinal.game.objects.trops.Tropas;
@@ -37,6 +38,9 @@ public class AtaqueScreen implements Screen {
 
     Tropas tropas;
     TiledMap mapa;
+    Torre_Fuego tf;
+
+    //Rayo rayo;
     OrthogonalTiledMapRenderer renderer;
     private Nivel nivel;
     OrthographicCamera camera;
@@ -83,6 +87,8 @@ public class AtaqueScreen implements Screen {
         camera.setToOrtho(false, 3200, 1600);
         renderer.setView(camera);
         camera.update();
+
+        //rayo = new Rayo();
 
         nivel = new Nivel();
 
@@ -181,10 +187,15 @@ public class AtaqueScreen implements Screen {
             for (int atacantes = 0; atacantes < tropasEnMapa.size(); atacantes++) {
                 Tropas tropaActual = tropasEnMapa.get(atacantes);
                 Torres torreActual = torres.get(defensoras);
-                orientacionRobot = torreActual.orientacionBala;
 
+                //torres.setTiempoDeEstado(torres.getTiempoDeEstado() + delta);
+               // rayo.setTiempoDeEstado(rayo.getTiempoDeEstado()+delta);
+                //tf.setTiempoDeEstado(tf.getTiempoDeEstado()+delta);
 
                 if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
+
+                    torreActual.setOverlaps(true);
+
 
                     if (tropasColisionadas.indexOf(tropaActual) == -1) {
                         tropaActual.setEstaAtacando(true);
@@ -194,9 +205,9 @@ public class AtaqueScreen implements Screen {
                         fuego.setVisible(true);
                     }
 
-                    if (tropasColisionadas.size() > 0){
-                        torreActual.setOverlaps(true);
-                    }
+                    //if (tropasColisionadas.size() > 0){
+
+                    //}
 
                     if (contador % 60 == 0 && contadorTropasMuertas < tropasColisionadas.size() && compruebaAtaqueTorre) {
                         compruebaAtaqueTorre = false;

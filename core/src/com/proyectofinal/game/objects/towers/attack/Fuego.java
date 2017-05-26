@@ -12,11 +12,13 @@ public class Fuego extends Actor {
     private float x,y;
     public float tiempoDeEstado = 0;
     private boolean visible;
+    private float radio;
 
-    public Fuego (float x, float y, int radio){
+    public Fuego (float x, float y, float radio){
         this.x = x;
         this.y = y;
         visible = false;
+        this.radio = radio * 2;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class Fuego extends Actor {
 
         super.draw(batch, parentAlpha);
         if (visible) {
-            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x, y, 0, 0, 60, 60, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x, y, 0, 0, radio, radio, 1f, 1f, 0);
         }
     }
 
