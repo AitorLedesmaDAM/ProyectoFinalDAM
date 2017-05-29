@@ -272,6 +272,7 @@ public class AtaqueScreen implements Screen {
     }
 
     private void renderDebug() {
+        
 
         debugRenderer.setProjectionMatrix(camera.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
