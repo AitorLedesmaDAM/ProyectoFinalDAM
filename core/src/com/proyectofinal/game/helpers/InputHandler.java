@@ -28,7 +28,6 @@ public class InputHandler implements InputProcessor {
     private FinalScreen finalScreen;
     private Stage stage;
     private Vector2 stageCoord;
-    private Container containerMusic, containerMusicMute;
     private int lvlInt;
 
     Musica m = new Musica();
@@ -58,14 +57,6 @@ public class InputHandler implements InputProcessor {
         if (keycode == Input.Keys.B) {
             AtaqueScreen.debug = !AtaqueScreen.debug;
         }
-
-        if (keycode == Input.Keys.C) {
-
-            Robot.attack = !Robot.attack;
-            System.out.println("C: pulsado");
-
-        }
-
         return false;
     }
 

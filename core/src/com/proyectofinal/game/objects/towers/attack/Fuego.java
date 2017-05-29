@@ -14,16 +14,15 @@ public class Fuego extends Actor {
     private boolean visible;
     private float radio;
 
-    public Fuego (float x, float y, float radio){
+    public Fuego (float x, float y, int radio){
         this.x = x;
         this.y = y;
-        visible = false;
         this.radio = radio * 2;
+        visible = false;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
         super.draw(batch, parentAlpha);
         if (visible) {
             batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x, y, 0, 0, radio, radio, 1f, 1f, 0);

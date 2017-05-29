@@ -208,11 +208,11 @@ public class AssetManager {
         robotMuzzle.setPlayMode(Animation.PlayMode.LOOP);
 
         TextureRegion[] regionFuegoTorre = TextureRegion.split(new Texture("torres/fuego_torre.png"), 192, 192)[0];
-        fuegoTorre = new Animation(0.12f, regionFuegoTorre);
+        fuegoTorre = new Animation(0.15f, regionFuegoTorre);
         fuegoTorre.setPlayMode(Animation.PlayMode.LOOP);
 
         TextureRegion[] regionRayoTorre = TextureRegion.split(new Texture("torres/rayo_torre.png"), 192, 192)[0];
-        rayoTorre = new Animation(0.12f, regionRayoTorre);
+        rayoTorre = new Animation(0.15f, regionRayoTorre);
         rayoTorre.setPlayMode(Animation.PlayMode.LOOP);
 
 

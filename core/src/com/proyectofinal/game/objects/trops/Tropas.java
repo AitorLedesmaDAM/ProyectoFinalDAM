@@ -3,6 +3,7 @@ package com.proyectofinal.game.objects.trops;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
@@ -16,7 +17,7 @@ import java.util.Random;
  */
 
 public class Tropas extends Actor{
-
+    
     public enum Estado {
         Atacando, Caminando
     }
@@ -32,7 +33,7 @@ public class Tropas extends Actor{
     private int desviacionY, desviacionX;
     public float tiempoDeEstado = 0;
     public int casillaActual = 0, casillasParaLlegarATorre = 0;
-    private boolean animacionCaminar, estaAtacando, colisionadoConTorre;
+    private boolean animacionCaminar, estaAtacando, colisionadoConTorre, proyectil = false;
     private Random random = new Random();
     public boolean ataqueCuerpoaCuerpo, ejecutaAtaque;
 
@@ -88,14 +89,9 @@ public class Tropas extends Actor{
     }
 
 
-    public void ataque(Vector2 origen, Vector2 destino){
+    public void ataque(Vector2 origen, Vector2 destino, Stage stage){
         ejecutaAtaque = true;
     }
-
-  /*  public abstract void act(float delta);
-
-    @Override
-    public  void draw(Batch batch, float parentAlpha);*/
 
     public float getX() {
         return position.x;
@@ -243,5 +239,13 @@ public class Tropas extends Actor{
 
     public void setColisionadoConTorre(boolean colisionadoConTorre) {
         this.colisionadoConTorre = colisionadoConTorre;
+    }
+
+    public boolean isProyectil() {
+        return proyectil;
+    }
+
+    public void setProyectil(boolean proyectil) {
+        this.proyectil = proyectil;
     }
 }

@@ -3,6 +3,7 @@ package com.proyectofinal.game.objects.towers;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.proyectofinal.game.utils.Settings;
 
@@ -14,7 +15,6 @@ public class Torres extends Actor {
     private Vector2 position;
     private int width, height, vida, danyo;
     private Circle collisionCircle;
-    public float tiempoDeEstado = 0;
     boolean orientacion, viva, overlaps;
     private float radius, circuloWidth, circuloHeight;
     Vector2 posicionAtaque;
@@ -45,10 +45,6 @@ public class Torres extends Actor {
         }else{
             posicionAtaque = new Vector2(position.x + circuloWidth, position.y - 50);
         }
-    }
-
-    public void atacar(){
-
     }
 
 

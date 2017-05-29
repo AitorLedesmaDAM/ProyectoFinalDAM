@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.proyectofinal.game.helpers.AssetManager;
+import com.proyectofinal.game.utils.Settings;
 
 /**
  * Created by ALUMNEDAM on 25/05/2017.
@@ -11,27 +12,45 @@ import com.proyectofinal.game.helpers.AssetManager;
 
 public class Bala extends Actor {
 
-    private Vector2 origen, destino, camino;
+    private Vector2 camino, destino, origen;
     public static Vector2 position;
     private float angle, tiempoDeEstado = 1;
 
     public Bala(Vector2 origen, Vector2 destino){
-        angle = (float) Math.atan2(origen.y - destino.y, origen.x - destino.y);
-        position = new Vector2(origen.x + 100, origen.y);
+        this.origen = origen;
+        this.destino = destino;
+        angle = (float) Math.atan2(origen.y - destino.y, origen.x - destino.x) * 120;
+        position = new Vector2(origen.x + 25, origen.y + 25);
         camino = new Vector2(destino.x - origen.x, destino.y - origen.y);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), position.x, position.y, 0, 0, 142, 140, 1f, 1f, angle);
+        batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), position.x, position.y, 0, 0, 50, 50, 1f, 1f, angle);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        //position.x += camino.x * delta;
-        //position.y += camino.y * delta;
+
+        if (origen.x < destino.x) {
+            if (position.x < destino.x) {
+                setTiempoDeEstado(getTiempoDeEstado() + delta);
+                position.x += (camino.x * delta) / Settings.VELOCIDAD_BALA;
+                position.y += (camino.y * delta) / Settings.VELOCIDAD_BALA;
+            } else {
+                this.remove();
+            }
+        }else{
+            if (position.x > destino.x) {
+                setTiempoDeEstado(getTiempoDeEstado() + delta);
+                position.x += (camino.x * delta) / Settings.VELOCIDAD_BALA;
+                position.y += (camino.y * delta) / Settings.VELOCIDAD_BALA;
+            } else {
+                this.remove();
+            }
+        }
     }
 
     public float getAngle() {

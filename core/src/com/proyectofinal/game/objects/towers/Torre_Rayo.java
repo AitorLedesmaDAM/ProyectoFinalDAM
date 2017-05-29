@@ -9,9 +9,8 @@ import com.proyectofinal.game.objects.towers.attack.Rayo;
  */
 
 public class Torre_Rayo extends Torres {
-    private Rayo rayo;
 
-    public float tiempoDeEstado = 0;
+    private Rayo rayo;
 
     public Torre_Rayo(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo) {
         super(x, y, orientacion, circuloWidth, circuloHeight, radio, vida, danyo);

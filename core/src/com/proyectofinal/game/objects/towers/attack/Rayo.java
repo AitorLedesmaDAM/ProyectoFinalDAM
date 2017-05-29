@@ -17,12 +17,7 @@ public class Rayo extends Actor {
     public Rayo (float x, float y, float radio){
         this.x = x ;
         this.y = y;
-        //visible = false;
         this.radio = radio * 2;
-    }
-
-    public Rayo(){
-
     }
 
     @Override

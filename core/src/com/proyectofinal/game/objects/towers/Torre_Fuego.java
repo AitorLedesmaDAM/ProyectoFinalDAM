@@ -11,11 +11,14 @@ import com.proyectofinal.game.objects.towers.attack.Rayo;
 
 public class Torre_Fuego extends Torres {
     private Fuego fuego;
-    public float tiempoDeEstado = 0;
 
     public Torre_Fuego(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo) {
         super(x, y, orientacion, circuloWidth, circuloHeight, radio, vida, danyo);
-        fuego = new Fuego(x - radio + circuloWidth,y - radio + circuloHeight,radio);
+        if (orientacion) {
+            fuego = new Fuego(x - radio + circuloWidth, y - radio + circuloHeight + 10, radio);
+        }else{
+            fuego = new Fuego(x - radio + circuloWidth -25, y - radio + circuloHeight, radio);
+        }
     }
 
     @Override
@@ -24,7 +27,6 @@ public class Torre_Fuego extends Torres {
             if (viva) {
                 batch.draw(AssetManager.torreF, getX(), getY());
                 if(overlaps) {
-
                         fuego.setVisible(true);
                     }else{
                         fuego.setVisible(false);
@@ -38,13 +40,10 @@ public class Torre_Fuego extends Torres {
             if (viva){
                 batch.draw(AssetManager.torreF2,getX(),getY());
                 if(overlaps) {
-
                         fuego.setVisible(true);
                     }else{
                         fuego.setVisible(false);
                     }
-
-
                 }else{
                 batch.draw(AssetManager.torreF2Muerta,getX(),getY());
                 fuego.setVisible(false);
