@@ -18,14 +18,16 @@ public class Torres extends Actor {
     boolean orientacion, viva, overlaps;
     private float radius, circuloWidth, circuloHeight;
     Vector2 posicionAtaque;
+    private String tipo;
 
-    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo)
+    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo, String tipo)
     {
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
         this.height = Settings.TROPA_HEIGHT;
         this.vida = vida;
         this.danyo = danyo;
+        this.tipo = tipo;
         viva = true;
         position = new Vector2(x, y);
         this.orientacion = orientacion;
@@ -68,6 +70,10 @@ public class Torres extends Actor {
         return collisionCircle;
     }
 
+    public void setCollisionCircle(Circle collisionCircle) {
+        this.collisionCircle = collisionCircle;
+    }
+
     public Vector2 getPosicionAtaque() {
         return posicionAtaque;
     }
@@ -106,6 +112,14 @@ public class Torres extends Actor {
 
     public void setOverlaps(boolean overlaps) {
         this.overlaps = overlaps;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
 

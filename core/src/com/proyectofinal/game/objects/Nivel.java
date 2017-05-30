@@ -46,7 +46,7 @@ public class Nivel {
                 danyo = 4;
                 radio = 300;
 
-                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
+                torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, "Rayo"));
 
             }else {
 
@@ -54,7 +54,7 @@ public class Nivel {
                 danyo = 2;
                 radio = 300;
 
-                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo));
+                torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, "Fuego"));
             }
         }
         return torres;
@@ -104,11 +104,7 @@ public class Nivel {
 
         MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
 
-        System.out.println(c.size());
-        System.out.println(casillaActual);
-
         if(c.size() -1 == casillaActual){
-            System.out.println("Fin del juego!");
             finalJuego = true;
         }else{
             finalJuego = false;

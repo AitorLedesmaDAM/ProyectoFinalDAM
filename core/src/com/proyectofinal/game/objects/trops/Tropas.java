@@ -17,7 +17,7 @@ import java.util.Random;
  */
 
 public class Tropas extends Actor{
-    
+
     public enum Estado {
         Atacando, Caminando
     }
@@ -36,6 +36,7 @@ public class Tropas extends Actor{
     private boolean animacionCaminar, estaAtacando, colisionadoConTorre, proyectil = false;
     private Random random = new Random();
     public boolean ataqueCuerpoaCuerpo, ejecutaAtaque;
+    private int contadorBala = 119;
 
     public Tropas(int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
         // Inicialitzem els arguments segons la crida del constructor
@@ -247,5 +248,13 @@ public class Tropas extends Actor{
 
     public void setProyectil(boolean proyectil) {
         this.proyectil = proyectil;
+    }
+
+    public int getContadorBala() {
+        return contadorBala;
+    }
+
+    public void setContadorBala(int contadorBala) {
+        this.contadorBala = contadorBala;
     }
 }

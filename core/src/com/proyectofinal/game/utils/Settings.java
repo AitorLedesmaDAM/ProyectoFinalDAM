@@ -25,7 +25,7 @@ public class Settings {
     public static final int TROPA_WIDTH = 70;
     public static final int TROPA_HEIGHT = 100;
     
-    public static final float VELOCIDAD_BALA = 2f;
+    public static final float VELOCIDAD_BALA = 1f;
 
     public static int pantalla = 0;
 

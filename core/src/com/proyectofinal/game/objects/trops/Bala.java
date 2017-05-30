@@ -3,6 +3,7 @@ package com.proyectofinal.game.objects.trops;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.utils.Settings;
 
@@ -12,15 +13,17 @@ import com.proyectofinal.game.utils.Settings;
 
 public class Bala extends Actor {
 
-    private Vector2 camino, destino, origen;
-    public static Vector2 position;
+    private boolean destruida = false;
+
+    private Vector2 camino, destino, origen, position;
     private float angle, tiempoDeEstado = 1;
+    Stage stage;
 
     public Bala(Vector2 origen, Vector2 destino){
         this.origen = origen;
         this.destino = destino;
         angle = (float) Math.atan2(origen.y - destino.y, origen.x - destino.x) * 120;
-        position = new Vector2(origen.x + 25, origen.y + 25);
+        position = new Vector2(origen.x, origen.y);
         camino = new Vector2(destino.x - origen.x, destino.y - origen.y);
     }
 
@@ -28,6 +31,7 @@ public class Bala extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw(AssetManager.robotBullet.getKeyFrame(getTiempoDeEstado()), position.x, position.y, 0, 0, 50, 50, 1f, 1f, angle);
+
     }
 
     @Override
@@ -37,10 +41,11 @@ public class Bala extends Actor {
         if (origen.x < destino.x) {
             if (position.x < destino.x) {
                 setTiempoDeEstado(getTiempoDeEstado() + delta);
-                position.x += (camino.x * delta) / Settings.VELOCIDAD_BALA;
-                position.y += (camino.y * delta) / Settings.VELOCIDAD_BALA;
+                position.x += camino.x * (Settings.VELOCIDAD_BALA/60);
+                position.y += camino.y * (Settings.VELOCIDAD_BALA/60);
             } else {
                 this.remove();
+                this.setDestruida(true);
             }
         }else{
             if (position.x > destino.x) {
@@ -49,6 +54,7 @@ public class Bala extends Actor {
                 position.y += (camino.y * delta) / Settings.VELOCIDAD_BALA;
             } else {
                 this.remove();
+                this.setDestruida(true);
             }
         }
     }
@@ -75,5 +81,13 @@ public class Bala extends Actor {
 
     public Vector2 getCamino() {
         return camino;
+    }
+
+    public boolean isDestruida() {
+        return destruida;
+    }
+
+    public void setDestruida(boolean destruida) {
+        this.destruida = destruida;
     }
 }

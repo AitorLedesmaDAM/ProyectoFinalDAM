@@ -195,7 +195,7 @@ public class AssetManager {
         robotRun = new Animation(0.12f, regionRobotRun);
         robotRun.setPlayMode(Animation.PlayMode.LOOP);
         TextureRegion[] regionRobotAtaque = TextureRegion.split(new Texture("tropas/robot_shoot.png"), 567, 556)[0];
-        robotAttack = new Animation(0.12f, regionRobotAtaque);
+        robotAttack = new Animation(0.17f, regionRobotAtaque);
         robotAttack.setPlayMode(Animation.PlayMode.LOOP);
 
         TextureRegion[] regionRobotBullet = TextureRegion.split(new Texture("tropas/robot_bullet.png"), 172, 139)[0];
@@ -207,8 +207,8 @@ public class AssetManager {
         robotMuzzle = new Animation(0.12f, regionRobotMuzzle);
         robotMuzzle.setPlayMode(Animation.PlayMode.LOOP);
 
-        TextureRegion[] regionFuegoTorre = TextureRegion.split(new Texture("torres/fuego_torre.png"), 192, 192)[0];
-        fuegoTorre = new Animation(0.15f, regionFuegoTorre);
+        TextureRegion[] regionFuegoTorre = TextureRegion.split(new Texture("torres/fuego_torre_2.png"), 512, 512)[0];
+        fuegoTorre = new Animation(0.10f, regionFuegoTorre);
         fuegoTorre.setPlayMode(Animation.PlayMode.LOOP);
 
         TextureRegion[] regionRayoTorre = TextureRegion.split(new Texture("torres/rayo_torre.png"), 192, 192)[0];

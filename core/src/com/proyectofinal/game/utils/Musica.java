@@ -20,7 +20,6 @@ public class Musica {
     public void iconoMusica(Stage stage){
 
         actores = stage.getActors();
-        System.out.println(actores.size);
 
 
         if (Settings.music){

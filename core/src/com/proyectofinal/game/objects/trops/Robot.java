@@ -25,8 +25,12 @@ public class Robot extends Tropas {
     public void ataque(Vector2 origen, Vector2 destino, Stage stage) {
         //bala.crearBala(origen, destino);
         super.ataque(origen, destino, stage);
-        bala = new Bala(origen, destino);
-        stage.addActor(bala);
+
+        if (bala == null || bala.isDestruida()) {
+            bala = new Bala(new Vector2(origen.x + getCollisionRect().getWidth() + 5, origen.y + (getCollisionRect().getHeight()/2) + 10), destino);
+            bala.setDestruida(false);
+            stage.addActor(bala);
+        }
     }
 
 

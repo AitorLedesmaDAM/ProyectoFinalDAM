@@ -13,11 +13,13 @@ public class Fuego extends Actor {
     public float tiempoDeEstado = 0;
     private boolean visible;
     private float radio;
+    private float curva;
 
     public Fuego (float x, float y, int radio){
-        this.x = x;
-        this.y = y;
-        this.radio = radio * 2;
+        this.x = x - 100;
+        this.y = y -100;
+        this.radio =  radio - (radio / 3);
+        curva = this.radio - (this.radio / 3);
         visible = false;
     }
 
@@ -25,7 +27,14 @@ public class Fuego extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (visible) {
-            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x, y, 0, 0, radio, radio, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x, y + radio, 0, 0, 300, 300, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x + radio, y, 0, 0, 300, 300, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x, y - radio, 0, 0, 300, 300, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x - radio, y, 0, 0, 300, 300, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x + curva, y + curva, 0, 0, 300, 300, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x + curva, y - curva, 0, 0, 300, 300, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x - curva, y + curva, 0, 0, 300, 300, 1f, 1f, 0);
+            batch.draw(AssetManager.fuegoTorre.getKeyFrame(getTiempoDeEstado()), x - curva, y - curva, 0, 0, 300, 300, 1f, 1f, 0);
         }
     }
 

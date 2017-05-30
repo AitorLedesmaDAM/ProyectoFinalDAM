@@ -12,9 +12,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
@@ -195,7 +197,7 @@ public class AtaqueScreen implements Screen {
                         hayTropasColisionadas = true;
                     }
 
-                    if (hayTropasColisionadas){
+                    if (hayTropasColisionadas) {
                         torreActual.setOverlaps(true);
                     }
 
@@ -203,16 +205,30 @@ public class AtaqueScreen implements Screen {
                     if (contador % 60 == 0 && tropasColisionadas.size() > 0 && compruebaAtaqueTorre) {
                         compruebaAtaqueTorre = false;
 
-                        tropasColisionadas.get(0).setVida(tropasColisionadas.get(0).getVida() - 1);
-                        if (tropasColisionadas.get(0).getVida() <= 0) {
-                            tropasColisionadas.get(0).setDanyo(0);
-                            tropasColisionadas.get(0).setVisible(false);
-                            if (tropasColisionadas.size() == 1){
-                                hayTropasColisionadas = false;
+                        if (torreActual.getTipo().equals("Fuego")) {
+                            tropasColisionadas.get(0).setVida(tropasColisionadas.get(0).getVida() - torreActual.getDanyo());
+                            if (tropasColisionadas.get(0).getVida() <= 0) {
+                                tropasColisionadas.get(0).setDanyo(0);
+                                tropasColisionadas.get(0).setVisible(false);
+                                if (tropasColisionadas.size() == 1) {
+                                    hayTropasColisionadas = false;
+                                }
+
+                                Tropas remove = tropasColisionadas.remove(0);
+                                tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
+                                borrarActorStage(remove);
+                                contadorTropasMuertas++;
                             }
-                            Tropas remove = tropasColisionadas.remove(0);
-                            tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
-                            contadorTropasMuertas++;
+                        } else if (torreActual.getTipo().equals("Rayo")) {
+                            for (int i = 0; i < tropasColisionadas.size(); i++) {
+                                tropasColisionadas.get(i).setVida(torreActual.getDanyo());
+                                if (tropasColisionadas.get(i).getVida() < 0) {
+                                    Tropas remove = tropasColisionadas.remove(i);
+                                    tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
+                                    borrarActorStage(remove);
+                                    contadorTropasMuertas++;
+                                }
+                            }
                         }
 
 
@@ -223,7 +239,7 @@ public class AtaqueScreen implements Screen {
                                     for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
                                         tropasColisionadas.get(tropas).setEstaAtacando(false);
                                     }
-                                    torreActual.getCollisionCircle().set(new Circle(10, 10, 5));
+                                    torreActual.getCollisionCircle().setRadius(5);
                                     torreActual.setViva(false);
                                     torreActual.setOverlaps(false);
                                 }
@@ -243,8 +259,9 @@ public class AtaqueScreen implements Screen {
                             }
                         }
                     } else {
+                        tropaActual.setContadorBala(tropaActual.getContadorBala() + 1);
                         tropaActual.setanimacionCaminar(false);
-                        if (contador % 120 == 0) {
+                        if (tropaActual.getContadorBala() % 120 == 0) {
                             tropaActual.ataque(tropaActual.getPosition(), new Vector2(torreActual.getCollisionCircle().x, torreActual.getCollisionCircle().y), stage);
                         }
                     }
@@ -253,14 +270,16 @@ public class AtaqueScreen implements Screen {
                     if (tropasColisionadas.size() > 0) {
                         for (int j = 0; j < tropasColisionadas.size(); j++) {
                             if (!tropasColisionadas.get(j).isEstaAtacando()) {
-                                if (!tropasColisionadas.get(j).salirDeTorre() && contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                    tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
-                                    tropasColisionadas.remove(j);
-                                }
-                            } else {
                                 if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                    tropasColisionadas.get(j).siguienteCasilla(camino);
+                                    if (!tropasColisionadas.get(j).salirDeTorre()) {
+                                        tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
+                                        tropasColisionadas.remove(j);
+                                    }
+                                } else {
+                                    if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
+                                        tropasColisionadas.get(j).siguienteCasilla(camino);
 
+                                    }
                                 }
                             }
                         }
@@ -282,6 +301,15 @@ public class AtaqueScreen implements Screen {
         batch.end();
     }else{
             game.setScreen(new FinalScreen(game, 1, true, batch));
+        }
+    }
+
+    public void borrarActorStage(Tropas tropa){
+        Array<Actor> actores = stage.getActors();
+        for (Actor actor: actores) {
+            if(actor.equals(tropa)){
+                actor.remove();
+            }
         }
     }
 
