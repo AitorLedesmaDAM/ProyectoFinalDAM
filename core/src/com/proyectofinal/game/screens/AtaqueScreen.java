@@ -45,6 +45,7 @@ public class AtaqueScreen implements Screen {
     Batch batch;
     Viewport viewport;
     private Stage stage;
+    public boolean esfinal = false;
 
     private ArrayList < Tropas > tropasEnMapa;
     public ArrayList < Camino > camino;
@@ -150,13 +151,15 @@ public class AtaqueScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+
         contador++;
         compruebaAtaqueTorre = true;
 
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        if(!isEsfinal()){
         camera.update();
         renderer.setView(camera);
         renderer.render();
@@ -168,6 +171,12 @@ public class AtaqueScreen implements Screen {
                 if (tropaActual.getEstado() == Tropas.Estado.Caminando) {
                     if (contador % tropaActual.getVelocidad() == 0) {
                         tropaActual.siguienteCasilla(camino);
+                        nivel.comproFinal(camino, tropaActual.getCasillaActual());
+
+                        if(nivel.comproFinal(camino, tropaActual.getCasillaActual()) == true) {
+
+                            setEsfinal(true);
+                        }
                     }
                 }
             }
@@ -230,6 +239,7 @@ public class AtaqueScreen implements Screen {
                         if (contador % tropaActual.getVelocidad() == 0) {
                             if (!tropaActual.siguienteCasillaAtaque(camino) && !tropaActual.llegarATorre(tropaActual.getY(), torreActual.getPosicionAtaque().y, torreActual.isOrientacion())) {
                                 tropaActual.setanimacionCaminar(false);
+
                             }
                         }
                     } else {
@@ -250,6 +260,7 @@ public class AtaqueScreen implements Screen {
                             } else {
                                 if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
                                     tropasColisionadas.get(j).siguienteCasilla(camino);
+
                                 }
                             }
                         }
@@ -269,10 +280,21 @@ public class AtaqueScreen implements Screen {
         batch.begin();
 
         batch.end();
+    }else{
+            game.setScreen(new FinalScreen(game, 1, true, batch));
+        }
+    }
+
+    public boolean isEsfinal() {
+        return esfinal;
+    }
+
+    public void setEsfinal(boolean esfinal) {
+        this.esfinal = esfinal;
     }
 
     private void renderDebug() {
-        
+
 
         debugRenderer.setProjectionMatrix(camera.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -296,6 +318,8 @@ public class AtaqueScreen implements Screen {
         debugRenderer.end();
 
     }
+
+
 
     @Override
     public void resize(int width, int height) {

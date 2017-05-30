@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Nivel {
 
     Tropas tropas;
-    boolean finalJuego;
+    boolean finalJuego = false;
 
     public Nivel() {
         tropas = new Tropas();
@@ -105,7 +105,7 @@ public class Nivel {
         MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
 
         System.out.println(c.size());
-        System.out.println(tropas);
+        System.out.println(casillaActual);
 
         if(c.size() -1 == casillaActual){
             System.out.println("Fin del juego!");
@@ -114,6 +114,10 @@ public class Nivel {
             finalJuego = false;
         }
 
+        return finalJuego;
+    }
+
+    public boolean isFinalJuego() {
         return finalJuego;
     }
 }
