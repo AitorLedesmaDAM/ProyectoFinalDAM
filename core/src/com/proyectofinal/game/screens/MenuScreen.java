@@ -159,7 +159,6 @@ public class MenuScreen implements Screen {
 */
     public void siguientePantalla(int lvl, int maxTropas){
         game.setScreen(new SeleccionScreen(game, stage.getViewport(), lvl, maxTropas));
-        //dispose();
     }
 
     

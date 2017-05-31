@@ -189,7 +189,7 @@ public class FinalScreen implements Screen {
 
     @Override
     public void dispose() {
-       // batch.dispose();
+
     }
 
     public Stage getStage() {
