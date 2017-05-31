@@ -222,6 +222,7 @@ public class AtaqueScreen implements Screen {
                         } else if (torreActual.getTipo().equals("Rayo")) {
                             for (int i = 0; i < tropasColisionadas.size(); i++) {
                                 tropasColisionadas.get(i).setVida(torreActual.getDanyo());
+                                System.out.println(tropasColisionadas.get(i));
                                 if (tropasColisionadas.get(i).getVida() < 0) {
                                     Tropas remove = tropasColisionadas.remove(i);
                                     tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
@@ -239,12 +240,17 @@ public class AtaqueScreen implements Screen {
                                     for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
                                         tropasColisionadas.get(tropas).setEstaAtacando(false);
                                     }
+                                    if (torreActual.isOrientacion()){
+                                        torreActual.getCollisionCircle().setY(torreActual.getCollisionCircle().y + 50);
+                                    }
                                     torreActual.getCollisionCircle().setRadius(5);
                                     torreActual.setViva(false);
                                     torreActual.setOverlaps(false);
                                 }
                             }
                         }
+
+                        System.out.println("Vida de la torre: " + torreActual.getVida());
                     }
 
                     tropaActual.setEstado(Tropas.Estado.Atacando);
