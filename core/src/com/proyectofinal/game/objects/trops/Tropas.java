@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.utils.Settings;
 
@@ -38,11 +37,11 @@ public class Tropas extends Actor{
     public boolean ataqueCuerpoaCuerpo, ejecutaAtaque;
     private int contadorBala = 119;
 
-    public Tropas(int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
+    public Tropas(float x, float y, int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
         // Inicialitzem els arguments segons la crida del constructor
         this.width = Settings.TROPA_WIDTH;
         this.height = Settings.TROPA_HEIGHT;
-        position = new Vector2(Nivel.recojerCamino().get(0).getX(), Nivel.recojerCamino().get(0).getY());
+        position = new Vector2(x,y);
         this.desviacionY = desviacionY;
         this.desviacionX = desviacionX;
         animacionCaminar = true;
@@ -69,25 +68,26 @@ public class Tropas extends Actor{
 
     }
 
-    public Tropas crearTropa(Tipo tipo){
+    public Tropas crearTropa(Tipo tipo, float x, float y){
         Tropas tropa = null;
         switch (tipo){
             case Caballero:
-                tropa = new Caballero(random.nextInt(125) + (-87), random.nextInt(150) + (-100), 10, 2, 3);
+                tropa = new Caballero(x, y, random.nextInt(125) + (-87), random.nextInt(150) + (-100), 10, 2, 3);
                 break;
 
             case Ninja:
-                tropa = new Ninja(random.nextInt(125) + (-87), random.nextInt(150) + (-100), 5, 5, 2);
+                tropa = new Ninja(x, y, random.nextInt(125) + (-87), random.nextInt(150) + (-100), 5, 5, 2);
                 break;
 
             case Robot:
-                tropa = new Robot(random.nextInt(125) + (-115), random.nextInt(150) + (-90), 7, 4, 3);
+                tropa = new Robot(x, y, random.nextInt(125) + (-115), random.nextInt(150) + (-90), 7, 4, 3);
                 break;
             default:
                 return tropa;
         }
         return tropa;
     }
+
 
 
     public void ataque(Vector2 origen, Vector2 destino, Stage stage){

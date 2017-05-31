@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -24,6 +23,7 @@ public class SeleccionScreen implements Screen{
     private TowerAttack game;
     OrthographicCamera camera;
     Viewport viewport;
+    int lvl;
     public int numCaballero, numNinja, numRobot;
 
     private Label.LabelStyle textStyle, textStylePequenio;
@@ -51,12 +51,11 @@ public class SeleccionScreen implements Screen{
     ** lvl : Nivel que se a elejido jugar
     ** maxTropasContador : El numero de tropas maximas permitidas para ese nivel
     */
-    public SeleccionScreen(TowerAttack game, Batch batch, Viewport _viewport, int lvl, int _maxTropasContador) {
+    public SeleccionScreen(TowerAttack game, Viewport _viewport, int lvl, int _maxTropasContador) {
         this.game = game;
         Settings.pantalla = 2;
-
         camera = AssetManager.camera;
-
+        this.lvl = lvl;
         // Ponemos los estilos de texto a los LabelStyle
         textStyle = AssetManager.textStyle;
         textStylePequenio = AssetManager.textStylePequenio;
@@ -68,7 +67,11 @@ public class SeleccionScreen implements Screen{
 
 
         // Creamos todos los Contenedores de datos para la segunda pantalla
-        miniMapa = new Container(new Image(AssetManager.mapa1));    //Imagen del mapa
+        if(lvl == 1) {
+            miniMapa = new Container(new Image(AssetManager.mapa1));    //Imagen del mapa
+        }else if(lvl == 2){
+            miniMapa = new Container(new Image(AssetManager.mapa2));    //Imagen del mapa
+        }
         miniMapa.setTransform(true);
         miniMapa.center();
         miniMapa.setSize(Settings.MINIMAPA_WIDTH, Settings.MINIMAPA_HEIGHT);    //Tamaño de la Imagen
@@ -142,7 +145,7 @@ public class SeleccionScreen implements Screen{
         viewport = _viewport;
 
         // Creamos el Stage y le asignamos el Viewport
-        stage = new Stage(viewport, batch);
+        stage = new Stage(viewport);
 
         // Añadimos el Fondo
         stage.addActor(new Image(AssetManager.background));
@@ -228,6 +231,9 @@ public class SeleccionScreen implements Screen{
 
     @Override
     public void dispose() {
+        //stage.getBatch().dispose();
+       //game.dispose();
+       // AssetManager.dispose();
 
     }
     
@@ -237,9 +243,9 @@ public class SeleccionScreen implements Screen{
     public void siguientePantalla(){
         if (contadorTropas < 25) {
             // Se le pasara a la siguiente pantalla el numero de cada tropa seleccionada
-           game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot));
+           game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot, lvl));
 
-            dispose();
+            //dispose();
         }
     }
 

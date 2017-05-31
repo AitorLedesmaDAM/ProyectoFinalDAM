@@ -28,7 +28,7 @@ public class AssetManager {
     public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre, rayoTorre;
 
     //Sprites
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig, musicIcono, musicMute;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1,mapa2, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig, musicIcono, musicMute;
     public static Sprite torreF, torreF2, torreFMuerta, torreF2Muerta, torreR, torreR2, torreRMuerta, torreR2Muerta;
 
     //Bitmap para difeentes fuentes
@@ -43,7 +43,7 @@ public class AssetManager {
     public static OrthographicCamera camera;
 
     //TiledMap
-    public static TiledMap tiledMap;
+    public static TiledMap tiledMap1, tiledMap2;
     //OrthogonalTiledMapRenderer
     public static OrthogonalTiledMapRenderer renderer;
 
@@ -78,6 +78,9 @@ public class AssetManager {
         //Se carga la textura de mapa en sprite.
         mapa1 = new Sprite(new Texture(Gdx.files.internal("texturas/mapa1.png")));
         mapa1.flip(false, true);
+
+        mapa2 = new Sprite(new Texture(Gdx.files.internal("texturas/mapa2.png")));
+        mapa2.flip(false, true);
 
         //Carrgamos las texturas de selecionar tropas en sprites.
         caballeroSelec = new Sprite(new Texture(Gdx.files.internal("tropas/caballeroSelec_prueba.png")));
@@ -243,9 +246,9 @@ public class AssetManager {
         camera.setToOrtho(true);
 
         //Inicializamos el mapa donde se juega el juego.
-        tiledMap = new TmxMapLoader().load("texturas/mapa1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(tiledMap);
+        tiledMap1 = new TmxMapLoader().load("texturas/mapa1.tmx");
 
+        tiledMap2 = new TmxMapLoader().load("texturas/mapa2.tmx");
 
     }
 

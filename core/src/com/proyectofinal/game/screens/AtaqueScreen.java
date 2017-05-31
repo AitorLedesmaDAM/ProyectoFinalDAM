@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -64,34 +63,42 @@ public class AtaqueScreen implements Screen {
     public int contadorTropasMuertas = 0;
     private boolean compruebaAtaqueTorre = true, hayTropasColisionadas;
     private Container containerCaballero, containerNinja, containerRobot;
+    public int lvl;
 
-    public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots) {
+    public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots, int lvl) {
         this.game = game;
         Settings.pantalla = 3;
         this.maxCaballeros = maxCaballeros;
         this.maxNinjas = maxNinjas;
         this.maxRobots = maxRobots;
+        this.lvl = lvl;
 
 
         debugRenderer = new ShapeRenderer();
 
         tropas = new Tropas();
 
-        mapa = AssetManager.tiledMap;
-        renderer = AssetManager.renderer;
+        if (lvl == 1){
+            mapa = AssetManager.tiledMap1;
+        }else if (lvl == 2){
+            mapa = AssetManager.tiledMap2;
+        }
+
+        renderer = new OrthogonalTiledMapRenderer(mapa);
+
 
         camera = AssetManager.camera;
         camera.setToOrtho(false, 3200, 1600);
         renderer.setView(camera);
         camera.update();
 
-        //rayo = new Rayo();
+
 
         nivel = new Nivel();
 
         tropasEnMapa = new ArrayList < Tropas > ();
 
-        camino = nivel.recojerCamino();
+        camino = nivel.recojerCamino(mapa);
         tropasColisionadas = new ArrayList < Tropas > ();
 
         Image caballero = new Image(AssetManager.caballeroSelecAtak); //Selección de caballero
@@ -137,7 +144,7 @@ public class AtaqueScreen implements Screen {
         }
 
         //bucle para saber las posiciones de los objetos torre
-        torres = nivel.recojerTorres();
+        torres = nivel.recojerTorres(mapa);
 
         for (int i = 0; i < torres.size(); i++) {
             stage.addActor(torres.get(i));
@@ -161,152 +168,160 @@ public class AtaqueScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(!isEsfinal()){
+
+        if (tropasEnMapa.size() == 0 && maxCaballeros == 0 && maxRobots == 0 && maxNinjas == 0) {
+            game.setScreen(new FinalScreen(game, lvl, false));
+            setEsfinal(true);
+
+        } else {
+
         camera.update();
         renderer.setView(camera);
         renderer.render();
 
-        if (tropasEnMapa != null) {
-            for (int i = 0; i < tropasEnMapa.size(); i++) {
-                Tropas tropaActual = tropasEnMapa.get(i);
-                tropaActual.setTiempoDeEstado(tropaActual.getTiempoDeEstado() + delta);
-                if (tropaActual.getEstado() == Tropas.Estado.Caminando) {
-                    if (contador % tropaActual.getVelocidad() == 0) {
-                        tropaActual.siguienteCasilla(camino);
-                        nivel.comproFinal(camino, tropaActual.getCasillaActual());
 
-                        if(nivel.comproFinal(camino, tropaActual.getCasillaActual()) == true) {
 
-                            setEsfinal(true);
+
+            if (tropasEnMapa != null) {
+                for (int i = 0; i < tropasEnMapa.size(); i++) {
+                    Tropas tropaActual = tropasEnMapa.get(i);
+                    tropaActual.setTiempoDeEstado(tropaActual.getTiempoDeEstado() + delta);
+                    if (tropaActual.getEstado() == Tropas.Estado.Caminando) {
+                        if (contador % tropaActual.getVelocidad() == 0) {
+                            tropaActual.siguienteCasilla(camino);
+                            nivel.comproFinal(camino, tropaActual.getCasillaActual());
+
+                            if (nivel.comproFinal(camino, tropaActual.getCasillaActual())) {
+                                game.setScreen(new FinalScreen(game, lvl, true));
+                                setEsfinal(true);
+                            }
                         }
                     }
                 }
             }
-        }
 
-        for (int defensoras = 0; defensoras < torres.size(); defensoras++) {
-            Torres torreActual = torres.get(defensoras);
-            for (int atacantes = 0; atacantes < tropasEnMapa.size(); atacantes++) {
-                Tropas tropaActual = tropasEnMapa.get(atacantes);
+            for (int defensoras = 0; defensoras < torres.size(); defensoras++) {
+                Torres torreActual = torres.get(defensoras);
+                for (int atacantes = 0; atacantes < tropasEnMapa.size(); atacantes++) {
+                    Tropas tropaActual = tropasEnMapa.get(atacantes);
 
-                if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
+                    if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
 
-                    if (contador % 60 == 0 && tropasColisionadas.indexOf(tropaActual) == -1) {
-                        tropaActual.setEstaAtacando(true);
-                        tropasColisionadas.add(tropaActual);
-                        hayTropasColisionadas = true;
-                    }
+                        if (contador % 60 == 0 && tropasColisionadas.indexOf(tropaActual) == -1) {
+                            tropaActual.setEstaAtacando(true);
+                            tropasColisionadas.add(tropaActual);
+                            hayTropasColisionadas = true;
+                        }
 
-                    if (hayTropasColisionadas) {
-                        torreActual.setOverlaps(true);
-                    }
+                        if (hayTropasColisionadas) {
+                            torreActual.setOverlaps(true);
+                        }
 
 
-                    if (contador % 60 == 0 && tropasColisionadas.size() > 0 && compruebaAtaqueTorre) {
-                        compruebaAtaqueTorre = false;
+                        if (contador % 60 == 0 && tropasColisionadas.size() > 0 && compruebaAtaqueTorre) {
+                            compruebaAtaqueTorre = false;
 
-                        if (torreActual.getTipo().equals("Fuego")) {
-                            tropasColisionadas.get(0).setVida(tropasColisionadas.get(0).getVida() - torreActual.getDanyo());
-                            if (tropasColisionadas.get(0).getVida() <= 0) {
-                                tropasColisionadas.get(0).setDanyo(0);
-                                tropasColisionadas.get(0).setVisible(false);
-                                if (tropasColisionadas.size() == 1) {
-                                    hayTropasColisionadas = false;
-                                }
+                            if (torreActual.getTipo().equals("Fuego")) {
+                                tropasColisionadas.get(0).setVida(tropasColisionadas.get(0).getVida() - torreActual.getDanyo());
+                                if (tropasColisionadas.get(0).getVida() <= 0) {
+                                    tropasColisionadas.get(0).setDanyo(0);
+                                    tropasColisionadas.get(0).setVisible(false);
+                                    if (tropasColisionadas.size() == 1) {
+                                        hayTropasColisionadas = false;
+                                    }
 
-                                Tropas remove = tropasColisionadas.remove(0);
-                                tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
-                                borrarActorStage(remove);
-                                contadorTropasMuertas++;
-                            }
-                        } else if (torreActual.getTipo().equals("Rayo")) {
-                            for (int i = 0; i < tropasColisionadas.size(); i++) {
-                                tropasColisionadas.get(i).setVida(torreActual.getDanyo());
-                                System.out.println(tropasColisionadas.get(i));
-                                if (tropasColisionadas.get(i).getVida() < 0) {
-                                    Tropas remove = tropasColisionadas.remove(i);
+                                    Tropas remove = tropasColisionadas.remove(0);
                                     tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
                                     borrarActorStage(remove);
                                     contadorTropasMuertas++;
                                 }
-                            }
-                        }
-
-
-                        for (int danyoTorre = 0; danyoTorre < tropasColisionadas.size(); danyoTorre++) {
-                            if (!tropasColisionadas.get(danyoTorre).isanimacionCaminar()) {
-                                torreActual.setVida(torreActual.getVida() - tropasColisionadas.get(danyoTorre).getDanyo());
-                                if (torreActual.getVida() <= 0) {
-                                    for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
-                                        tropasColisionadas.get(tropas).setEstaAtacando(false);
+                            } else if (torreActual.getTipo().equals("Rayo")) {
+                                for (int i = 0; i < tropasColisionadas.size(); i++) {
+                                    tropasColisionadas.get(i).setVida(torreActual.getDanyo());
+                                    System.out.println(tropasColisionadas.get(i));
+                                    if (tropasColisionadas.get(i).getVida() < 0) {
+                                        Tropas remove = tropasColisionadas.remove(i);
+                                        tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
+                                        borrarActorStage(remove);
+                                        contadorTropasMuertas++;
                                     }
-                                    if (torreActual.isOrientacion()){
-                                        torreActual.getCollisionCircle().setY(torreActual.getCollisionCircle().y + 50);
-                                    }
-                                    torreActual.getCollisionCircle().setRadius(5);
-                                    torreActual.setViva(false);
-                                    torreActual.setOverlaps(false);
                                 }
                             }
+
+
+                            for (int danyoTorre = 0; danyoTorre < tropasColisionadas.size(); danyoTorre++) {
+                                if (!tropasColisionadas.get(danyoTorre).isanimacionCaminar()) {
+                                    torreActual.setVida(torreActual.getVida() - tropasColisionadas.get(danyoTorre).getDanyo());
+                                    if (torreActual.getVida() <= 0) {
+                                        for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
+                                            tropasColisionadas.get(tropas).setEstaAtacando(false);
+                                        }
+                                        if (torreActual.isOrientacion()) {
+                                            torreActual.getCollisionCircle().setY(torreActual.getCollisionCircle().y + 50);
+                                        }
+                                        torreActual.getCollisionCircle().setRadius(5);
+                                        torreActual.setViva(false);
+                                        torreActual.setOverlaps(false);
+                                    }
+                                }
+                            }
+
+                            System.out.println("Vida de la torre: " + torreActual.getVida());
                         }
 
-                        System.out.println("Vida de la torre: " + torreActual.getVida());
-                    }
+                        tropaActual.setEstado(Tropas.Estado.Atacando);
 
-                    tropaActual.setEstado(Tropas.Estado.Atacando);
+                        if (!tropaActual.getName().equals("Robots")) {
+                            AtacarTorre at = new AtacarTorre(tropaActual, torreActual, camino);
+                            ArrayList<Camino> camino = at.caminarHaciaTorre();
+                            if (contador % tropaActual.getVelocidad() == 0) {
+                                if (!tropaActual.siguienteCasillaAtaque(camino) && !tropaActual.llegarATorre(tropaActual.getY(), torreActual.getPosicionAtaque().y, torreActual.isOrientacion())) {
+                                    tropaActual.setanimacionCaminar(false);
 
-                    if (!tropaActual.getName().equals("Robots")) {
-                        AtacarTorre at = new AtacarTorre(tropaActual, torreActual);
-                        ArrayList<Camino> camino = at.caminarHaciaTorre();
-                        if (contador % tropaActual.getVelocidad() == 0) {
-                            if (!tropaActual.siguienteCasillaAtaque(camino) && !tropaActual.llegarATorre(tropaActual.getY(), torreActual.getPosicionAtaque().y, torreActual.isOrientacion())) {
-                                tropaActual.setanimacionCaminar(false);
-
+                                }
+                            }
+                        } else {
+                            tropaActual.setContadorBala(tropaActual.getContadorBala() + 1);
+                            tropaActual.setanimacionCaminar(false);
+                            if (tropaActual.getContadorBala() % 120 == 0) {
+                                tropaActual.ataque(tropaActual.getPosition(), new Vector2(torreActual.getCollisionCircle().x, torreActual.getCollisionCircle().y), stage);
                             }
                         }
+
                     } else {
-                        tropaActual.setContadorBala(tropaActual.getContadorBala() + 1);
-                        tropaActual.setanimacionCaminar(false);
-                        if (tropaActual.getContadorBala() % 120 == 0) {
-                            tropaActual.ataque(tropaActual.getPosition(), new Vector2(torreActual.getCollisionCircle().x, torreActual.getCollisionCircle().y), stage);
-                        }
-                    }
-
-                } else {
-                    if (tropasColisionadas.size() > 0) {
-                        for (int j = 0; j < tropasColisionadas.size(); j++) {
-                            if (!tropasColisionadas.get(j).isEstaAtacando()) {
-                                if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                    if (!tropasColisionadas.get(j).salirDeTorre()) {
-                                        tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
-                                        tropasColisionadas.remove(j);
-                                    }
-                                } else {
+                        if (tropasColisionadas.size() > 0) {
+                            for (int j = 0; j < tropasColisionadas.size(); j++) {
+                                if (!tropasColisionadas.get(j).isEstaAtacando()) {
                                     if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                        tropasColisionadas.get(j).siguienteCasilla(camino);
+                                        if (!tropasColisionadas.get(j).salirDeTorre()) {
+                                            tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
+                                            tropasColisionadas.remove(j);
+                                        }
+                                    } else {
+                                        if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
+                                            tropasColisionadas.get(j).siguienteCasilla(camino);
 
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+
+                if (!hayTropasColisionadas) {
+                    torreActual.setOverlaps(false);
+                }
             }
+            stage.draw();
+            stage.act(delta);
 
-            if (!hayTropasColisionadas){
-                torreActual.setOverlaps(false);
-            }
-        }
-        stage.draw();
-        stage.act(delta);
+            if (debug) renderDebug();
 
-        if (debug) renderDebug();
+            batch.begin();
 
-        batch.begin();
+            batch.end();
 
-        batch.end();
-    }else{
-            game.setScreen(new FinalScreen(game, 1, true, batch));
         }
     }
 
@@ -379,7 +394,6 @@ public class AtaqueScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        renderer.dispose();
     }
 
     public Stage getStage() {
@@ -390,19 +404,19 @@ public class AtaqueScreen implements Screen {
 
         if (tropa.equals("Caballero")) {
             if (maxCaballeros > 0) {
-                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Caballero));
+                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Caballero, camino.get(0).getX(), camino.get(0).getY()));
                 stage.addActor(tropasEnMapa.get(tropasEnMapa.size() - 1));
                 maxCaballeros--;
             }
         } else if (tropa.equals("Ninja")) {
             if (maxNinjas > 0) {
-                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Ninja));
+                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Ninja, camino.get(0).getX(), camino.get(0).getY()));
                 stage.addActor(tropasEnMapa.get(tropasEnMapa.size() - 1));
                 maxNinjas--;
             }
         } else if (tropa.equals("Robot")) {
             if (maxRobots > 0) {
-                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Robot));
+                tropasEnMapa.add(tropas.crearTropa(Tropas.Tipo.Robot, camino.get(0).getX(), camino.get(0).getY()));
                 stage.addActor(tropasEnMapa.get(tropasEnMapa.size() - 1));
                 maxRobots--;
             }

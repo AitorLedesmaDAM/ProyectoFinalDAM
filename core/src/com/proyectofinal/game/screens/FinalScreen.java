@@ -41,11 +41,10 @@ public class FinalScreen implements Screen {
     * Le pasamos un boolean para definir el mensaje y los botones
     */
 
-    public FinalScreen(TowerAttack game, int nivelActual, Boolean ganado, Batch batch) {
+    public FinalScreen(TowerAttack game, int nivelActual, Boolean ganado) {
 
         this.game = game;
         this.lvl = nivelActual;
-        this.batch = batch;
         Settings.pantalla = 4;
 
         camera = AssetManager.camera;
@@ -140,6 +139,20 @@ public class FinalScreen implements Screen {
         m.iconoMusica(stage);
     }
 
+
+    public int CantidadTropas(int nivel){
+        int cantidad = 0;
+
+            if(nivel == 1){
+                cantidad = 50;
+
+            }else if(nivel == 2){
+                cantidad = 30;
+            }
+
+        return cantidad;
+    }
+
     @Override
     public void show() {
 
@@ -176,20 +189,27 @@ public class FinalScreen implements Screen {
 
     @Override
     public void dispose() {
-
+       // batch.dispose();
     }
+
     public Stage getStage() {
         return stage;
     }
 
     public void botonSiguiente() {
 
-        game.setScreen(new SeleccionScreen(game, batch, viewport, lvl+1 , 50));
+        int cantidad;
+        cantidad = CantidadTropas(lvl+1);
+        game.setScreen(new SeleccionScreen(game, viewport, lvl+1 , cantidad));
+
     }
 
     public void botonReiniciar() {
 
-        game.setScreen(new SeleccionScreen(game, batch, viewport, lvl , 50));
+        int cantidad;
+        cantidad = CantidadTropas(lvl);
+        game.setScreen(new SeleccionScreen(game, viewport, lvl , cantidad));
+
     }
 
     public void botonSalir() {

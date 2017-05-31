@@ -16,8 +16,8 @@ public class Robot extends Tropas {
 
 
 
-    public Robot(int desviacionX, int desviacionY, int vida, int danyo, int velocidad) {
-        super(desviacionX, desviacionY, vida, danyo, velocidad);
+    public Robot(float x, float y, int desviacionX, int desviacionY, int vida, int danyo, int velocidad) {
+        super(x, y, desviacionX, desviacionY, vida, danyo, velocidad);
         ataqueCuerpoaCuerpo = false;
     }
 

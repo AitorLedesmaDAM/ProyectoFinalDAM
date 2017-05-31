@@ -2,8 +2,8 @@ package com.proyectofinal.game.objects;
 
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.towers.Torre_Rayo;
@@ -27,20 +27,20 @@ public class Nivel {
 
 
 
-    public static ArrayList<Torres> recojerTorres(){
+    public static ArrayList<Torres> recojerTorres(TiledMap mapa){
         ArrayList<Torres> torres = new ArrayList<Torres>();
         int vida, danyo, radio;
         int pos = 0;
-        MapObjects objectsT = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects();
+
+        MapObjects objectsT = mapa.getLayers().get("TorresObjetos").getObjects();
 
         for (int i = 0; i < objectsT.getCount(); i++) {
             RectangleMapObject rmo = (RectangleMapObject) objectsT.get(i);
             Rectangle rect = rmo.getRectangle();
             pos++;
-            boolean orientacion = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("cara");
-            boolean orientaBala = AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("AtaqueBajo");
+            boolean orientacion = mapa.getLayers().get("TorresObjetos").getObjects().get("torre" + pos).getProperties().containsKey("cara");
 
-            if(AssetManager.tiledMap.getLayers().get("TorresObjetos").getObjects().get("torre"+pos).getProperties().containsKey("TorreR")){
+            if (mapa.getLayers().get("TorresObjetos").getObjects().get("torre" + pos).getProperties().containsKey("TorreR")) {
 
                 vida = 100;
                 danyo = 4;
@@ -48,26 +48,30 @@ public class Nivel {
 
                 torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, "Rayo"));
 
-            }else {
+            } else {
 
                 vida = 150;
                 danyo = 2;
                 radio = 300;
 
+
                 torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, "Fuego"));
             }
         }
+
         return torres;
     }
 
-    public static ArrayList<Camino> recojerCamino() {
+    public static ArrayList<Camino> recojerCamino(TiledMap mapa) {
 
         ArrayList<Camino> camino = new ArrayList<Camino>();
 
-        MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
+        MapObjects objects = mapa.getLayers().get("CaminoObjetos").getObjects();
         Camino camMitad, camDoble, camMitadMitad, caminoMitadMitadMitad, caminoMitadMitadDoble, caminoDobleMitad, caminoDobleDoble;
 
         for (int i = 0; i < objects.getCount(); i++) {
+
+
 
             RectangleMapObject rmo = (RectangleMapObject) objects.get(i);
             Rectangle rect = rmo.getRectangle();
@@ -98,11 +102,6 @@ public class Nivel {
     }
 
     public boolean comproFinal(ArrayList<Camino> c, int casillaActual){
-
-        //ArrayList<Camino> camino = new ArrayList<Camino>();
-       // ArrayList<Camino> c = recojerCamino();
-
-        MapObjects objects = AssetManager.tiledMap.getLayers().get("CaminoObjetos").getObjects();
 
         if(c.size() -1 == casillaActual){
             finalJuego = true;

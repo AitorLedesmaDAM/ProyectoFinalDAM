@@ -18,13 +18,12 @@ public class AtacarTorre {
     Nivel nivel;
     ArrayList<Camino> caminoTropas;
 
-    public AtacarTorre(Tropas tropa, Torres torre) {
+    public AtacarTorre(Tropas tropa, Torres torre, ArrayList<Camino> camino) {
         this.objectTropa = tropa;
         this.objectTorre = torre;
         nivel = new Nivel();
 
-        caminoTropas = new ArrayList<Camino>();
-        caminoTropas = nivel.recojerCamino();
+        caminoTropas = camino;
     }
 
     public float posicionTropaX(){

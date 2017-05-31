@@ -5,9 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.proyectofinal.game.TowerAttack;
-import com.proyectofinal.game.objects.trops.Robot;
 import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.screens.FinalScreen;
 import com.proyectofinal.game.screens.MenuScreen;
@@ -81,6 +79,9 @@ public class InputHandler implements InputProcessor {
                 if (lvl.equals("1")){
                     lvlInt = Integer.parseInt(lvl.toString());
                     menuScreen.siguientePantalla(lvlInt, 50);
+                }else if(lvl.equals("2")){
+                    lvlInt = Integer.parseInt(lvl.toString());
+                    menuScreen.siguientePantalla(lvlInt, 30);
                 }
                 if (lvl.equals("Music") || lvl.equals("MusicMute")){
                     Settings.music = !Settings.music;
@@ -141,10 +142,13 @@ public class InputHandler implements InputProcessor {
                 String opt = actorHit.toString();
                 if (opt.equals("Siguente")) {
                     finalScreen.botonSiguiente();
+
                 } else if (opt.equals("Reniciar")) {
                     finalScreen.botonReiniciar();
+
                 } else if (opt.equals("Salir")) {
                     finalScreen.botonSalir();
+
                 }
 
                 if (opt.equals("Music") || opt.equals("MusicMute")){
