@@ -147,9 +147,11 @@ public class InputHandler implements InputProcessor {
                 String opt = actorHit.toString();
                 if (opt.equals("Siguente")) {
                     finalScreen.botonSiguiente();
+                    AssetManager.musicEnd.dispose();
 
                 } else if (opt.equals("Reniciar")) {
                     finalScreen.botonReiniciar();
+                    AssetManager.musicEnd.dispose();
 
                 } else if (opt.equals("Salir")) {
                     finalScreen.botonSalir();

@@ -335,7 +335,7 @@ public class AtaqueScreen implements Screen {
 
                 for (int i = 0; i < tropasEnMapa.size(); i++){
                     if (tropasEnMapa.get(i).isanimacionCaminar()){
-                        
+
                         sonidoCaminar = true;
                     }
 
