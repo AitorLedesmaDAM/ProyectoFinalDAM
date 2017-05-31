@@ -131,6 +131,11 @@ public class InputHandler implements InputProcessor {
                 }else if (tropa.equals("Robot")) {
                     ataqueScreen.soltarTropa(tropa);
                 }
+
+                if (actorHit.getName().equals("Music") || actorHit.getName().equals("MusicMute")){
+                    Settings.music = !Settings.music;
+                    ataqueScreen.canviarMusica();
+                }
             }
 
             return true;
@@ -148,6 +153,7 @@ public class InputHandler implements InputProcessor {
 
                 } else if (opt.equals("Salir")) {
                     finalScreen.botonSalir();
+                    AssetManager.musicEnd.dispose();
 
                 }
 

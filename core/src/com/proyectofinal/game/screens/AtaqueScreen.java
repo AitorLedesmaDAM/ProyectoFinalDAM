@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,6 +27,7 @@ import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torres;
 import com.proyectofinal.game.objects.trops.Tropas;
+import com.proyectofinal.game.utils.Musica;
 import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
@@ -46,6 +48,8 @@ public class AtaqueScreen implements Screen {
     Batch batch;
     Viewport viewport;
     private Stage stage;
+    private boolean musicaActiva = Settings.music;
+
     public boolean esfinal = false;
 
     private ArrayList < Tropas > tropasEnMapa;
@@ -64,6 +68,10 @@ public class AtaqueScreen implements Screen {
     private boolean compruebaAtaqueTorre = true, hayTropasColisionadas;
     private Container containerCaballero, containerNinja, containerRobot;
     public int lvl;
+
+    Musica m = new Musica();
+
+    private Boolean sonidoAtacar = false, sonidoCaminar = false;
 
     public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots, int lvl) {
         this.game = game;
@@ -150,7 +158,13 @@ public class AtaqueScreen implements Screen {
             stage.addActor(torres.get(i));
         }
 
+        canviarMusica();
+
         Gdx.input.setInputProcessor(new InputHandler(this));
+    }
+
+    public void canviarMusica(){
+        m.iconoMusica(stage);
     }
 
     @Override
@@ -164,6 +178,7 @@ public class AtaqueScreen implements Screen {
 
         contador++;
         compruebaAtaqueTorre = true;
+        musicaActiva = Settings.music;
 
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -208,6 +223,8 @@ public class AtaqueScreen implements Screen {
                     if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
 
                         if (contador % 60 == 0 && tropasColisionadas.indexOf(tropaActual) == -1) {
+
+                            sonidoAtacar = true;
                             tropaActual.setEstaAtacando(true);
                             tropasColisionadas.add(tropaActual);
                             hayTropasColisionadas = true;
@@ -244,6 +261,9 @@ public class AtaqueScreen implements Screen {
                                         tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
                                         borrarActorStage(remove);
                                         contadorTropasMuertas++;
+                                        if (musicaActiva) {
+                                            AssetManager.soundDead2.play();
+                                        }
                                     }
                                 }
                             }
@@ -259,7 +279,11 @@ public class AtaqueScreen implements Screen {
                                         if (torreActual.isOrientacion()) {
                                             torreActual.getCollisionCircle().setY(torreActual.getCollisionCircle().y + 50);
                                         }
-                                        torreActual.getCollisionCircle().setRadius(5);
+                                        torreActual.getCollisionCircle().set(new Circle(10, 10, 5));
+                                        if (musicaActiva){
+                                            AssetManager.soundFireball.play();
+                                        }
+
                                         torreActual.setViva(false);
                                         torreActual.setOverlaps(false);
                                     }
@@ -308,6 +332,38 @@ public class AtaqueScreen implements Screen {
                         }
                     }
                 }
+
+                for (int i = 0; i < tropasEnMapa.size(); i++){
+                    if (tropasEnMapa.get(i).isanimacionCaminar()){
+                        
+                        sonidoCaminar = true;
+                    }
+
+                }
+                System.out.println(musicaActiva);
+                if (musicaActiva){
+                    if (sonidoAtacar){
+                        AssetManager.soundAttack.loop();
+
+                    }
+                    sonidoAtacar = false;
+                    if (tropasColisionadas.size() == 0){
+                        AssetManager.soundAttack.stop();
+                    }
+                    if (sonidoCaminar){
+                        AssetManager.soundWalk.play();
+                    }
+                    sonidoCaminar = false;
+                    if (tropasEnMapa.size() == 0){
+                        AssetManager.soundWalk.stop();
+                    }
+                }else{
+                    AssetManager.soundAttack.stop();
+                    AssetManager.soundWalk.stop();
+                    AssetManager.soundDead2.stop();
+                }
+
+
 
                 if (!hayTropasColisionadas) {
                     torreActual.setOverlaps(false);

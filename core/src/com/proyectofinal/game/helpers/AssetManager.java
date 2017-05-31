@@ -23,12 +23,12 @@ import com.proyectofinal.game.utils.Settings;
 public class AssetManager {
 
     //Atibutos como Texturas.
-    public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig, textureMusic, textureMusicMute ;
+    public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig, textureMusic, textureMusicMute, textureAttackMusic, textureAttackMusicMute ;
     //Atributos de Animaciones
     public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre, rayoTorre;
 
     //Sprites
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1,mapa2, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig, musicIcono, musicMute;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1,mapa2, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig, musicIcono, musicMute, musicIconoAttack, musicMuteAttack;
     public static Sprite torreF, torreF2, torreFMuerta, torreF2Muerta, torreR, torreR2, torreRMuerta, torreR2Muerta;
 
     //Bitmap para difeentes fuentes
@@ -140,6 +140,16 @@ public class AssetManager {
         musicMute = new Sprite(textureMusicMute);
         musicMute.flip(false, true);
 
+
+        textureAttackMusic = new Texture(Gdx.files.internal("otros/musicIconoAttack.png"));
+        musicIconoAttack = new Sprite(textureAttackMusic);
+        musicIconoAttack.flip(false, true);
+
+        textureAttackMusicMute = new Texture(Gdx.files.internal("otros/musicIconoMuteAttack.png"));
+        musicMuteAttack = new Sprite(textureAttackMusicMute);
+        musicMuteAttack.flip(false, true);
+
+
         //Musica
         musicStart = Gdx.audio.newMusic(Gdx.files.internal("musica/start.mp3"));
         musicStart.setVolume(1f);
@@ -152,20 +162,18 @@ public class AssetManager {
 
         soundAttack = Gdx.audio.newSound(Gdx.files.internal("musica/attack.mp3"));
         soundAttack.setVolume(1, 0.8f);
-        soundAttack.setLooping(1, true);
+        //soundAttack.setLooping(1, true);
 
         soundFireball = Gdx.audio.newSound(Gdx.files.internal("musica/fireball.wav"));
         soundFireball.setVolume(2, 0.8f);
-        soundFireball.setLooping(2, true);
 
 
         soundWalk = Gdx.audio.newSound(Gdx.files.internal("musica/footstep1.mp3"));
         soundWalk.setVolume(3, 0.8f);
-        soundWalk.setLooping(3, true);
 
         soundDead = Gdx.audio.newSound(Gdx.files.internal("musica/dead.wav"));
         soundDead.setVolume(4, 0.8f);
-        soundDead.setLooping(4, true);
+        soundDead.setLooping(4, false);
 
         soundDead1 = Gdx.audio.newSound(Gdx.files.internal("musica/dead1.wav"));
         soundDead1.setVolume(5, 0.8f);
@@ -173,8 +181,6 @@ public class AssetManager {
 
         soundDead2 = Gdx.audio.newSound(Gdx.files.internal("musica/dead2.wav"));
         soundDead2.setVolume(6, 0.8f);
-        soundDead2.setLooping(6, true);
-
 
 
 
