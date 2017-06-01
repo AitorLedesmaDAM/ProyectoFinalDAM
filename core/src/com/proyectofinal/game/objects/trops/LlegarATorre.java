@@ -1,5 +1,6 @@
-package com.proyectofinal.game.objects;
+package com.proyectofinal.game.objects.trops;
 
+import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.towers.Torres;
@@ -11,34 +12,19 @@ import java.util.ArrayList;
  * Created by ALUMNEDAM on 16/05/2017.
  */
 
-public class AtacarTorre {
+public class LlegarATorre {
 
-    Tropas objectTropa;
-    Torres objectTorre;
-    Nivel nivel;
-    ArrayList<Camino> caminoTropas;
+    private Tropas objectTropa;
+    private Torres objectTorre;
+    private Nivel nivel;
+    private ArrayList<Camino> caminoTropas;
 
-    public AtacarTorre(Tropas tropa, Torres torre, ArrayList<Camino> camino) {
+    public LlegarATorre(Tropas tropa, Torres torre, ArrayList<Camino> camino) {
         this.objectTropa = tropa;
         this.objectTorre = torre;
         nivel = new Nivel();
 
         caminoTropas = camino;
-    }
-
-    public float posicionTropaX(){
-        return objectTropa.getX();
-    }
-
-    public float posicionTropaY(){
-        return objectTropa.getY();
-    }
-
-    public float posicionTorre(){
-        return objectTorre.getX();
-    }
-    public float posicionTorreY(){
-        return objectTorre.getY();
     }
 
     public Camino recogerXTorre(){
@@ -50,7 +36,7 @@ public class AtacarTorre {
         return null;
     }
 
-    public ArrayList<Camino> caminarHaciaTorre(){;
+    public ArrayList<Camino> caminarHaciaTorre(){
         Camino camino = recogerXTorre();
         int casillaTorre = caminoTropas.indexOf(camino);
         ArrayList<Camino> todasCasillas = new ArrayList<Camino>();
@@ -59,11 +45,5 @@ public class AtacarTorre {
         }
         return todasCasillas;
     }
-
-    public void AtaqueTorre(Torre_Fuego torre_fuego) {
-
-        torre_fuego.getPosicionAtaque();
-
-
-    }
 }
+

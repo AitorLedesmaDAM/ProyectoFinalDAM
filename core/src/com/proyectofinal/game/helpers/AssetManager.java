@@ -48,7 +48,7 @@ public class AssetManager {
     public static OrthogonalTiledMapRenderer renderer;
 
     public static Music musicStart, musicEnd;
-    public static Sound soundAttack, soundFireball, soundWalk, soundDead, soundDead1, soundDead2;
+    public static Sound soundMelee, soundTowerDead, soundWalk, soundFire, soundThunder, soundShoot;
 
     /**
      * Methodo Load
@@ -108,6 +108,9 @@ public class AssetManager {
         torreR = new Sprite(new Texture(Gdx.files.internal("torres/torreRayo.png")));
         torreR.flip(true, false);
 
+        torreR2 = new Sprite(new Texture(Gdx.files.internal("torres/torreRayo2.png")));
+        torreR2.flip(true, false);
+
         torreRMuerta = new Sprite(new Texture(Gdx.files.internal("torres/torreRayo_muerta.png")));
         torreRMuerta.flip(true, false);
 
@@ -160,29 +163,23 @@ public class AssetManager {
         musicEnd.setLooping(true);
 
 
-        soundAttack = Gdx.audio.newSound(Gdx.files.internal("musica/attack.mp3"));
-        soundAttack.setVolume(1, 0.8f);
-        //soundAttack.setLooping(1, true);
+        soundMelee = Gdx.audio.newSound(Gdx.files.internal("musica/mele_attack.mp3"));
+        soundMelee.setVolume(1, 0.8f);
 
-        soundFireball = Gdx.audio.newSound(Gdx.files.internal("musica/fireball.wav"));
-        soundFireball.setVolume(2, 0.8f);
+        soundShoot = Gdx.audio.newSound(Gdx.files.internal("musica/shoot_robot_2.wav"));
+        soundShoot.setVolume(2, 0.4f);
 
+        soundTowerDead = Gdx.audio.newSound(Gdx.files.internal("musica/fireball.wav"));
+        soundTowerDead.setVolume(3, 0.8f);
 
-        soundWalk = Gdx.audio.newSound(Gdx.files.internal("musica/footstep1.mp3"));
-        soundWalk.setVolume(3, 0.8f);
+        soundWalk = Gdx.audio.newSound(Gdx.files.internal("musica/footstep.mp3"));
+        soundWalk.setVolume(4, 0.8f);
 
-        soundDead = Gdx.audio.newSound(Gdx.files.internal("musica/dead.wav"));
-        soundDead.setVolume(4, 0.8f);
-        soundDead.setLooping(4, false);
+        soundFire = Gdx.audio.newSound(Gdx.files.internal("musica/fuego_torre_2.wav"));
+        soundFire.setVolume(5, 0.6f);
 
-        soundDead1 = Gdx.audio.newSound(Gdx.files.internal("musica/dead1.wav"));
-        soundDead1.setVolume(5, 0.8f);
-        soundDead1.setLooping(5, true);
-
-        soundDead2 = Gdx.audio.newSound(Gdx.files.internal("musica/dead2.wav"));
-        soundDead2.setVolume(6, 0.8f);
-
-
+        soundThunder = Gdx.audio.newSound(Gdx.files.internal("musica/rayo_torre.wav"));
+        soundThunder.setVolume(6, 0.6f);
 
 
         //Cargamos las texturas de las tropas, ponmeos animacion de caminando o atacando.
@@ -217,7 +214,7 @@ public class AssetManager {
         robotMuzzle.setPlayMode(Animation.PlayMode.LOOP);
 
         TextureRegion[] regionFuegoTorre = TextureRegion.split(new Texture("torres/fuego_torre_2.png"), 512, 512)[0];
-        fuegoTorre = new Animation(0.10f, regionFuegoTorre);
+        fuegoTorre = new Animation(0.15f, regionFuegoTorre);
         fuegoTorre.setPlayMode(Animation.PlayMode.LOOP);
 
         TextureRegion[] regionRayoTorre = TextureRegion.split(new Texture("torres/rayo_torre.png"), 192, 192)[0];
@@ -267,8 +264,8 @@ public class AssetManager {
         fondo.dispose();
         musicStart.dispose();
         musicEnd.dispose();
-        soundAttack.dispose();
-        soundFireball.dispose();
+        soundMelee.dispose();
+        soundTowerDead.dispose();
 
     }
 

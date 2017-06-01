@@ -27,20 +27,19 @@ public class Tropas extends Actor{
 
     private Estado estado;
     private Vector2 position;
-    private int width, height, danyo, vida, velocidad;
+    protected int width = Settings.TROPA_WIDTH, height = Settings.TROPA_HEIGHT;
+    protected int danyo, vida, velocidad;
     private Rectangle collisionRect;
     private int desviacionY, desviacionX;
     public float tiempoDeEstado = 0;
     public int casillaActual = 0, casillasParaLlegarATorre = 0;
-    private boolean animacionCaminar, estaAtacando, colisionadoConTorre, proyectil = false;
+    private boolean animacionCaminar, estaAtacando;
     private Random random = new Random();
-    public boolean ataqueCuerpoaCuerpo, ejecutaAtaque;
+    public boolean ataqueCuerpoaCuerpo;
     private int contadorBala = 119;
 
     public Tropas(float x, float y, int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
         // Inicialitzem els arguments segons la crida del constructor
-        this.width = Settings.TROPA_WIDTH;
-        this.height = Settings.TROPA_HEIGHT;
         position = new Vector2(x,y);
         this.desviacionY = desviacionY;
         this.desviacionX = desviacionX;
@@ -48,14 +47,10 @@ public class Tropas extends Actor{
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
         ataqueCuerpoaCuerpo = true;
-        ejecutaAtaque = false;
 
         this.vida = vida;
         this.danyo = danyo;
         this.velocidad = velocidad;
-
-        this.colisionadoConTorre = false;
-
 
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
@@ -72,15 +67,15 @@ public class Tropas extends Actor{
         Tropas tropa = null;
         switch (tipo){
             case Caballero:
-                tropa = new Caballero(x, y, random.nextInt(125) + (-87), random.nextInt(150) + (-100), 10, 2, 3);
+                tropa = new Caballero(x, y, random.nextInt(125) + (-87), random.nextInt(150) + (-100), Settings.VIDA_CABALLERO, Settings.DANYO_CABALLERO, Settings.VELOCIDAD_CABALLERO);
                 break;
 
             case Ninja:
-                tropa = new Ninja(x, y, random.nextInt(125) + (-87), random.nextInt(150) + (-100), 5, 5, 2);
+                tropa = new Ninja(x, y, random.nextInt(125) + (-87), random.nextInt(150) + (-100), Settings.VIDA_NINJA, Settings.DANYO_NINJA, Settings.VELOCIDAD_NINJA);
                 break;
 
             case Robot:
-                tropa = new Robot(x, y, random.nextInt(125) + (-115), random.nextInt(150) + (-90), 7, 4, 3);
+                tropa = new Robot(x, y, random.nextInt(125) + (-115), random.nextInt(150) + (-90), Settings.VIDA_ROBOT, Settings.DANYO_ROBOT, Settings.VELOCIDAD_ROBOT);
                 break;
             default:
                 return tropa;
@@ -88,10 +83,8 @@ public class Tropas extends Actor{
         return tropa;
     }
 
-
-
     public void ataque(Vector2 origen, Vector2 destino, Stage stage){
-        ejecutaAtaque = true;
+
     }
 
     public float getX() {
@@ -153,17 +146,17 @@ public class Tropas extends Actor{
     }
 
     public boolean salirDeTorre(){
-         if (casillasParaLlegarATorre < 0){
-             casillasParaLlegarATorre++;
-             position.y += 2;
-             return true;
-         }else if (casillasParaLlegarATorre > 0){
-             casillasParaLlegarATorre--;
-             position.y -= 2;
-             return false;
-         }else{
-             return false;
-         }
+            if (casillasParaLlegarATorre < 0) {
+                casillasParaLlegarATorre++;
+                position.y += 2;
+                return true;
+            } else if (casillasParaLlegarATorre > 0) {
+                casillasParaLlegarATorre--;
+                position.y -= 2;
+                return true;
+            } else {
+                return false;
+            }
     }
 
     public void setCollisionRect(Rectangle collisionRect) {
@@ -172,10 +165,6 @@ public class Tropas extends Actor{
 
     public Vector2 getPosition() {
         return position;
-    }
-
-    public void setPosition(Vector2 position) {
-        this.position = position;
     }
 
     public Estado getEstado() {
@@ -196,10 +185,6 @@ public class Tropas extends Actor{
 
     public void setanimacionCaminar(boolean animacionCaminar) {
         this.animacionCaminar = animacionCaminar;
-    }
-
-    public boolean isAtaqueCuerpoaCuerpo() {
-        return ataqueCuerpoaCuerpo;
     }
 
     public int getVida() {
@@ -228,26 +213,6 @@ public class Tropas extends Actor{
 
     public int getVelocidad() {
         return velocidad;
-    }
-
-    public void setVelocidad(int velocidad) {
-        this.velocidad = velocidad;
-    }
-
-    public boolean isColisionadoConTorre() {
-        return colisionadoConTorre;
-    }
-
-    public void setColisionadoConTorre(boolean colisionadoConTorre) {
-        this.colisionadoConTorre = colisionadoConTorre;
-    }
-
-    public boolean isProyectil() {
-        return proyectil;
-    }
-
-    public void setProyectil(boolean proyectil) {
-        this.proyectil = proyectil;
     }
 
     public int getContadorBala() {

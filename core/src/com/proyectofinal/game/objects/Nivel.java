@@ -9,6 +9,7 @@ import com.proyectofinal.game.objects.towers.Torre_Fuego;
 import com.proyectofinal.game.objects.towers.Torre_Rayo;
 import com.proyectofinal.game.objects.towers.Torres;
 import com.proyectofinal.game.objects.trops.Tropas;
+import com.proyectofinal.game.utils.Settings;
 
 import java.util.ArrayList;
 
@@ -42,17 +43,17 @@ public class Nivel {
 
             if (mapa.getLayers().get("TorresObjetos").getObjects().get("torre" + pos).getProperties().containsKey("TorreR")) {
 
-                vida = 100;
-                danyo = 4;
-                radio = 300;
+                vida = Settings.VIDA_TORRE_RAYO;
+                danyo = Settings.DANYO_TORRE_RAYO;
+                radio = Settings.RADIO_TORRE_RAYO;
 
                 torres.add(new Torre_Rayo(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, "Rayo"));
 
             } else {
 
-                vida = 150;
-                danyo = 2;
-                radio = 300;
+                vida = Settings.VIDA_TORRE_FUEGO;
+                danyo = Settings.DANYO_TORRE_FUEGO;
+                radio = Settings.RADIO_TORRE_FUEGO;
 
 
                 torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, "Fuego"));

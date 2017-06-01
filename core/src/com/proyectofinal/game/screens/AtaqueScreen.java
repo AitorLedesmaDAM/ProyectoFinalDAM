@@ -9,9 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -22,7 +20,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
-import com.proyectofinal.game.objects.AtacarTorre;
+import com.proyectofinal.game.objects.towers.AtaqueTorre;
+import com.proyectofinal.game.objects.trops.AtaqueTropa;
 import com.proyectofinal.game.objects.Nivel;
 import com.proyectofinal.game.objects.road.Camino;
 import com.proyectofinal.game.objects.towers.Torres;
@@ -38,40 +37,36 @@ import java.util.ArrayList;
 
 public class AtaqueScreen implements Screen {
 
-    Tropas tropas;
-    TiledMap mapa;
-
-    OrthogonalTiledMapRenderer renderer;
+    private Tropas tropas;
     private Nivel nivel;
-    OrthographicCamera camera;
     private TowerAttack game;
-    Batch batch;
-    Viewport viewport;
-    private Stage stage;
-    private boolean musicaActiva = Settings.music;
+    private AtaqueTropa ataqueTropa;
+    private AtaqueTorre ataqueTorre;
 
-    public boolean esfinal = false;
-
-    private ArrayList < Tropas > tropasEnMapa;
-    public ArrayList < Camino > camino;
-    ArrayList < Tropas > tropasColisionadas;
-
-    private long contador = 0;
-
-    ArrayList < Torres > torres;
-
+    private TiledMap mapa;
+    private OrthogonalTiledMapRenderer renderer;
+    private OrthographicCamera camera;
     public static boolean debug = false;
     private ShapeRenderer debugRenderer;
 
-    public int maxCaballeros, maxNinjas, maxRobots;
-    public int contadorTropasMuertas = 0;
-    private boolean compruebaAtaqueTorre = true, hayTropasColisionadas;
+    private Batch batch;
+    private Viewport viewport;
+    private Stage stage;
+
+    private ArrayList < Tropas > tropasEnMapa, tropasColisionadas;
+    private ArrayList < Camino > camino;
+    private ArrayList < Torres > torres;
+
+    private long contador = 0;
+
+    public int maxCaballeros, maxNinjas, maxRobots, lvl;
+
+    private boolean compruebaAtaqueTorre = true, hayTropasColisionadas, orientacionUltimaTorre;
+
     private Container containerCaballero, containerNinja, containerRobot;
-    public int lvl;
 
-    Musica m = new Musica();
-
-    private Boolean sonidoAtacar = false, sonidoCaminar = false;
+    private Musica m = new Musica();
+    private boolean musicaActiva = Settings.music, sonidoAtacar = false, sonidoCaminar = false;
 
     public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots, int lvl) {
         this.game = game;
@@ -81,26 +76,25 @@ public class AtaqueScreen implements Screen {
         this.maxRobots = maxRobots;
         this.lvl = lvl;
 
+        ataqueTropa = new AtaqueTropa();
+        ataqueTorre = new AtaqueTorre();
 
         debugRenderer = new ShapeRenderer();
 
         tropas = new Tropas();
 
-        if (lvl == 1){
+        if (lvl == 1) {
             mapa = AssetManager.tiledMap1;
-        }else if (lvl == 2){
+        } else if (lvl == 2) {
             mapa = AssetManager.tiledMap2;
         }
 
         renderer = new OrthogonalTiledMapRenderer(mapa);
 
-
         camera = AssetManager.camera;
         camera.setToOrtho(false, 3200, 1600);
         renderer.setView(camera);
         camera.update();
-
-
 
         nivel = new Nivel();
 
@@ -163,7 +157,7 @@ public class AtaqueScreen implements Screen {
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
-    public void canviarMusica(){
+    public void canviarMusica() {
         m.iconoMusica(stage);
     }
 
@@ -175,7 +169,6 @@ public class AtaqueScreen implements Screen {
     @Override
     public void render(float delta) {
 
-
         contador++;
         compruebaAtaqueTorre = true;
         musicaActiva = Settings.music;
@@ -186,16 +179,12 @@ public class AtaqueScreen implements Screen {
 
         if (tropasEnMapa.size() == 0 && maxCaballeros == 0 && maxRobots == 0 && maxNinjas == 0) {
             game.setScreen(new FinalScreen(game, lvl, false));
-            setEsfinal(true);
 
         } else {
 
-        camera.update();
-        renderer.setView(camera);
-        renderer.render();
-
-
-
+            camera.update();
+            renderer.setView(camera);
+            renderer.render();
 
             if (tropasEnMapa != null) {
                 for (int i = 0; i < tropasEnMapa.size(); i++) {
@@ -204,11 +193,9 @@ public class AtaqueScreen implements Screen {
                     if (tropaActual.getEstado() == Tropas.Estado.Caminando) {
                         if (contador % tropaActual.getVelocidad() == 0) {
                             tropaActual.siguienteCasilla(camino);
-                            nivel.comproFinal(camino, tropaActual.getCasillaActual());
 
                             if (nivel.comproFinal(camino, tropaActual.getCasillaActual())) {
                                 game.setScreen(new FinalScreen(game, lvl, true));
-                                setEsfinal(true);
                             }
                         }
                     }
@@ -222,6 +209,8 @@ public class AtaqueScreen implements Screen {
 
                     if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
 
+                        orientacionUltimaTorre = torreActual.isOrientacion();
+
                         if (contador % 60 == 0 && tropasColisionadas.indexOf(tropaActual) == -1) {
 
                             sonidoAtacar = true;
@@ -234,141 +223,79 @@ public class AtaqueScreen implements Screen {
                             torreActual.setOverlaps(true);
                         }
 
-
                         if (contador % 60 == 0 && tropasColisionadas.size() > 0 && compruebaAtaqueTorre) {
                             compruebaAtaqueTorre = false;
 
-                            if (torreActual.getTipo().equals("Fuego")) {
-                                tropasColisionadas.get(0).setVida(tropasColisionadas.get(0).getVida() - torreActual.getDanyo());
-                                if (tropasColisionadas.get(0).getVida() <= 0) {
-                                    tropasColisionadas.get(0).setDanyo(0);
-                                    tropasColisionadas.get(0).setVisible(false);
-                                    if (tropasColisionadas.size() == 1) {
-                                        hayTropasColisionadas = false;
-                                    }
-
-                                    Tropas remove = tropasColisionadas.remove(0);
-                                    tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
-                                    borrarActorStage(remove);
-                                    contadorTropasMuertas++;
-                                }
-                            } else if (torreActual.getTipo().equals("Rayo")) {
-                                for (int i = 0; i < tropasColisionadas.size(); i++) {
-                                    tropasColisionadas.get(i).setVida(torreActual.getDanyo());
-                                    System.out.println(tropasColisionadas.get(i));
-                                    if (tropasColisionadas.get(i).getVida() < 0) {
-                                        Tropas remove = tropasColisionadas.remove(i);
-                                        tropasEnMapa.remove(tropasEnMapa.indexOf(remove));
-                                        borrarActorStage(remove);
-                                        contadorTropasMuertas++;
-                                        if (musicaActiva) {
-                                            AssetManager.soundDead2.play();
-                                        }
-                                    }
+                            ArrayList < Tropas > tropasMuertas = ataqueTorre.atacarTropas(torreActual, tropasColisionadas);
+                            if (tropasMuertas != null) {
+                                for (Tropas tropa: tropasMuertas) {
+                                    tropasEnMapa.remove(tropasEnMapa.indexOf(tropa));
+                                    borrarActorStage(tropa);
                                 }
                             }
 
+                            ataqueTorre.mostrarAtaque(torreActual, tropasColisionadas);
 
-                            for (int danyoTorre = 0; danyoTorre < tropasColisionadas.size(); danyoTorre++) {
-                                if (!tropasColisionadas.get(danyoTorre).isanimacionCaminar()) {
-                                    torreActual.setVida(torreActual.getVida() - tropasColisionadas.get(danyoTorre).getDanyo());
-                                    if (torreActual.getVida() <= 0) {
-                                        for (int tropas = 0; tropas < tropasColisionadas.size(); tropas++) {
-                                            tropasColisionadas.get(tropas).setEstaAtacando(false);
-                                        }
-                                        if (torreActual.isOrientacion()) {
-                                            torreActual.getCollisionCircle().setY(torreActual.getCollisionCircle().y + 50);
-                                        }
-                                        torreActual.getCollisionCircle().set(new Circle(10, 10, 5));
-                                        if (musicaActiva){
-                                            AssetManager.soundFireball.play();
-                                        }
+                            ataqueTropa.atacarTorre(torreActual, tropasColisionadas, musicaActiva);
 
-                                        torreActual.setViva(false);
-                                        torreActual.setOverlaps(false);
-                                    }
-                                }
-                            }
-
-                            System.out.println("Vida de la torre: " + torreActual.getVida());
                         }
 
                         tropaActual.setEstado(Tropas.Estado.Atacando);
 
                         if (!tropaActual.getName().equals("Robots")) {
-                            AtacarTorre at = new AtacarTorre(tropaActual, torreActual, camino);
-                            ArrayList<Camino> camino = at.caminarHaciaTorre();
                             if (contador % tropaActual.getVelocidad() == 0) {
-                                if (!tropaActual.siguienteCasillaAtaque(camino) && !tropaActual.llegarATorre(tropaActual.getY(), torreActual.getPosicionAtaque().y, torreActual.isOrientacion())) {
-                                    tropaActual.setanimacionCaminar(false);
-
-                                }
+                                ataqueTropa.llegarATorre(torreActual, tropaActual, camino);
                             }
                         } else {
-                            tropaActual.setContadorBala(tropaActual.getContadorBala() + 1);
-                            tropaActual.setanimacionCaminar(false);
-                            if (tropaActual.getContadorBala() % 120 == 0) {
-                                tropaActual.ataque(tropaActual.getPosition(), new Vector2(torreActual.getCollisionCircle().x, torreActual.getCollisionCircle().y), stage);
-                            }
+                            ataqueTropa.disparoRobot(torreActual, tropaActual, stage);
                         }
 
                     } else {
-                        if (tropasColisionadas.size() > 0) {
-                            for (int j = 0; j < tropasColisionadas.size(); j++) {
-                                if (!tropasColisionadas.get(j).isEstaAtacando()) {
-                                    if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                        if (!tropasColisionadas.get(j).salirDeTorre()) {
-                                            tropasColisionadas.get(j).setEstado(Tropas.Estado.Caminando);
-                                            tropasColisionadas.remove(j);
-                                        }
-                                    } else {
-                                        if (contador % tropasColisionadas.get(j).getVelocidad() == 0) {
-                                            tropasColisionadas.get(j).siguienteCasilla(camino);
-
-                                        }
-                                    }
-                                }
+                        if (!tropaActual.isEstaAtacando() && contador % tropaActual.getVelocidad() == 0){
+                            tropaActual.setanimacionCaminar(true);
+                            if (!tropaActual.salirDeTorre()) {
+                                tropaActual.setEstado(Tropas.Estado.Caminando);
+                                tropasColisionadas.remove(tropaActual);
+                            }else{
+                                tropaActual.siguienteCasilla(camino);
                             }
                         }
                     }
-                }
-
-                for (int i = 0; i < tropasEnMapa.size(); i++){
-                    if (tropasEnMapa.get(i).isanimacionCaminar()){
-
-                        sonidoCaminar = true;
+                    if (!hayTropasColisionadas) {
+                        torreActual.setOverlaps(false);
                     }
-
-                }
-                System.out.println(musicaActiva);
-                if (musicaActiva){
-                    if (sonidoAtacar){
-                        AssetManager.soundAttack.loop();
-
-                    }
-                    sonidoAtacar = false;
-                    if (tropasColisionadas.size() == 0){
-                        AssetManager.soundAttack.stop();
-                    }
-                    if (sonidoCaminar){
-                        AssetManager.soundWalk.play();
-                    }
-                    sonidoCaminar = false;
-                    if (tropasEnMapa.size() == 0){
-                        AssetManager.soundWalk.stop();
-                    }
-                }else{
-                    AssetManager.soundAttack.stop();
-                    AssetManager.soundWalk.stop();
-                    AssetManager.soundDead2.stop();
-                }
-
-
-
-                if (!hayTropasColisionadas) {
-                    torreActual.setOverlaps(false);
                 }
             }
+
+            if (contador % 30 == 0) {
+                int caminar = 0, atacar = 0;
+                for (int i = 0; i < tropasEnMapa.size(); i++) {
+                    if (tropasEnMapa.get(i).isanimacionCaminar()) {
+                        caminar++;
+                    } else {
+                        if (!tropasEnMapa.get(i).getName().equals("Robots"))
+                        atacar++;
+                    }
+                }
+                if (musicaActiva) {
+                    if (contador % 30 == 0) {
+                        if (atacar > 0) {
+                            AssetManager.soundMelee.play();
+                        } else {
+                            AssetManager.soundMelee.stop();
+                        }
+                    }
+                    if (caminar > 0) {
+                        AssetManager.soundWalk.play();
+                    }else{
+                        AssetManager.soundWalk.stop();
+                    }
+                } else {
+                    AssetManager.soundMelee.stop();
+                    AssetManager.soundWalk.stop();
+                }
+            }
+
             stage.draw();
             stage.act(delta);
 
@@ -377,29 +304,19 @@ public class AtaqueScreen implements Screen {
             batch.begin();
 
             batch.end();
-
         }
     }
 
-    public void borrarActorStage(Tropas tropa){
-        Array<Actor> actores = stage.getActors();
+    public void borrarActorStage(Tropas tropa) {
+        Array < Actor > actores = stage.getActors();
         for (Actor actor: actores) {
-            if(actor.equals(tropa)){
+            if (actor.equals(tropa)) {
                 actor.remove();
             }
         }
     }
 
-    public boolean isEsfinal() {
-        return esfinal;
-    }
-
-    public void setEsfinal(boolean esfinal) {
-        this.esfinal = esfinal;
-    }
-
     private void renderDebug() {
-
 
         debugRenderer.setProjectionMatrix(camera.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -424,8 +341,6 @@ public class AtaqueScreen implements Screen {
 
     }
 
-
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -443,12 +358,10 @@ public class AtaqueScreen implements Screen {
     }
 
     @Override
-    public void hide() {
-    }
+    public void hide() {}
 
     @Override
-    public void dispose() {
-    }
+    public void dispose() {}
 
     public Stage getStage() {
         return stage;

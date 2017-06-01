@@ -12,23 +12,22 @@ import com.proyectofinal.game.utils.Settings;
  */
 
 public class Torres extends Actor {
-    private Vector2 position;
-    private int width, height, vida, danyo;
+
+    protected Vector2 position, posicionAtaque;
     private Circle collisionCircle;
-    boolean orientacion, viva, overlaps;
-    private float radius, circuloWidth, circuloHeight;
-    Vector2 posicionAtaque;
-    private String tipo;
+
+    private int width = Settings.TROPA_WIDTH, height = Settings.TROPA_HEIGHT;
+    private int vida, danyo;
+    protected boolean orientacion, viva = true, overlaps = false;
+    protected float radius, circuloWidth, circuloHeight;
+    protected String tipo;
 
     public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo, String tipo)
     {
         // Inicialitzem els arguments segons la crida del constructor
-        this.width = Settings.TROPA_WIDTH;
-        this.height = Settings.TROPA_HEIGHT;
         this.vida = vida;
         this.danyo = danyo;
         this.tipo = tipo;
-        viva = true;
         position = new Vector2(x, y);
         this.orientacion = orientacion;
         // Creem el rectangle de col·lisions
@@ -37,7 +36,6 @@ public class Torres extends Actor {
         this.circuloWidth = circuloWidth;
         this.circuloHeight = circuloHeight;
 
-        overlaps = false;
         // Per a la gestio de hit
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
@@ -48,8 +46,6 @@ public class Torres extends Actor {
             posicionAtaque = new Vector2(position.x + circuloWidth, position.y - 50);
         }
     }
-
-
 
     public void act(float delta)
     {
@@ -70,10 +66,6 @@ public class Torres extends Actor {
         return collisionCircle;
     }
 
-    public void setCollisionCircle(Circle collisionCircle) {
-        this.collisionCircle = collisionCircle;
-    }
-
     public Vector2 getPosicionAtaque() {
         return posicionAtaque;
     }
@@ -84,10 +76,6 @@ public class Torres extends Actor {
 
     public int getDanyo() {
         return danyo;
-    }
-
-    public void setDanyo(int danyo) {
-        this.danyo = danyo;
     }
 
     public int getVida() {
@@ -106,10 +94,6 @@ public class Torres extends Actor {
         this.viva = viva;
     }
 
-    public boolean isOverlaps() {
-        return overlaps;
-    }
-
     public void setOverlaps(boolean overlaps) {
         this.overlaps = overlaps;
     }
@@ -118,8 +102,5 @@ public class Torres extends Actor {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
 }
 

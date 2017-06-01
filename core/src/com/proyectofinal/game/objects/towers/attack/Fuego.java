@@ -17,7 +17,7 @@ public class Fuego extends Actor {
 
     public Fuego (float x, float y, int radio){
         this.x = x - 100;
-        this.y = y -100;
+        this.y = y - 100;
         this.radio =  radio - (radio / 3);
         curva = this.radio - (this.radio / 3);
         visible = false;

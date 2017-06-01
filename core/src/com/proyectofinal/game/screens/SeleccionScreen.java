@@ -1,6 +1,5 @@
 package com.proyectofinal.game.screens;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,15 +15,17 @@ import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.utils.Musica;
 import com.proyectofinal.game.utils.Settings;
 
-public class SeleccionScreen implements Screen{
+public class SeleccionScreen implements Screen {
 
     // Atributos
     private Stage stage;
+    private OrthographicCamera camera;
+    private Viewport viewport;
+
     private TowerAttack game;
-    OrthographicCamera camera;
-    Viewport viewport;
-    int lvl;
+
     public int numCaballero, numNinja, numRobot;
+    private int lvl;
 
     private Label.LabelStyle textStyle, textStylePequenio;
 
@@ -33,29 +34,28 @@ public class SeleccionScreen implements Screen{
 
     private Container miniMapa, containerTropasMax, containerTextocontainerTropasMax, containerCaballero,
             containerCosteCaballero, containerCosteNinja, containerCosteRobot, containerNinja,
-            containerRobot, containerBoton, containerMusic, containerMusicMute;
+            containerRobot, containerBoton;
 
-    Musica m = new Musica();
+    private Musica m = new Musica();
 
-    public SeleccionScreen(){
-
-    }
-
+    public SeleccionScreen() {}
 
     /**
-    * Constructor
-    * Le pasamos por parametros 
-    ** game
-    ** batch
-    ** viewport
-    ** lvl : Nivel que se a elejido jugar
-    ** maxTropasContador : El numero de tropas maximas permitidas para ese nivel
-    */
+     * Constructor
+     * Le pasamos por parametros
+     ** game
+     ** batch
+     ** viewport
+     ** lvl : Nivel que se a elejido jugar
+     ** maxTropasContador : El numero de tropas maximas permitidas para ese nivel
+     */
     public SeleccionScreen(TowerAttack game, Viewport _viewport, int lvl, int _maxTropasContador) {
         this.game = game;
         Settings.pantalla = 2;
+
         camera = AssetManager.camera;
         this.lvl = lvl;
+
         // Ponemos los estilos de texto a los LabelStyle
         textStyle = AssetManager.textStyle;
         textStylePequenio = AssetManager.textStylePequenio;
@@ -64,57 +64,54 @@ public class SeleccionScreen implements Screen{
         maxTropasContador = _maxTropasContador;
         contadorTropas = _maxTropasContador;
 
-
-
         // Creamos todos los Contenedores de datos para la segunda pantalla
-        if(lvl == 1) {
-            miniMapa = new Container(new Image(AssetManager.mapa1));    //Imagen del mapa
-        }else if(lvl == 2){
-            miniMapa = new Container(new Image(AssetManager.mapa2));    //Imagen del mapa
+        if (lvl == 1) {
+            miniMapa = new Container(new Image(AssetManager.mapa1)); //Imagen del mapa
+        } else if (lvl == 2) {
+            miniMapa = new Container(new Image(AssetManager.mapa2)); //Imagen del mapa
         }
         miniMapa.setTransform(true);
         miniMapa.center();
-        miniMapa.setSize(Settings.MINIMAPA_WIDTH, Settings.MINIMAPA_HEIGHT);    //Tamaño de la Imagen
+        miniMapa.setSize(Settings.MINIMAPA_WIDTH, Settings.MINIMAPA_HEIGHT); //Tamaño de la Imagen
         miniMapa.setPosition(Settings.GAME_WIDTH - Settings.MINIMAPA_WIDTH, 0);
 
-        contador = new Label("" + contadorTropas, textStyle);   //Contador de tropas
+        contador = new Label("" + contadorTropas, textStyle); //Contador de tropas
         containerTropasMax = new Container(contador);
         containerTropasMax.setTransform(true);
         containerTropasMax.center();
         containerTropasMax.setPosition(350, 250);
 
-        textoTropas = new Label("Tropas máximas restantes: ", textStylePequenio);   //Texto encima del contador
+        textoTropas = new Label("Tropas máximas restantes: ", textStylePequenio); //Texto encima del contador
         containerTextocontainerTropasMax = new Container(textoTropas);
         containerTextocontainerTropasMax.setTransform(true);
         containerTextocontainerTropasMax.center();
-        containerTextocontainerTropasMax.setPosition(400,150);
+        containerTextocontainerTropasMax.setPosition(400, 150);
 
-
-        Image caballero = new Image(AssetManager.caballeroSelec);   //Selección de caballero
+        Image caballero = new Image(AssetManager.caballeroSelec); //Selección de caballero
         caballero.setName("Caballero");
         containerCaballero = new Container(caballero);
         containerCaballero.setTransform(true);
         containerCaballero.center();
         containerCaballero.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH*2, Settings.GAME_HEIGHT / 2);
+        containerCaballero.setPosition(Settings.GAME_WIDTH / 3 - Settings.TROPA_SELEC_WIDTH * 2, Settings.GAME_HEIGHT / 2);
 
-        Image ninja = new Image(AssetManager.ninjaSelec);   //Selección del ninja
+        Image ninja = new Image(AssetManager.ninjaSelec); //Selección del ninja
         ninja.setName("Ninja");
         containerNinja = new Container(ninja);
         containerNinja.setTransform(true);
         containerNinja.center();
         containerNinja.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH/2 + Settings.TROPA_SELEC_WIDTH/3), Settings.GAME_HEIGHT / 2);
+        containerNinja.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH / 2 + Settings.TROPA_SELEC_WIDTH / 3), Settings.GAME_HEIGHT / 2);
 
-        Image robot = new Image(AssetManager.robotSelec);   //Selección del robot
+        Image robot = new Image(AssetManager.robotSelec); //Selección del robot
         robot.setName("Robot");
         containerRobot = new Container(robot);
         containerRobot.setTransform(true);
         containerRobot.center();
         containerRobot.setSize(Settings.TROPA_SELEC_WIDTH, Settings.TROPA_SELEC_HEIGHT);
-        containerRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH/3, Settings.GAME_HEIGHT / 2);
+        containerRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH / 3, Settings.GAME_HEIGHT / 2);
 
-        Image continuar = new Image(AssetManager.btnContinuar);   //Seleccion del botón
+        Image continuar = new Image(AssetManager.btnContinuar); //Seleccion del botón
         continuar.setName("Continuar");
         containerBoton = new Container(continuar);
         containerBoton.setTransform(false);
@@ -123,23 +120,21 @@ public class SeleccionScreen implements Screen{
         containerBoton.setPosition(Settings.GAME_WIDTH - 450, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4);
         containerBoton.setVisible(false);
 
-
         // Contenedores de los costes de cada tropa
         costeCaballero = new Label("coste: 1", textStylePequenio);
         containerCosteCaballero = new Container(costeCaballero);
         containerCosteCaballero.center();
-        containerCosteCaballero.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH*2) + Settings.TROPA_SELEC_WIDTH/2,Settings.GAME_HEIGHT / 2 + Settings.TROPA_SELEC_HEIGHT + 30);
+        containerCosteCaballero.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH * 2) + Settings.TROPA_SELEC_WIDTH / 2, Settings.GAME_HEIGHT / 2 + Settings.TROPA_SELEC_HEIGHT + 30);
 
         costeNinja = new Label("coste: 2", textStylePequenio);
         containerCosteNinja = new Container(costeNinja);
         containerCosteNinja.center();
-        containerCosteNinja.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH/2 + Settings.TROPA_SELEC_WIDTH/3) + Settings.TROPA_SELEC_WIDTH/2,Settings.GAME_HEIGHT / 2 + Settings.TROPA_SELEC_HEIGHT + 30);
+        containerCosteNinja.setPosition(Settings.GAME_WIDTH / 3 - (Settings.TROPA_SELEC_WIDTH / 2 + Settings.TROPA_SELEC_WIDTH / 3) + Settings.TROPA_SELEC_WIDTH / 2, Settings.GAME_HEIGHT / 2 + Settings.TROPA_SELEC_HEIGHT + 30);
 
         costeRobot = new Label("coste: 3", textStylePequenio);
         containerCosteRobot = new Container(costeRobot);
         containerCosteRobot.center();
-        containerCosteRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH/3 + Settings.TROPA_SELEC_WIDTH/2,Settings.GAME_HEIGHT / 2 + Settings.TROPA_SELEC_HEIGHT + 30);
-
+        containerCosteRobot.setPosition(Settings.GAME_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH / 3 + Settings.TROPA_SELEC_WIDTH / 2, Settings.GAME_HEIGHT / 2 + Settings.TROPA_SELEC_HEIGHT + 30);
 
         // Creamos el Viewport con las mismas dimensiones que la Camara
         viewport = _viewport;
@@ -149,7 +144,7 @@ public class SeleccionScreen implements Screen{
 
         // Añadimos el Fondo
         stage.addActor(new Image(AssetManager.background));
-        
+
         // Añadimos los Contenedores como Actores al Stage
         stage.addActor(miniMapa);
         stage.addActor(containerTropasMax);
@@ -162,31 +157,28 @@ public class SeleccionScreen implements Screen{
         stage.addActor(containerCosteNinja);
         stage.addActor(containerCosteRobot);
 
-
         canviarMusica();
-
 
         // Hacemos que los Contenedores se puedan pulsar
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
-    public void canviarMusica(){
+    public void canviarMusica() {
         m.iconoMusica(stage);
     }
 
-
     /**
-    * Metodo para restar de las tropas maximas el valor de la tropa seleccionada
-    * y en caso de pasar de la mitad de tropas maximas Selecionadas
-    * se active el boton de continuar
-    */
-    public void modMaxTropas(int resta){
+     * Metodo para restar de las tropas maximas el valor de la tropa seleccionada
+     * y en caso de pasar de la mitad de tropas maximas Selecionadas
+     * se active el boton de continuar
+     */
+    public void modMaxTropas(int resta) {
 
         if (contadorTropas - resta > -1) {
             contadorTropas = contadorTropas - resta;
             contador.setText("" + contadorTropas);
         }
-        if(contadorTropas < maxTropasContador/2){
+        if (contadorTropas < maxTropasContador / 2) {
             containerBoton.setVisible(true);
         }
     }
@@ -204,7 +196,6 @@ public class SeleccionScreen implements Screen{
 
         stage.draw();
         stage.act(delta);
-
 
     }
 
@@ -231,21 +222,17 @@ public class SeleccionScreen implements Screen{
 
     @Override
     public void dispose() {
-        //stage.getBatch().dispose();
-       //game.dispose();
-       // AssetManager.dispose();
 
     }
-    
-    /**
-    * Metodo para cambiar de pantalla al hacer click en continuar
-    */
-    public void siguientePantalla(){
-        if (contadorTropas < 25) {
-            // Se le pasara a la siguiente pantalla el numero de cada tropa seleccionada
-           game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot, lvl));
 
-            //dispose();
+    /**
+     * Metodo para cambiar de pantalla al hacer click en continuar
+     */
+    public void siguientePantalla() {
+        if (contadorTropas < (maxTropasContador / 2)) {
+            // Se le pasara a la siguiente pantalla el numero de cada tropa seleccionada
+            game.setScreen(new AtaqueScreen(game, numCaballero, numNinja, numRobot, lvl));
+
         }
     }
 
@@ -254,24 +241,24 @@ public class SeleccionScreen implements Screen{
     }
 
     /**
-    * Metodo que sumara uno cada vez a la variable numCaballero
-    */
-    public void sumarCaballero(int i) {
-        numCaballero = numCaballero + i;
+     * Metodo que sumara uno cada vez a la variable numCaballero
+     */
+    public void sumarCaballero() {
+        numCaballero++;
     }
 
     /**
-    * Metodo que sumara uno cada vez a la variable numNinja
-    */
-    public void sumarNinja(int i) {
-        numNinja = numNinja + i;
+     * Metodo que sumara uno cada vez a la variable numNinja
+     */
+    public void sumarNinja() {
+        numNinja++;
     }
 
     /**
-    * Metodo que sumara uno cada vez a la variable numRobot
-    */
-    public void sumarRobot(int i) {
-        numRobot = numRobot + i;
+     * Metodo que sumara uno cada vez a la variable numRobot
+     */
+    public void sumarRobot() {
+        numRobot++;
     }
 
 }

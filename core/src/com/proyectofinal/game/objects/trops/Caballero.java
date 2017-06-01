@@ -13,7 +13,6 @@ public class Caballero extends Tropas {
 
     public Caballero(float x, float y, int desviacionX, int desviacionY, int vida, int danyo, int velocidad) {
         super(x, y, desviacionX, desviacionY, vida, danyo, velocidad);
-
     }
 
     @Override
@@ -29,8 +28,6 @@ public class Caballero extends Tropas {
         }else{
             batch.draw(AssetManager.caballeroAttack.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 116, 140, 1f, 1f, 0);
         }
-
-
     }
 }
 

@@ -13,6 +13,7 @@ import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.utils.Musica;
+import com.proyectofinal.game.utils.Preferences;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -22,10 +23,10 @@ import com.proyectofinal.game.utils.Settings;
 public class FinalScreen implements Screen {
 
     //Atributos
-    StretchViewport viewport;
-    OrthographicCamera camera;
+    private StretchViewport viewport;
+    private OrthographicCamera camera;
     private Stage stage;
-    private Batch batch;
+    private Preferences pref;
     private int lvl;
 
     private static Label.LabelStyle textStyleTitulo;
@@ -34,7 +35,7 @@ public class FinalScreen implements Screen {
     private Container containerBtSalir, containerBtSig, containerBtReniciar;
     private TowerAttack game;
 
-    Musica m = new Musica();
+    private Musica m = new Musica();
 
     /**
     * Constructor
@@ -50,6 +51,8 @@ public class FinalScreen implements Screen {
         camera = AssetManager.camera;
         camera.setToOrtho(true);
         camera.update();
+
+        pref = new Preferences();
 
         // Creamos el Viewport con las mismas dimensiones que la Camara
         viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
@@ -67,6 +70,7 @@ public class FinalScreen implements Screen {
         String msg; 
         if (ganado){
             msg= "Has Ganado ";
+            pref.guardarPreferences(lvl);
         }else {
             msg = "Has Perdido!!! ";
         }
@@ -144,10 +148,10 @@ public class FinalScreen implements Screen {
         int cantidad = 0;
 
             if(nivel == 1){
-                cantidad = 50;
+                cantidad = Settings.MAX_TROPAS_LVL_1;
 
             }else if(nivel == 2){
-                cantidad = 30;
+                cantidad = Settings.MAX_TROPAS_LVL_2;
             }
 
         return cantidad;
@@ -200,7 +204,11 @@ public class FinalScreen implements Screen {
 
         int cantidad;
         cantidad = CantidadTropas(lvl+1);
-        game.setScreen(new SeleccionScreen(game, viewport, lvl+1 , cantidad));
+        if (cantidad != 2) {
+            game.setScreen(new SeleccionScreen(game, viewport, lvl + 1, cantidad));
+        }else{
+            game.setScreen(new MenuScreen(game));
+        }
 
     }
 

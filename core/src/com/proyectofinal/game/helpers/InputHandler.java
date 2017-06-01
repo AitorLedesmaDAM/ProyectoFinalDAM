@@ -5,12 +5,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.screens.AtaqueScreen;
 import com.proyectofinal.game.screens.FinalScreen;
 import com.proyectofinal.game.screens.MenuScreen;
 import com.proyectofinal.game.screens.SeleccionScreen;
-import com.proyectofinal.game.utils.Musica;
 import com.proyectofinal.game.utils.Settings;
 
 /**
@@ -19,7 +17,6 @@ import com.proyectofinal.game.utils.Settings;
 
 public class InputHandler implements InputProcessor {
 
-    private TowerAttack towerAttack;
     private SeleccionScreen selecScreen;
     private MenuScreen menuScreen;
     private AtaqueScreen ataqueScreen;
@@ -27,8 +24,6 @@ public class InputHandler implements InputProcessor {
     private Stage stage;
     private Vector2 stageCoord;
     private int lvlInt;
-
-    Musica m = new Musica();
 
     public InputHandler(MenuScreen menuScreen) {
         this.menuScreen = menuScreen;
@@ -52,9 +47,9 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.B) {
+        /*if (keycode == Input.Keys.B) {
             AtaqueScreen.debug = !AtaqueScreen.debug;
-        }
+        }*/
         return false;
     }
 
@@ -70,20 +65,20 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (Settings.pantalla == 1){
+        if (Settings.pantalla == 1) {
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String lvl = actorHit.toString().replaceAll("Label: ", "");
 
-                if (lvl.equals("1")){
+                if (lvl.equals("1")) {
                     lvlInt = Integer.parseInt(lvl.toString());
-                    menuScreen.siguientePantalla(lvlInt, 50);
-                }else if(lvl.equals("2")){
+                    menuScreen.siguientePantalla(lvlInt, Settings.MAX_TROPAS_LVL_1);
+                } else if (lvl.equals("2")) {
                     lvlInt = Integer.parseInt(lvl.toString());
-                    menuScreen.siguientePantalla(lvlInt, 30);
+                    menuScreen.siguientePantalla(lvlInt, Settings.MAX_TROPAS_LVL_2);
                 }
-                if (lvl.equals("Music") || lvl.equals("MusicMute")){
+                if (lvl.equals("Music") || lvl.equals("MusicMute")) {
                     Settings.music = !Settings.music;
                     menuScreen.canviarMusica();
                 }
@@ -95,83 +90,74 @@ public class InputHandler implements InputProcessor {
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String tropa = actorHit.toString();
-                if (tropa.equals("Caballero")){
-                    selecScreen.modMaxTropas(1);
-                    selecScreen.sumarCaballero(1);
-                }else if (tropa.equals("Ninja")){
-                    selecScreen.modMaxTropas(2);
-                    selecScreen.sumarNinja(1);
-                }else if (tropa.equals("Robot")){
-                    selecScreen.modMaxTropas(3);
-                    selecScreen.sumarRobot(1);
-                }else if (tropa.equals("Continuar")){
+                if (tropa.equals("Caballero")) {
+                    selecScreen.modMaxTropas(Settings.TAMANYO_CABALLERO);
+                    selecScreen.sumarCaballero();
+                } else if (tropa.equals("Ninja")) {
+                    selecScreen.modMaxTropas(Settings.TAMANYO_NINJA);
+                    selecScreen.sumarNinja();
+                } else if (tropa.equals("Robot")) {
+                    selecScreen.modMaxTropas(Settings.TAMANYO_ROBOT);
+                    selecScreen.sumarRobot();
+                } else if (tropa.equals("Continuar")) {
                     AssetManager.musicStart.dispose();
                     selecScreen.siguientePantalla();
-                }else{
+                } else {
 
                 }
-                if (tropa.equals("Music") || tropa.equals("MusicMute")){
+                if (tropa.equals("Music") || tropa.equals("MusicMute")) {
                     Settings.music = !Settings.music;
                     selecScreen.canviarMusica();
                 }
-
-
-
             }
             return true;
-        }else if (Settings.pantalla == 3){
+        } else if (Settings.pantalla == 3) {
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String tropa = actorHit.toString();
-                if (tropa.equals("Caballero")){
+                if (tropa.equals("Caballero")) {
                     ataqueScreen.soltarTropa(tropa);
-                }else if (tropa.equals("Ninja")){
+                } else if (tropa.equals("Ninja")) {
                     ataqueScreen.soltarTropa(tropa);
-                }else if (tropa.equals("Robot")) {
+                } else if (tropa.equals("Robot")) {
                     ataqueScreen.soltarTropa(tropa);
                 }
 
-                if (actorHit.getName().equals("Music") || actorHit.getName().equals("MusicMute")){
+                if (actorHit.getName().equals("Music") || actorHit.getName().equals("MusicMute")) {
                     Settings.music = !Settings.music;
                     ataqueScreen.canviarMusica();
                 }
             }
-
             return true;
-        }else if (Settings.pantalla == 4) {
+        } else if (Settings.pantalla == 4) {
 
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
-                String opt = actorHit.toString();
-                if (opt.equals("Siguente")) {
+                String option = actorHit.toString();
+                if (option.equals("Siguente")) {
                     finalScreen.botonSiguiente();
                     AssetManager.musicEnd.dispose();
 
-                } else if (opt.equals("Reniciar")) {
+                } else if (option.equals("Reniciar")) {
                     finalScreen.botonReiniciar();
                     AssetManager.musicEnd.dispose();
 
-                } else if (opt.equals("Salir")) {
+                } else if (option.equals("Salir")) {
                     finalScreen.botonSalir();
                     AssetManager.musicEnd.dispose();
 
                 }
 
-                if (opt.equals("Music") || opt.equals("MusicMute")){
+                if (option.equals("Music") || option.equals("MusicMute")) {
                     Settings.music = !Settings.music;
                     finalScreen.canviarMusica();
                 }
             }
-
-
         }
-            return true;
-
-
+        return true;
     }
-
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {

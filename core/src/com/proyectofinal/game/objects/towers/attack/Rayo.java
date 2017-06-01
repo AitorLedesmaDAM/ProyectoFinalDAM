@@ -15,7 +15,7 @@ public class Rayo extends Actor {
     private float radio;
 
     public Rayo (float x, float y, float radio){
-        this.x = x ;
+        this.x = x + 25;
         this.y = y;
         this.radio = radio * 2;
     }

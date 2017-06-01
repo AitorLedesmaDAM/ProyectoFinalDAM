@@ -12,28 +12,25 @@ import com.proyectofinal.game.TowerAttack;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.helpers.InputHandler;
 import com.proyectofinal.game.utils.Musica;
+import com.proyectofinal.game.utils.Preferences;
 import com.proyectofinal.game.utils.Settings;
 
 public class MenuScreen implements Screen {
 
     // Atributos
     private TowerAttack game;
-    StretchViewport viewport;
-    OrthographicCamera camera;
+    private Preferences pref;
+    private int lvl;
+
+    private StretchViewport viewport;
+    private OrthographicCamera camera;
     private Stage stage;
 
     private static Label.LabelStyle textStyle, textStyleTitulo;
-    private Label textLbl, textLbl2, textLbl3, textLbl4, textLbl5, textLbl6, textLbl7, textLbl8, titulo;
+    private Label textLbl1, textLbl2, textLbl3, textLbl4, textLbl5, textLbl6, textLbl7, textLbl8, titulo;
     private Container container1, container2, container3,container4, container5, container6, container7, container8, contenedorTitulo;
 
-    public Container containerMusic;
-
-    Musica m = new Musica();
-
-    public MenuScreen(){
-
-    }
-
+    private Musica m = new Musica();
 
     /**
     * Constructor
@@ -43,6 +40,9 @@ public class MenuScreen implements Screen {
         this.game = game;
         Settings.pantalla = 1;
 
+        pref = new Preferences();
+        lvl = pref.obtenerPreference();
+        System.out.println(lvl);
 /**
         //Image mIcono = new Image(AssetManager.musicIcono);
         if (Settings.music) {
@@ -67,7 +67,7 @@ public class MenuScreen implements Screen {
         canviarMusica();
 
         // Añadimos los Labels con el texto que queremos y el estilo de letra
-        textLbl = new Label("1", textStyle);
+        textLbl1 = new Label("1", textStyle);
         textLbl2 = new Label("2", textStyle);
         textLbl3 = new Label("3", textStyle);
         textLbl4 = new Label("4", textStyle);
@@ -75,33 +75,55 @@ public class MenuScreen implements Screen {
         textLbl6 = new Label("6", textStyle);
         textLbl7 = new Label("7", textStyle);
         textLbl8 = new Label("8", textStyle);
+
         titulo = new Label("TowerAttack", textStyleTitulo);
 
+        contenedorTitulo = new Container(titulo);
+
+        contenedorTitulo.setTransform(true);
+        contenedorTitulo.center();
+        contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2,Settings.GAME_HEIGHT/6);
+
+
+
+
+            container1 = new Container(textLbl1);
+
+            container1.setTransform(true);
+            container1.center();
+            container1.setPosition((Settings.GAME_WIDTH / 5),Settings.GAME_HEIGHT/2);
+
+            stage.addActor(container1);
+
+        if (lvl > 0){
+            container2 = new Container(textLbl2);
+
+            container2.setTransform(true);
+            container2.center();
+            container2.setPosition((Settings.GAME_WIDTH / 5)*2,Settings.GAME_HEIGHT/2);
+
+            stage.addActor(container2);
+        }
+        if (lvl > 1){
+            container3 = new Container(textLbl3);
+
+            container3.setTransform(true);
+            container3.center();
+            container3.setPosition((Settings.GAME_WIDTH / 5)*3,Settings.GAME_HEIGHT/2);
+
+            stage.addActor(container3);
+        }
+
         // Creamos el Contenedor necesario para aplicarle las acciones
-        container1 = new Container(textLbl);
-        container2 = new Container(textLbl2);
-        container3 = new Container(textLbl3);
-        container4 = new Container(textLbl4);
+       /* container4 = new Container(textLbl4);
         container5 = new Container(textLbl5);
         container6 = new Container(textLbl6);
         container7 = new Container(textLbl7);
-        container8 = new Container(textLbl8);
-        contenedorTitulo = new Container(titulo);
+        container8 = new Container(textLbl8); */
+
 
         // Asignamos la posicion de cada Contenedor en la pantalla
-        container1.setTransform(true);
-        container1.center();
-        container1.setPosition((Settings.GAME_WIDTH / 5),Settings.GAME_HEIGHT/2);
-
-        container2.setTransform(true);
-        container2.center();
-        container2.setPosition((Settings.GAME_WIDTH / 5)*2,Settings.GAME_HEIGHT/2);
-
-        container3.setTransform(true);
-        container3.center();
-        container3.setPosition((Settings.GAME_WIDTH / 5)*3,Settings.GAME_HEIGHT/2);
-
-        container4.setTransform(true);
+     /*   container4.setTransform(true);
         container4.center();
         container4.setPosition((Settings.GAME_WIDTH / 5)*4,Settings.GAME_HEIGHT/2);
 
@@ -121,20 +143,16 @@ public class MenuScreen implements Screen {
         container8.center();
         container8.setPosition((Settings.GAME_WIDTH / 5)*4,Settings.GAME_HEIGHT/2 + Settings.GAME_HEIGHT/4);
 
-        contenedorTitulo.setTransform(true);
-        contenedorTitulo.center();
-        contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2,Settings.GAME_HEIGHT/6);
+*/
         
         // Añadimos los Contenedores como Actores al Stage
         stage.addActor(contenedorTitulo);
-        stage.addActor(container1);
-        stage.addActor(container2);
-        stage.addActor(container3);
+     /*
         stage.addActor(container4);
         stage.addActor(container5);
         stage.addActor(container6);
         stage.addActor(container7);
-        stage.addActor(container8);
+        stage.addActor(container8); */
 
         //stage.addActor(containerMusic);
 
