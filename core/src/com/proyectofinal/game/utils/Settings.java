@@ -18,7 +18,7 @@ public class Settings {
     public static final int MUSICICONO_HEIGHT = 100;
 
     public static final int MAX_TROPAS_LVL_1 = 50;
-    public static final int MAX_TROPAS_LVL_2 = 35;
+    public static final int MAX_TROPAS_LVL_2 = 45;
 
     public static final int TAMANYO_CABALLERO = 1;
     public static final int TAMANYO_NINJA = 2;
@@ -41,8 +41,8 @@ public class Settings {
     public static final int RADIO_TORRE_FUEGO = 300;
 
     public static final int VIDA_TORRE_RAYO = 50;
-    public static final int DANYO_TORRE_RAYO = 4;
-    public static final int RADIO_TORRE_RAYO = 250;
+    public static final int DANYO_TORRE_RAYO = 2;
+    public static final int RADIO_TORRE_RAYO = 230;
 
     //ATRIBUTOS DE LAS DIFERENTES TROPAS
     public static final int VIDA_CABALLERO = 10;

@@ -34,7 +34,7 @@ public class Robot extends Tropas {
 
     @Override
     public void act(float delta) {
-        getCollisionRect().set(new Rectangle(getPosition().x+19,getPosition().y,10,130));
+        getCollisionRect().set(new Rectangle(getPosition().x+19,getPosition().y,57,130));
     }
 
     @Override

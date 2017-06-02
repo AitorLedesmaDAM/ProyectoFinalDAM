@@ -47,9 +47,9 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        /*if (keycode == Input.Keys.B) {
+        if (keycode == Input.Keys.B) {
             AtaqueScreen.debug = !AtaqueScreen.debug;
-        }*/
+        }
         return false;
     }
 

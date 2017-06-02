@@ -234,23 +234,23 @@
   <object id="148" x="2758.5" y="861.167" width="27" height="27"/>
  </objectgroup>
  <objectgroup name="TorresObjetos">
-  <object id="149" name="torre1" type="torre" x="1187.88" y="1024.24" width="181.818" height="178.788">
+  <object id="149" name="torre1" type="torre" x="1227.88" y="1062.24" width="150" height="150">
    <properties>
     <property name="cara" type="int" value="1"/>
    </properties>
   </object>
-  <object id="150" name="torre2" type="torre" x="896.48" y="500.606" width="181.818" height="172.727">
+  <object id="150" name="torre2" type="torre" x="910.48" y="514.606" width="150" height="150">
    <properties>
     <property name="TorreR" type="int" value="1"/>
     <property name="cara" type="int" value="1"/>
    </properties>
   </object>
-  <object id="152" name="torre3" type="torre" x="1809.58" y="40.2424" width="193.939" height="184.848">
+  <object id="152" name="torre3" type="torre" x="1895.58" y="70.2424" width="150" height="150">
    <properties>
     <property name="cara" type="int" value="1"/>
    </properties>
   </object>
-  <object id="154" name="torre4" type="torre" x="2321.21" y="993.939" width="190.909" height="181.818">
+  <object id="154" name="torre4" type="torre" x="2327.21" y="993.939" width="150" height="150">
    <properties>
     <property name="TorreR" type="int" value="1"/>
    </properties>
