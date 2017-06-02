@@ -26,6 +26,10 @@ public class Nivel {
         tropas = new Tropas();
     }
 
+    /**
+    * Metodo que recoge los objetos del tiled de la capa TorresObjetos y a cada uno les añade una torre nueva
+    * También controla
+    */
     public static ArrayList<Torres> recojerTorres(TiledMap mapa){
         ArrayList<Torres> torres = new ArrayList<Torres>();
         int vida, danyo, radio;
