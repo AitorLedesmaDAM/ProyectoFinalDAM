@@ -84,9 +84,6 @@ public class MenuScreen implements Screen {
         contenedorTitulo.center();
         contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2,Settings.GAME_HEIGHT/6);
 
-
-
-
             container1 = new Container(textLbl1);
 
             container1.setTransform(true);

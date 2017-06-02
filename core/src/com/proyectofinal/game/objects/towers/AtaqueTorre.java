@@ -15,7 +15,6 @@ public class AtaqueTorre {
     public AtaqueTorre(){
     }
 
-
     public ArrayList<Tropas> atacarTropas(Torres torre, ArrayList<Tropas> tropas){
         ArrayList<Tropas> tropasMuertas = new ArrayList<Tropas>();
         if (torre.getTipo().equals("Fuego")) {

@@ -26,8 +26,6 @@ public class Nivel {
         tropas = new Tropas();
     }
 
-
-
     public static ArrayList<Torres> recojerTorres(TiledMap mapa){
         ArrayList<Torres> torres = new ArrayList<Torres>();
         int vida, danyo, radio;
@@ -54,7 +52,6 @@ public class Nivel {
                 vida = Settings.VIDA_TORRE_FUEGO;
                 danyo = Settings.DANYO_TORRE_FUEGO;
                 radio = Settings.RADIO_TORRE_FUEGO;
-
 
                 torres.add(new Torre_Fuego(rect.getX(), rect.getY(), orientacion, rect.getWidth() / 2, rect.getHeight() / 2, radio, vida, danyo, "Fuego"));
             }

@@ -45,7 +45,6 @@ public class Torre_Rayo extends Torres {
             }
         }
         rayo.draw(batch, parentAlpha);
-
     }
 
 

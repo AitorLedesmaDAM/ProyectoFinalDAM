@@ -201,7 +201,6 @@ public class FinalScreen implements Screen {
     }
 
     public void botonSiguiente() {
-
         int cantidad;
         cantidad = CantidadTropas(lvl+1);
         if (cantidad != 2) {
@@ -209,20 +208,15 @@ public class FinalScreen implements Screen {
         }else{
             game.setScreen(new MenuScreen(game));
         }
-
     }
 
     public void botonReiniciar() {
-
         int cantidad;
         cantidad = CantidadTropas(lvl);
         game.setScreen(new SeleccionScreen(game, viewport, lvl , cantidad));
-
     }
 
     public void botonSalir() {
-
         game.setScreen(new MenuScreen(game));
-
     }
 }

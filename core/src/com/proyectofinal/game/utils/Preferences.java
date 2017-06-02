@@ -16,14 +16,22 @@ public class Preferences {
     public Preferences() {
     }
 
+    /**
+     * Recull Preferences del sistema
+     * @return
+     */
     protected com.badlogic.gdx.Preferences getPrefs() {
-        if(preferences==null){
+        if(preferences == null){
             preferences = Gdx.app.getPreferences("Preferencias");
         }
         return preferences;
     }
 
 
+    /**
+     * Guarda el nivell que t'acabes de passar
+     * @param nivell
+     */
     public void guardarPreferences(int nivell){
 
         //put some Integer
@@ -36,6 +44,10 @@ public class Preferences {
 
     }
 
+    /**
+     * Obté el nivel actual
+     * @return
+     */
     public int obtenerPreference(){
 
         int nivel = getPrefs().getInteger("nivell");

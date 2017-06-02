@@ -57,8 +57,10 @@ public class Settings {
     public static final int DANYO_ROBOT = 4;
     public static final int VELOCIDAD_ROBOT = 3;
 
+    //Pantalla actual
     public static int pantalla = 0;
 
+    //comprovante de la musica
     public static boolean music = true;
 
 }

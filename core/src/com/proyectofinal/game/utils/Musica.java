@@ -14,9 +14,8 @@ import com.proyectofinal.game.helpers.AssetManager;
 
 public class Musica {
 
-    public Container containerMusic, containerMusicMute;
+    private Container containerMusic, containerMusicMute;
     private Array < Actor > actores = new Array < Actor > ();
-    boolean parado;
 
     public void iconoMusica(Stage stage) {
 
@@ -64,12 +63,6 @@ public class Musica {
                 AssetManager.musicStart.pause();
             } else if (Settings.pantalla == 4) {
                 AssetManager.musicEnd.pause();
-            }else if (Settings.pantalla == 3) {
-                //AssetManager.soundWalk.stop();
-                //AssetManager.soundMelee.stop();
-                //AssetManager.soundTowerDead.stop();
-                //AssetManager.soundDead2.stop();
-                //parado = true;
             }
 
             if (Settings.pantalla == 3) {
