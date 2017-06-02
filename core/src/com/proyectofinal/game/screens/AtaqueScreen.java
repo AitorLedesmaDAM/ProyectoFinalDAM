@@ -53,9 +53,9 @@ public class AtaqueScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
 
-    private ArrayList < Tropas > tropasEnMapa, tropasColisionadas;
-    private ArrayList < Camino > camino;
-    private ArrayList < Torres > torres;
+    private ArrayList<Tropas> tropasEnMapa, tropasColisionadas;
+    private ArrayList<Camino> camino;
+    private ArrayList<Torres> torres;
 
     private long contador = 0;
 
@@ -99,10 +99,10 @@ public class AtaqueScreen implements Screen {
 
         nivel = new Nivel();
 
-        tropasEnMapa = new ArrayList < Tropas > ();
+        tropasEnMapa = new ArrayList<Tropas>();
 
         camino = nivel.recojerCamino(mapa);
-        tropasColisionadas = new ArrayList < Tropas > ();
+        tropasColisionadas = new ArrayList<Tropas>();
 
         Image caballero = new Image(AssetManager.caballeroSelecAtak); //Selección de caballero
         caballero.setName("Caballero");
@@ -248,10 +248,10 @@ public class AtaqueScreen implements Screen {
                         if (contador % 60 == 0 && tropasColisionadas.size() > 0 && compruebaAtaqueTorre) {
                             compruebaAtaqueTorre = false;
 
-                            ArrayList < Tropas > tropasMuertas = ataqueTorre.atacarTropas(torreActual, tropasColisionadas);
+                            ArrayList<Tropas> tropasMuertas = ataqueTorre.atacarTropas(torreActual, tropasColisionadas);
                             if (tropasMuertas != null) {
                                 //Controla las tropas muertas
-                                for (Tropas tropa: tropasMuertas) {
+                                for (Tropas tropa : tropasMuertas) {
                                     tropasEnMapa.remove(tropasEnMapa.indexOf(tropa));
                                     borrarActorStage(tropa);
                                 }
@@ -276,12 +276,12 @@ public class AtaqueScreen implements Screen {
 
                     } else {
                         //mientras la tropa este atacando que no se mueva
-                        if (!tropaActual.isEstaAtacando() && contador % tropaActual.getVelocidad() == 0){
+                        if (!tropaActual.isEstaAtacando() && contador % tropaActual.getVelocidad() == 0) {
                             tropaActual.setanimacionCaminar(true);
                             if (!tropaActual.salirDeTorre()) {
                                 tropaActual.setEstado(Tropas.Estado.Caminando);
                                 tropasColisionadas.remove(tropaActual);
-                            }else{
+                            } else {
                                 //cuando termine de atacar que busque la siguiente casilla
                                 tropaActual.siguienteCasilla(camino);
                             }
@@ -314,7 +314,7 @@ public class AtaqueScreen implements Screen {
                     }
                     if (caminar > 0) {
                         AssetManager.soundWalk.play();
-                    }else{
+                    } else {
                         AssetManager.soundWalk.stop();
                     }
                 } else {
@@ -335,14 +335,13 @@ public class AtaqueScreen implements Screen {
     }
 
     /**
-     *
      * Metodo para eliminar un actor del stage
      *
      * @param tropa
      */
     public void borrarActorStage(Tropas tropa) {
-        Array < Actor > actores = stage.getActors();
-        for (Actor actor: actores) {
+        Array<Actor> actores = stage.getActors();
+        for (Actor actor : actores) {
             if (actor.equals(tropa)) {
                 actor.remove();
             }
@@ -350,9 +349,7 @@ public class AtaqueScreen implements Screen {
     }
 
     /**
-     *
      * Metodo para que cuando se pulse 'B' se vean los rectangulos y los circulos de colisiones de las tropas y las torres
-     *
      */
     private void renderDebug() {
 
@@ -379,11 +376,7 @@ public class AtaqueScreen implements Screen {
 
     }
 
-    /**
-     *
-     * @param width
-     * @param height
-     */
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -408,7 +401,8 @@ public class AtaqueScreen implements Screen {
     }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 
     public Stage getStage() {
         return stage;
@@ -416,7 +410,6 @@ public class AtaqueScreen implements Screen {
 
 
     /**
-     *
      * Metodo para añadir una tropa al camino y restar a la variable correspondiente
      *
      * @param tropa

@@ -209,7 +209,8 @@ public class FinalScreen implements Screen {
     }
 
     /**
-     * MEthodo que devuelve un stage
+     * Metodo que devuelve un stage
+     *
      * @return stage
      */
     public Stage getStage() {
@@ -218,7 +219,7 @@ public class FinalScreen implements Screen {
 
 
     /**
-     * Methodo para boton Siguiente que le lleva a siguiente nivell, cuando el usuario apreta a ese boton,
+     * Metodo para boton Siguiente que le lleva a siguiente nivell, cuando el usuario apreta a ese boton,
      * se le lleva a seleccionScreen y suma un nivell mas al nivel anterior. Asi el usuario ya esta
      * en siguiente nivell.
      */
@@ -234,7 +235,7 @@ public class FinalScreen implements Screen {
 
 
     /**
-     * Methodo para boton de reiniciar el juego, al usuario le lleva otra vez al seleccionScreen, por
+     * Metodo para boton de reiniciar el juego, al usuario le lleva otra vez al seleccionScreen, por
      * parametros le pasamos el game, viewport, nivell y cantidad de tropas.
      */
     public void botonReiniciar() {

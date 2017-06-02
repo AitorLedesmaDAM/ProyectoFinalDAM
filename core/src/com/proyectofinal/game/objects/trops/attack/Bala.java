@@ -3,7 +3,6 @@ package com.proyectofinal.game.objects.trops.attack;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.proyectofinal.game.helpers.AssetManager;
 import com.proyectofinal.game.utils.Settings;
 
@@ -18,7 +17,7 @@ public class Bala extends Actor {
     private Vector2 camino, destino, origen, position;
     private float angle, tiempoDeEstado = 1;
 
-    public Bala(Vector2 origen, Vector2 destino){
+    public Bala(Vector2 origen, Vector2 destino) {
         this.origen = origen;
         this.destino = destino;
         angle = (float) Math.atan2(origen.y - destino.y, origen.x - destino.x) * 120;
@@ -36,24 +35,28 @@ public class Bala extends Actor {
 
     }
 
+    /**
+     * Se ejecuta el movimiento de la bala
+     *
+     * @param delta
+     */
     @Override
     public void act(float delta) {
         super.act(delta);
 
-        if (origen.x < destino.x) {
+        setTiempoDeEstado(getTiempoDeEstado() + delta);
+        if (origen.x < destino.x) {     //Si la coordenada X es mayor del origen que del destino...
             if (position.x < destino.x) {
-                setTiempoDeEstado(getTiempoDeEstado() + delta);
-                position.x += camino.x * (Settings.VELOCIDAD_BALA/60);
-                position.y += camino.y * (Settings.VELOCIDAD_BALA/60);
+                position.x += camino.x * (Settings.VELOCIDAD_BALA / 60);
+                position.y += camino.y * (Settings.VELOCIDAD_BALA / 60);
             } else {
-                this.remove();
+                this.remove();  //Borra el objeto del stage
                 this.setDestruida(true);
             }
-        }else{
+        } else {
             if (position.x > destino.x) {
-                setTiempoDeEstado(getTiempoDeEstado() + delta);
-                position.x += (camino.x * delta) / Settings.VELOCIDAD_BALA;
-                position.y += (camino.y * delta) / Settings.VELOCIDAD_BALA;
+                position.x += (camino.x * delta) / (Settings.VELOCIDAD_BALA / 60);
+                position.y += (camino.y * delta) / (Settings.VELOCIDAD_BALA / 60);
             } else {
                 this.remove();
                 this.setDestruida(true);

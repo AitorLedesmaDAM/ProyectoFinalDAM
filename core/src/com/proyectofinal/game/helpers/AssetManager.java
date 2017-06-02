@@ -23,12 +23,12 @@ import com.proyectofinal.game.utils.Settings;
 public class AssetManager {
 
     //Atibutos como Texturas.
-    public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig, textureMusic, textureMusicMute, textureAttackMusic, textureAttackMusicMute ;
+    public static Texture fondo, textureBtnCont, textureBtnReiniciar, textureBtnSalir, textureBtnSig, textureMusic, textureMusicMute, textureAttackMusic, textureAttackMusicMute;
     //Atributos de Animaciones
     public static Animation<TextureRegion> caballeroRun, caballeroAttack, ninjaRun, ninjaAttack, robotRun, robotAttack, robotBullet, robotMuzzle, fuegoTorre, rayoTorre;
 
     //Sprites
-    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1,mapa2, btnContinuar, caballeroSelecAtak,ninjaSelecAtak,robotSelecAtak, btnReiniciar, btnSalir, btnSig, musicIcono, musicMute, musicIconoAttack, musicMuteAttack;
+    public static Sprite caballeroSelec, ninjaSelec, robotSelec, mapa1, mapa2, btnContinuar, caballeroSelecAtak, ninjaSelecAtak, robotSelecAtak, btnReiniciar, btnSalir, btnSig, musicIcono, musicMute, musicIconoAttack, musicMuteAttack;
     public static Sprite torreF, torreF2, torreFMuerta, torreF2Muerta, torreR, torreR2, torreRMuerta, torreR2Muerta;
 
     //Bitmap para difeentes fuentes
@@ -64,7 +64,6 @@ public class AssetManager {
 
         robotSelecAtak = new Sprite(new Texture(Gdx.files.internal("tropas/robotSelec_prueba.png")));
         robotSelecAtak.flip(true, false);
-
 
 
         //Carrgamos les textures para poner de fondo
@@ -222,7 +221,6 @@ public class AssetManager {
         rayoTorre.setPlayMode(Animation.PlayMode.LOOP);
 
 
-
         //Cargar el fichero de fuentes, para aplicar.
         FileHandle fontFile = Gdx.files.internal("fonts/fuente1.fnt");
         font = new BitmapFont(fontFile, true);
@@ -241,7 +239,7 @@ public class AssetManager {
 
         textStyleTitulo = new Label.LabelStyle(fontGrande, null);
 
-        textStylePequenio = new Label.LabelStyle(fontPequenia,null);
+        textStylePequenio = new Label.LabelStyle(fontPequenia, null);
 
         //Creamos la camara de dimensiones de juego.
         camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);

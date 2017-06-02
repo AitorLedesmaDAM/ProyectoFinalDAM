@@ -29,6 +29,7 @@ public class LlegarATorre {
 
     /**
      * Recoje el camino que hace falta para que el m
+     *
      * @return
      */
     public Camino recogerXTorre() {
@@ -40,6 +41,11 @@ public class LlegarATorre {
         return null;
     }
 
+    /**
+     * Recoje el camino que hay que recojer para llegar a la torre
+     *
+     * @return
+     */
     public ArrayList<Camino> caminarHaciaTorre() {
         Camino camino = recogerXTorre();
         int casillaTorre = caminoTropas.indexOf(camino);

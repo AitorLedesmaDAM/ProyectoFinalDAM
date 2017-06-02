@@ -6,12 +6,12 @@ package com.proyectofinal.game.objects.road;
 
 public class Camino {
 
-    //Atributos x, y;
     private float x;
     private float y;
 
     /**
      * Constructor de Camino
+     *
      * @param x
      * @param y
      */
@@ -22,6 +22,7 @@ public class Camino {
 
     /**
      * Methodo para obtener el X.
+     *
      * @return
      */
     public float getX() {
@@ -30,6 +31,7 @@ public class Camino {
 
     /**
      * Methodo para obtener Y.
+     *
      * @return
      */
     public float getY() {

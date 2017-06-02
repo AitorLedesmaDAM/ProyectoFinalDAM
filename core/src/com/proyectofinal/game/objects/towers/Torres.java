@@ -22,8 +22,7 @@ public class Torres extends Actor {
     protected float radius, circuloWidth, circuloHeight;
     protected String tipo;
 
-    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo, String tipo)
-    {
+    public Torres(float x, float y, boolean orientacion, float circuloWidth, float circuloHeight, int radio, int vida, int danyo, String tipo) {
         // Inicialitzem els arguments segons la crida del constructor
         this.vida = vida;
         this.danyo = danyo;
@@ -40,15 +39,15 @@ public class Torres extends Actor {
         setBounds(position.x, position.y, width, height);
         setTouchable(Touchable.enabled);
 
-        if(!orientacion){
-            posicionAtaque = new Vector2(position.x + circuloWidth, position.y + (circuloHeight*2) + 25);
-        }else{
+        //Dependiendo de la orientación de la torre, la posicion donde atacaran las torres será diferente
+        if (!orientacion) {
+            posicionAtaque = new Vector2(position.x + circuloWidth, position.y + (circuloHeight * 2) + 25);
+        } else {
             posicionAtaque = new Vector2(position.x + circuloWidth, position.y - 50);
         }
     }
 
-    public void act(float delta)
-    {
+    public void act(float delta) {
         if (viva) {
             collisionCircle.set(position.x + circuloWidth, position.y + circuloHeight, radius);
         }

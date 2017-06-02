@@ -17,15 +17,15 @@ public class Caballero extends Tropas {
 
     @Override
     public void act(float delta) {
-        setCollisionRect(new Rectangle(getPosition().x+12,getPosition().y,90,130)); //Rectangulo de posiciones del Caballero
+        setCollisionRect(new Rectangle(getPosition().x + 12, getPosition().y, 90, 130)); //Rectangulo de posiciones del Caballero
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         this.setName("Caballeros");
-        if(isanimacionCaminar()){
+        if (isanimacionCaminar()) {
             batch.draw(AssetManager.caballeroRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 116, 140, 1f, 1f, 0);
-        }else{
+        } else {
             batch.draw(AssetManager.caballeroAttack.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 116, 140, 1f, 1f, 0);
         }
     }

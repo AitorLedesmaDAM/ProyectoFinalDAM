@@ -28,14 +28,14 @@ public class MenuScreen implements Screen {
 
     private static Label.LabelStyle textStyle, textStyleTitulo;
     private Label textLbl1, textLbl2, textLbl3, textLbl4, textLbl5, textLbl6, textLbl7, textLbl8, titulo;
-    private Container container1, container2, container3,container4, container5, container6, container7, container8, contenedorTitulo;
+    private Container container1, container2, container3, container4, container5, container6, container7, container8, contenedorTitulo;
 
     private Musica m = new Musica();
 
     /**
-    * Constructor
-    * Le pasamos el game por parametros
-    */
+     * Constructor
+     * Le pasamos el game por parametros
+     */
     public MenuScreen(TowerAttack game) {
         this.game = game;
         Settings.pantalla = 1;
@@ -78,32 +78,32 @@ public class MenuScreen implements Screen {
 
         contenedorTitulo.setTransform(true);
         contenedorTitulo.center();
-        contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2,Settings.GAME_HEIGHT/6);
+        contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 6);
 
         // Creamos el Contenedor necesario para aplicarle las acciones
-            container1 = new Container(textLbl1);
+        container1 = new Container(textLbl1);
 
-            container1.setTransform(true);
-            container1.center();
-            container1.setPosition((Settings.GAME_WIDTH / 5),Settings.GAME_HEIGHT/2);
+        container1.setTransform(true);
+        container1.center();
+        container1.setPosition((Settings.GAME_WIDTH / 5), Settings.GAME_HEIGHT / 2);
 
-            stage.addActor(container1);
+        stage.addActor(container1);
 
-        if (lvl > 0){
+        if (lvl > 0) {
             container2 = new Container(textLbl2);
 
             container2.setTransform(true);
             container2.center();
-            container2.setPosition((Settings.GAME_WIDTH / 5)*2,Settings.GAME_HEIGHT/2);
+            container2.setPosition((Settings.GAME_WIDTH / 5) * 2, Settings.GAME_HEIGHT / 2);
 
             stage.addActor(container2);
         }
-        if (lvl > 1){
+        if (lvl > 1) {
             container3 = new Container(textLbl3);
 
             container3.setTransform(true);
             container3.center();
-            container3.setPosition((Settings.GAME_WIDTH / 5)*3,Settings.GAME_HEIGHT/2);
+            container3.setPosition((Settings.GAME_WIDTH / 5) * 3, Settings.GAME_HEIGHT / 2);
 
             stage.addActor(container3);
         }
@@ -115,7 +115,7 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
-    public void canviarMusica(){
+    public void canviarMusica() {
         m.iconoMusica(stage);
     }
 
@@ -123,26 +123,26 @@ public class MenuScreen implements Screen {
     public void show() {
 
     }
-    
-/**
-* Metodo para cambiar de pantalla al hacer click
-* pasandole por parametros el nivel que se a pulsado y el maximo de tropas
-* que se permiten en ese nivel
-*/
-    public void siguientePantalla(int lvl, int maxTropas){
+
+    /**
+     * Metodo para cambiar de pantalla al hacer click
+     * pasandole por parametros el nivel que se a pulsado y el maximo de tropas
+     * que se permiten en ese nivel
+     */
+    public void siguientePantalla(int lvl, int maxTropas) {
         game.setScreen(new SeleccionScreen(game, stage.getViewport(), lvl, maxTropas));
     }
 
-    
+
     @Override
     public void render(float delta) {
         stage.draw();
         stage.act(delta);
     }
-    
+
     /**
-    * Metodo para redimensionar el viewport y la camara
-    */
+     * Metodo para redimensionar el viewport y la camara
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);

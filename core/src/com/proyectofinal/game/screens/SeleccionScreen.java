@@ -38,16 +38,17 @@ public class SeleccionScreen implements Screen {
 
     private Musica m = new Musica();
 
-    public SeleccionScreen() {}
+    public SeleccionScreen() {
+    }
 
     /**
      * Constructor
      * Le pasamos por parametros
-     ** game
-     ** batch
-     ** viewport
-     ** lvl : Nivel que se a elejido jugar
-     ** maxTropasContador : El numero de tropas maximas permitidas para ese nivel
+     * * game
+     * * batch
+     * * viewport
+     * * lvl : Nivel que se a elejido jugar
+     * * maxTropasContador : El numero de tropas maximas permitidas para ese nivel
      */
     public SeleccionScreen(TowerAttack game, Viewport _viewport, int lvl, int _maxTropasContador) {
         this.game = game;

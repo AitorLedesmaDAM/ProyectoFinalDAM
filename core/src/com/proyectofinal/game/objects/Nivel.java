@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class Nivel {
 
-    Tropas tropas;
-    boolean finalJuego = false;
+    private Tropas tropas;
+    private boolean finalJuego = false;
 
     public Nivel() {
         tropas = new Tropas();

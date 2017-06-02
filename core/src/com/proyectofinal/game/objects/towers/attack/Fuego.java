@@ -11,7 +11,7 @@ import com.proyectofinal.game.helpers.AssetManager;
 public class Fuego extends Actor {
 
     //Atributos
-    private float x,y;
+    private float x, y;
     public float tiempoDeEstado = 0;
     private boolean visible;
     private float radio;
@@ -19,14 +19,15 @@ public class Fuego extends Actor {
 
     /**
      * Constructor de clase fuego, inicialitza atributos.
+     *
      * @param x
      * @param y
      * @param radio
      */
-    public Fuego (float x, float y, int radio){
+    public Fuego(float x, float y, int radio) {
         this.x = x - 100;
         this.y = y - 100;
-        this.radio =  radio - (radio / 3);
+        this.radio = radio - (radio / 3);
         curva = this.radio - (this.radio / 3);
         visible = false;
     }
@@ -34,6 +35,7 @@ public class Fuego extends Actor {
 
     /**
      * Methodo override de draw. Por parametros le pasamos el batch y parentAlpha
+     *
      * @param batch
      * @param parentAlpha
      */
@@ -55,6 +57,7 @@ public class Fuego extends Actor {
 
     /**
      * Methodo que devuelve el tirmpo de estado
+     *
      * @return
      */
     public float getTiempoDeEstado() {
@@ -63,6 +66,7 @@ public class Fuego extends Actor {
 
     /**
      * Methodo set para poner el tiempo de estado.
+     *
      * @param tiempoDeEstado
      */
     public void setTiempoDeEstado(float tiempoDeEstado) {

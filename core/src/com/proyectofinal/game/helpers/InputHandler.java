@@ -46,8 +46,8 @@ public class InputHandler implements InputProcessor {
     }
 
     /**
-    * Cuando se pulsa la tecla 'B' el atauqeScreen se pone en debug
-    */
+     * Cuando se pulsa la tecla 'B' el atauqeScreen se pone en debug
+     */
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.B) {
@@ -67,9 +67,9 @@ public class InputHandler implements InputProcessor {
     }
 
     /**
-    * Este metodo mira que boton a sido pulado de que pantalla 
-    * y llama a los metodos correspondientes.
-    */
+     * Este metodo mira que boton a sido pulado de que pantalla
+     * y llama a los metodos correspondientes.
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //En la pantalla 1
@@ -84,7 +84,7 @@ public class InputHandler implements InputProcessor {
                     //se llama al metodo siguiente pantalla con los atributos para
                     //el nivel 1
                     menuScreen.siguientePantalla(lvlInt, Settings.MAX_TROPAS_LVL_1);
-                 //si se pulsa el 2
+                    //si se pulsa el 2
                 } else if (lvl.equals("2")) {
                     lvlInt = Integer.parseInt(lvl.toString());
                     //se llama al metodo siguiente pantalla con los atributos para
@@ -129,7 +129,7 @@ public class InputHandler implements InputProcessor {
                 }
             }
             return true;
-         //En la pantalla 3
+            //En la pantalla 3
         } else if (Settings.pantalla == 3) {
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);

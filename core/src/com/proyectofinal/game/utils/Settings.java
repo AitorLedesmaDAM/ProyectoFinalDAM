@@ -32,7 +32,7 @@ public class Settings {
     //Buscar en que clase se utilizan estas medidas/velocidad
     public static final int TROPA_WIDTH = 70;
     public static final int TROPA_HEIGHT = 100;
-    
+
     public static final float VELOCIDAD_BALA = 0.7f;
 
     //ATRIBUTOS DE LAS DIFERENTES TORRES

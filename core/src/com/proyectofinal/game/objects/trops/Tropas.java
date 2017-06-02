@@ -15,13 +15,13 @@ import java.util.Random;
  * Created by ALUMNEDAM on 05/05/2017.
  */
 
-public class Tropas extends Actor{
+public class Tropas extends Actor {
 
     public enum Estado {
         Atacando, Caminando
     }
 
-    public enum Tipo{
+    public enum Tipo {
         Caballero, Ninja, Robot
     }
 
@@ -38,9 +38,9 @@ public class Tropas extends Actor{
     public boolean ataqueCuerpoaCuerpo;
     private int contadorBala = 119;
 
-    public Tropas(float x, float y, int desviacionX, int desviacionY, int vida, int danyo, int velocidad){
+    public Tropas(float x, float y, int desviacionX, int desviacionY, int vida, int danyo, int velocidad) {
         // Inicialitzem els arguments segons la crida del constructor
-        position = new Vector2(x,y);
+        position = new Vector2(x, y);
         this.desviacionY = desviacionY;
         this.desviacionX = desviacionX;
         animacionCaminar = true;
@@ -59,20 +59,21 @@ public class Tropas extends Actor{
 
     }
 
-    public Tropas(){
+    public Tropas() {
 
     }
 
     /**
      * Dependiendo del tipo de tropa que se le pase, añadira una tropa u otra
+     *
      * @param tipo
      * @param x
      * @param y
      * @return
      */
-    public Tropas crearTropa(Tipo tipo, float x, float y){
+    public Tropas crearTropa(Tipo tipo, float x, float y) {
         Tropas tropa = null;
-        switch (tipo){
+        switch (tipo) {
             case Caballero:
                 tropa = new Caballero(x, y, random.nextInt(125) + (-87), random.nextInt(150) + (-100), Settings.VIDA_CABALLERO, Settings.DANYO_CABALLERO, Settings.VELOCIDAD_CABALLERO);
                 break;
@@ -90,7 +91,7 @@ public class Tropas extends Actor{
         return tropa;
     }
 
-    public void ataque(Vector2 origen, Vector2 destino, Stage stage){
+    public void ataque(Vector2 origen, Vector2 destino, Stage stage) {
 
     }
 
@@ -116,9 +117,10 @@ public class Tropas extends Actor{
 
     /**
      * Va recojiendo el camino por el que tiene que ir y actualiza su posicion
+     *
      * @param camino
      */
-    public void siguienteCasilla(ArrayList<Camino> camino){
+    public void siguienteCasilla(ArrayList<Camino> camino) {
         if (estado == Estado.Caminando && casillaActual < camino.size() - 1) {
             casillaActual++;
             position.x = camino.get(casillaActual).getX() + desviacionX;
@@ -129,17 +131,18 @@ public class Tropas extends Actor{
 
     /**
      * Devuelve un boolean
+     *
      * @param camino
      * @return
      */
-    public boolean siguienteCasillaAtaque(ArrayList<Camino> camino){
+    public boolean siguienteCasillaAtaque(ArrayList<Camino> camino) {
 
         if (camino.size() - 1 > casillaActual) {
             casillaActual++;
             position.x = camino.get(casillaActual).getX() + desviacionX;
             position.y = camino.get(casillaActual).getY() + desviacionY;
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -147,20 +150,21 @@ public class Tropas extends Actor{
     /**
      * Dependiendo de la posicion de la torre, la tropa irá hacia arriba o hacia abajo. Una vez que
      * llegue a la posicion indicada, devolvera un false
+     *
      * @param comienzo
      * @param fin
      * @param posicionTorre
      * @return
      */
-    public boolean llegarATorre(float comienzo, float fin, boolean posicionTorre){
+    public boolean llegarATorre(float comienzo, float fin, boolean posicionTorre) {
         if (posicionTorre) {
-            if(comienzo < fin) {
+            if (comienzo < fin) {
                 position.y += 2;
                 casillasParaLlegarATorre++; //Se le suma cada vez que tiene que ir para arriba
                 return true;
             }
-        }else{
-            if(comienzo > fin) {
+        } else {
+            if (comienzo > fin) {
                 position.y -= 2;
                 casillasParaLlegarATorre--; //Se le resta cada vez que tiene que ir para abajo
                 return true;
@@ -172,20 +176,21 @@ public class Tropas extends Actor{
     /**
      * El metodo inverso a llegarATorre(). Devuelve un boolean dependiendo de si a vuelto a su
      * posicion original o no
+     *
      * @return
      */
-    public boolean salirDeTorre(){
-            if (casillasParaLlegarATorre < 0) {
-                casillasParaLlegarATorre++;
-                position.y += 2;
-                return true;
-            } else if (casillasParaLlegarATorre > 0) {
-                casillasParaLlegarATorre--;
-                position.y -= 2;
-                return true;
-            } else {
-                return false;
-            }
+    public boolean salirDeTorre() {
+        if (casillasParaLlegarATorre < 0) {
+            casillasParaLlegarATorre++;
+            position.y += 2;
+            return true;
+        } else if (casillasParaLlegarATorre > 0) {
+            casillasParaLlegarATorre--;
+            position.y -= 2;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setCollisionRect(Rectangle collisionRect) {
