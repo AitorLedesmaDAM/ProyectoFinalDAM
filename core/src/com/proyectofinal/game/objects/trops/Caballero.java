@@ -17,7 +17,7 @@ public class Caballero extends Tropas {
 
     @Override
     public void act(float delta) {
-        setCollisionRect(new Rectangle(getPosition().x+12,getPosition().y,90,130));
+        setCollisionRect(new Rectangle(getPosition().x+12,getPosition().y,90,130)); //Rectangulo de posiciones del Caballero
     }
 
     @Override

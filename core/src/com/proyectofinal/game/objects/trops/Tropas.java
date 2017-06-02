@@ -63,6 +63,13 @@ public class Tropas extends Actor{
 
     }
 
+    /**
+     * Dependiendo del tipo de tropa que se le pase, añadira una tropa u otra
+     * @param tipo
+     * @param x
+     * @param y
+     * @return
+     */
     public Tropas crearTropa(Tipo tipo, float x, float y){
         Tropas tropa = null;
         switch (tipo){
@@ -107,6 +114,10 @@ public class Tropas extends Actor{
         this.tiempoDeEstado = tiempoDeEstado;
     }
 
+    /**
+     * Va recojiendo el camino por el que tiene que ir y actualiza su posicion
+     * @param camino
+     */
     public void siguienteCasilla(ArrayList<Camino> camino){
         if (estado == Estado.Caminando && casillaActual < camino.size() - 1) {
             casillaActual++;
@@ -116,6 +127,11 @@ public class Tropas extends Actor{
         }
     }
 
+    /**
+     * Devuelve un boolean
+     * @param camino
+     * @return
+     */
     public boolean siguienteCasillaAtaque(ArrayList<Camino> camino){
 
         if (camino.size() - 1 > casillaActual) {
@@ -128,23 +144,36 @@ public class Tropas extends Actor{
         }
     }
 
+    /**
+     * Dependiendo de la posicion de la torre, la tropa irá hacia arriba o hacia abajo. Una vez que
+     * llegue a la posicion indicada, devolvera un false
+     * @param comienzo
+     * @param fin
+     * @param posicionTorre
+     * @return
+     */
     public boolean llegarATorre(float comienzo, float fin, boolean posicionTorre){
         if (posicionTorre) {
             if(comienzo < fin) {
                 position.y += 2;
-                casillasParaLlegarATorre++;
+                casillasParaLlegarATorre++; //Se le suma cada vez que tiene que ir para arriba
                 return true;
             }
         }else{
             if(comienzo > fin) {
                 position.y -= 2;
-                casillasParaLlegarATorre--;
+                casillasParaLlegarATorre--; //Se le resta cada vez que tiene que ir para abajo
                 return true;
             }
         }
-            return false;
+        return false;
     }
 
+    /**
+     * El metodo inverso a llegarATorre(). Devuelve un boolean dependiendo de si a vuelto a su
+     * posicion original o no
+     * @return
+     */
     public boolean salirDeTorre(){
             if (casillasParaLlegarATorre < 0) {
                 casillasParaLlegarATorre++;

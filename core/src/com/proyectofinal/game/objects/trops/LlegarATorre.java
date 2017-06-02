@@ -27,20 +27,24 @@ public class LlegarATorre {
         caminoTropas = camino;
     }
 
-    public Camino recogerXTorre(){
+    /**
+     * Recoje el camino que hace falta para que el m
+     * @return
+     */
+    public Camino recogerXTorre() {
         for (Camino caminos : caminoTropas) {
-            if (caminos.getX() > objectTorre.getPosicionAtaque().x){
+            if (caminos.getX() > objectTorre.getPosicionAtaque().x) {
                 return caminos;
             }
         }
         return null;
     }
 
-    public ArrayList<Camino> caminarHaciaTorre(){
+    public ArrayList<Camino> caminarHaciaTorre() {
         Camino camino = recogerXTorre();
         int casillaTorre = caminoTropas.indexOf(camino);
         ArrayList<Camino> todasCasillas = new ArrayList<Camino>();
-        for (int i = 0; i < casillaTorre; i++){
+        for (int i = 0; i < casillaTorre; i++) {
             todasCasillas.add(caminoTropas.get(i));
         }
         return todasCasillas;

@@ -20,21 +20,27 @@ public class Robot extends Tropas {
         ataqueCuerpoaCuerpo = false;
     }
 
+    /**
+     * Recojiendo las posiciones del robot y la torre a la que ataca se genera una bala
+     * @param origen
+     * @param destino
+     * @param stage
+     */
     @Override
     public void ataque(Vector2 origen, Vector2 destino, Stage stage) {
         super.ataque(origen, destino, stage);
 
-        if (bala == null || bala.isDestruida()) {
+        if (bala == null || bala.isDestruida()) {   //Siempre que no tenga una bala ya creada y que su última bala disparada ya este destruida...
             bala = new Bala(new Vector2(origen.x + getCollisionRect().getWidth() + 5, origen.y + (getCollisionRect().getHeight()/2) + 10), destino);
             bala.setDestruida(false);
-            stage.addActor(bala);
+            stage.addActor(bala);   //Se le añade al stage para que pueda verse
         }
     }
 
 
     @Override
     public void act(float delta) {
-        getCollisionRect().set(new Rectangle(getPosition().x+19,getPosition().y,57,130));
+        getCollisionRect().set(new Rectangle(getPosition().x+19,getPosition().y,57,130));   //Rectangulo de colisiones del Robot
     }
 
     @Override

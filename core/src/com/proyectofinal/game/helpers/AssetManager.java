@@ -260,7 +260,7 @@ public class AssetManager {
      */
     public static void dispose() {
 
-        // Descrtem els recursos
+        // Descartem els recursos
         fondo.dispose();
         musicStart.dispose();
         musicEnd.dispose();

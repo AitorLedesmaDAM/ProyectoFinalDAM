@@ -12,19 +12,20 @@ import java.util.ArrayList;
 
 public class AtaqueTorre {
 
-    public AtaqueTorre(){
+    public AtaqueTorre() {
     }
 
     /**
      * Recoje la torre y las tropas que han colisionado con ella y les hace daño
+     *
      * @param torre
      * @param tropas
      * @return
      */
-    public ArrayList<Tropas> atacarTropas(Torres torre, ArrayList<Tropas> tropas){
+    public ArrayList<Tropas> atacarTropas(Torres torre, ArrayList<Tropas> tropas) {
         ArrayList<Tropas> tropasMuertas = new ArrayList<Tropas>();
         if (torre.getTipo().equals("Fuego")) {  //Si la torre es de fuego el daño se le hara de uno en uno
-            if (Settings.music){
+            if (Settings.music) {
                 AssetManager.soundFire.play();
             }
             tropas.get(0).setVida(tropas.get(0).getVida() - torre.getDanyo());  //Se le quita el daño de la torre
@@ -35,7 +36,7 @@ public class AtaqueTorre {
                 tropasMuertas.add(tropas.remove(0));    //Se le añade a la array list de tropas
             }
         } else if (torre.getTipo().equals("Rayo")) {    //Si la torre es de rayos, harà daño a 4 tropas
-            if (Settings.music){
+            if (Settings.music) {
                 AssetManager.soundThunder.play();
             }
             int contador = 0;
@@ -45,7 +46,7 @@ public class AtaqueTorre {
                     if (tropas.get(i).getVida() < 0) {
                         tropasMuertas.add(tropas.remove(i));
                     }
-                }else{
+                } else {
                     break;
                 }
             }
@@ -53,10 +54,16 @@ public class AtaqueTorre {
         return tropasMuertas;
     }
 
-    public void mostrarAtaque(Torres torre, ArrayList<Tropas> tropas){
-        if (tropas.size() > 0){
+    /**
+     * Dependiendo de si hay tropas, mostrara o no la animación de ataque de la torre
+     *
+     * @param torre
+     * @param tropas
+     */
+    public void mostrarAtaque(Torres torre, ArrayList<Tropas> tropas) {
+        if (tropas.size() > 0) {
             torre.setOverlaps(true);
-        }else{
+        } else {
             torre.setOverlaps(false);
         }
     }

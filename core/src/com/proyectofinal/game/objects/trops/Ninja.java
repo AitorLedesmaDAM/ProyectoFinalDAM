@@ -17,15 +17,15 @@ public class Ninja extends Tropas {
 
     @Override
     public void act(float delta) {
-        setCollisionRect(new Rectangle(getPosition().x,getPosition().y,78,90));
+        setCollisionRect(new Rectangle(getPosition().x, getPosition().y, 78, 90)); //Rectangulo de posiciones del Ninja
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         this.setName("Ninjas");
-        if(isanimacionCaminar()) {
+        if (isanimacionCaminar()) {
             batch.draw(AssetManager.ninjaRun.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 77, 88, 1f, 1f, 0);
-        }else{
+        } else {
             batch.draw(AssetManager.ninjaAttack.getKeyFrame(getTiempoDeEstado()), getX(), getY(), 0, 0, 110, 100, 1f, 1f, 0);
         }
     }
