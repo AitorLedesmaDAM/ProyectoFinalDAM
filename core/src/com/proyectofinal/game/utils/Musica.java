@@ -16,13 +16,14 @@ public class Musica {
 
     //Containers para icono de musica en marcha y otro cuando esta parado
     private Container containerMusic, containerMusicMute;
-    private Array < Actor > actores = new Array < Actor > ();
+    private Array<Actor> actores = new Array<Actor>();
 
-    
+
     /**
      * Methodo para poner icono de musica, por parametros le llega el Stage. en calse setting hay un booleano de musica
-     * si esta true entonces pone musica de empezar que esta indicado en assetmanager y muestro el icono de musica en 
+     * si esta true entonces pone musica de empezar que esta indicado en assetmanager y muestro el icono de musica en
      * marcha. si el booleano esta false entonves para la musica y muestra el icono de musica parado.
+     *
      * @param stage
      */
     public void iconoMusica(Stage stage) {
@@ -57,7 +58,7 @@ public class Musica {
                 stage.addActor(containerMusic); //Se anade
                 //Borrar el container de musica parado, eso es en caso de que el usuario vuelva a poner musica, para que 
                 //no le muestra el icono de musica parado.
-                stage.addAction(Actions.removeActor(containerMusicMute)); 
+                stage.addAction(Actions.removeActor(containerMusicMute));
 
             } else {
                 //sino carga ese icono de imagen, y hace mismos pasos que anterior
@@ -73,10 +74,10 @@ public class Musica {
                 stage.addActor(containerMusic);
                 stage.addAction(Actions.removeActor(containerMusicMute));
             }
-            
+
             //Si el booleano de musica es falso
-        }else{
-            
+        } else {
+
             //Hace un pause de musica segun en pantalla que este.
             if (Settings.pantalla == 1 || Settings.pantalla == 2) {
                 AssetManager.musicStart.pause();

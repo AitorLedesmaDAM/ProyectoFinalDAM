@@ -30,7 +30,7 @@ public class FinalScreen implements Screen {
     private int lvl;
 
     private static Label.LabelStyle textStyleTitulo;
-    private Label  titulo;
+    private Label titulo;
     private Container contenedorTitulo;
     private Container containerBtSalir, containerBtSig, containerBtReniciar;
     private TowerAttack game;
@@ -38,9 +38,9 @@ public class FinalScreen implements Screen {
     private Musica m = new Musica();
 
     /**
-    * Constructor
-    * Le pasamos un boolean para definir el mensaje y los botones
-    */
+     * Constructor
+     * Le pasamos un boolean para definir el mensaje y los botones
+     */
 
     public FinalScreen(TowerAttack game, int nivelActual, Boolean ganado) {
 
@@ -67,11 +67,11 @@ public class FinalScreen implements Screen {
         textStyleTitulo = AssetManager.textStyleTitulo;
 
         // Mostramos un mensaje diferente si ha ganado o perdido.
-        String msg; 
-        if (ganado){
-            msg= "Has Ganado ";
+        String msg;
+        if (ganado) {
+            msg = "Has Ganado ";
             pref.guardarPreferences(lvl);
-        }else {
+        } else {
             msg = "Has Perdido!!! ";
         }
 
@@ -82,7 +82,7 @@ public class FinalScreen implements Screen {
         // Definimos la posicion del contenedor
         contenedorTitulo.setTransform(true);
         contenedorTitulo.center();
-        contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2 ,Settings.GAME_HEIGHT / 6 + 100);
+        contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 6 + 100);
 
         // Añadimos el ContenedorTitulo como Actor al Stage
         stage.addActor(contenedorTitulo);
@@ -90,35 +90,35 @@ public class FinalScreen implements Screen {
         // Definimos los botones que segun el boolean que se recibe por parametros
         if (ganado) {
             // Añadimos el boton siguente a un Contenedor
-            Image sig = new Image(AssetManager.btnSig); 
+            Image sig = new Image(AssetManager.btnSig);
             sig.setName("Siguente");
             containerBtSig = new Container(sig);
             containerBtSig.setTransform(false);
             containerBtSig.center();
             containerBtSig.setSize(400, 200);
-            
+
             // Definimos su posicion
             containerBtSig.setPosition(Settings.GAME_WIDTH / 2 + 300, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
-            
+
             // Añadimos el ContainerBtSig como Actor al Stage
             stage.addActor(containerBtSig);
         }
 
-         // Añadimos el boton Reiniciar a un Contenedor
-        Image reniciar = new Image(AssetManager.btnReiniciar); 
+        // Añadimos el boton Reiniciar a un Contenedor
+        Image reniciar = new Image(AssetManager.btnReiniciar);
         reniciar.setName("Reniciar");
         containerBtReniciar = new Container(reniciar);
         containerBtReniciar.setTransform(false);
         containerBtReniciar.center();
         containerBtReniciar.setSize(400, 200);
-        
+
         // Definimos su posicion
-        containerBtReniciar.setPosition(Settings.GAME_WIDTH / 2 - 200 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
+        containerBtReniciar.setPosition(Settings.GAME_WIDTH / 2 - 200, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
 
         // Añadimos el ContainerBtReiniciar como Actor al Stage
-        stage.addActor(containerBtReniciar); 
+        stage.addActor(containerBtReniciar);
 
-        
+
         // Añadimos el boton Salir a un Contenedor
         Image salir = new Image(AssetManager.btnSalir);
         salir.setName("Salir");
@@ -126,37 +126,49 @@ public class FinalScreen implements Screen {
         containerBtSalir.setTransform(false);
         containerBtSalir.center();
         containerBtSalir.setSize(400, 200);
-        //containerBtSalir.setPosition(Settings.GAME_WIDTH - 450, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4);
-        
+
+
         // Definimos su posicion
-        containerBtSalir.setPosition(Settings.GAME_WIDTH / 2 - 700 , Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
+        containerBtSalir.setPosition(Settings.GAME_WIDTH / 2 - 700, Settings.GAME_HEIGHT / 2 + Settings.GAME_HEIGHT / 4 - 60);
 
         // Añadimos el ContainerBtSalir como Actor al Stage
         stage.addActor(containerBtSalir);
 
+        //Methodo de canvia iconomusica.
         canviarMusica();
 
+        //Se pone a la escucha.
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
-    public void canviarMusica(){
+    /**
+     * Methodo que se llamo a otro methodo que esta en calse de musica, y por parametros le paso un stage
+     */
+    public void canviarMusica() {
         m.iconoMusica(stage);
     }
 
 
-    public int CantidadTropas(int nivel){
+    /**
+     * MEthodo de devuelve cantidad de tropas permiridas segun el nivell que sea.
+     *
+     * @param nivel
+     * @return cantidad de tropas
+     */
+    public int CantidadTropas(int nivel) {
         int cantidad = 0;
 
-            if(nivel == 1){
-                cantidad = Settings.MAX_TROPAS_LVL_1;
+        if (nivel == 1) {
+            cantidad = Settings.MAX_TROPAS_LVL_1;
 
-            }else if(nivel == 2){
-                cantidad = Settings.MAX_TROPAS_LVL_2;
-            }
+        } else if (nivel == 2) {
+            cantidad = Settings.MAX_TROPAS_LVL_2;
+        }
 
         return cantidad;
     }
 
+    //Methodos overrides
     @Override
     public void show() {
 
@@ -196,26 +208,44 @@ public class FinalScreen implements Screen {
 
     }
 
+    /**
+     * MEthodo que devuelve un stage
+     * @return stage
+     */
     public Stage getStage() {
         return stage;
     }
 
+
+    /**
+     * Methodo para boton Siguiente que le lleva a siguiente nivell, cuando el usuario apreta a ese boton,
+     * se le lleva a seleccionScreen y suma un nivell mas al nivel anterior. Asi el usuario ya esta
+     * en siguiente nivell.
+     */
     public void botonSiguiente() {
         int cantidad;
-        cantidad = CantidadTropas(lvl+1);
+        cantidad = CantidadTropas(lvl + 1);
         if (cantidad != 2) {
             game.setScreen(new SeleccionScreen(game, viewport, lvl + 1, cantidad));
-        }else{
+        } else {
             game.setScreen(new MenuScreen(game));
         }
     }
 
+
+    /**
+     * Methodo para boton de reiniciar el juego, al usuario le lleva otra vez al seleccionScreen, por
+     * parametros le pasamos el game, viewport, nivell y cantidad de tropas.
+     */
     public void botonReiniciar() {
         int cantidad;
         cantidad = CantidadTropas(lvl);
-        game.setScreen(new SeleccionScreen(game, viewport, lvl , cantidad));
+        game.setScreen(new SeleccionScreen(game, viewport, lvl, cantidad));
     }
 
+    /**
+     * Methodo para boton de salir, que lleva a MesuScreen.
+     */
     public void botonSalir() {
         game.setScreen(new MenuScreen(game));
     }

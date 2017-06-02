@@ -9,17 +9,30 @@ import com.proyectofinal.game.helpers.AssetManager;
  */
 
 public class Rayo extends Actor {
+
+    //Atributos
     private float x,y;
     public float tiempoDeEstado = 0;
     private boolean visible;
     private float radio;
 
+    /**
+     * Constructor, se inicializa las variables.
+     * @param x
+     * @param y
+     * @param radio
+     */
     public Rayo (float x, float y, float radio){
         this.x = x + 25;
         this.y = y;
         this.radio = radio * 2;
     }
 
+    /**
+     * Methodo override de draw, para dibujar animacion de ray al torre.
+     * @param batch
+     * @param parentAlpha
+     */
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
@@ -29,14 +42,24 @@ public class Rayo extends Actor {
         }
     }
 
+    /**
+     * Methodo para obtener el tiempo de estado.
+     * @return
+     */
     public float getTiempoDeEstado() {
         return tiempoDeEstado;
     }
 
+    /**
+     * Methodo ser para poner el tiempo de estado.
+     * @param tiempoDeEstado
+     */
     public void setTiempoDeEstado(float tiempoDeEstado) {
         this.tiempoDeEstado = tiempoDeEstado;
     }
 
+
+    //Methodos overrides
     @Override
     public float getX() {
         return x;
