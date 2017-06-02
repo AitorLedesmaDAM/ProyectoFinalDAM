@@ -45,6 +45,9 @@ public class InputHandler implements InputProcessor {
         stage = finalScreen.getStage();
     }
 
+    /**
+    * Cuando se pulsa la tecla 'B' el atauqeScreen se pone en debug
+    */
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.B) {
@@ -63,21 +66,32 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
+    /**
+    * Este metodo mira que boton a sido pulado de que pantalla 
+    * y llama a los metodos correspondientes.
+    */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        //En la pantalla 1
         if (Settings.pantalla == 1) {
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String lvl = actorHit.toString().replaceAll("Label: ", "");
-
+                //se pulsa el nivel 1
                 if (lvl.equals("1")) {
                     lvlInt = Integer.parseInt(lvl.toString());
+                    //se llama al metodo siguiente pantalla con los atributos para
+                    //el nivel 1
                     menuScreen.siguientePantalla(lvlInt, Settings.MAX_TROPAS_LVL_1);
+                 //si se pulsa el 2
                 } else if (lvl.equals("2")) {
                     lvlInt = Integer.parseInt(lvl.toString());
+                    //se llama al metodo siguiente pantalla con los atributos para
+                    //el nivel 2
                     menuScreen.siguientePantalla(lvlInt, Settings.MAX_TROPAS_LVL_2);
                 }
+                //if para encender/apagar la musica
                 if (lvl.equals("Music") || lvl.equals("MusicMute")) {
                     Settings.music = !Settings.music;
                     menuScreen.canviarMusica();
@@ -85,12 +99,15 @@ public class InputHandler implements InputProcessor {
 
             }
             return true;
+            //En la pantalla 2
         } else if (Settings.pantalla == 2) {
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String tropa = actorHit.toString();
+                //si la tropa pulsada es caballero
                 if (tropa.equals("Caballero")) {
+                    //se llama al metodo sumarCaballero de selectScreen
                     selecScreen.modMaxTropas(Settings.TAMANYO_CABALLERO);
                     selecScreen.sumarCaballero();
                 } else if (tropa.equals("Ninja")) {
@@ -105,18 +122,22 @@ public class InputHandler implements InputProcessor {
                 } else {
 
                 }
+                //if para encender/apagar la musica
                 if (tropa.equals("Music") || tropa.equals("MusicMute")) {
                     Settings.music = !Settings.music;
                     selecScreen.canviarMusica();
                 }
             }
             return true;
+         //En la pantalla 3
         } else if (Settings.pantalla == 3) {
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String tropa = actorHit.toString();
+                //si se pulsa en el boton de caballero
                 if (tropa.equals("Caballero")) {
+                    //se llama a soltarTropa de ataqueScreen
                     ataqueScreen.soltarTropa(tropa);
                 } else if (tropa.equals("Ninja")) {
                     ataqueScreen.soltarTropa(tropa);
@@ -130,13 +151,16 @@ public class InputHandler implements InputProcessor {
                 }
             }
             return true;
+            //En la pantalla 4
         } else if (Settings.pantalla == 4) {
 
             stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
             Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
             if (actorHit != null) {
                 String option = actorHit.toString();
+                //si se pulsa el boton siguiente
                 if (option.equals("Siguente")) {
+                    //se llama al metodo botonSiguiente de finalScreen
                     finalScreen.botonSiguiente();
                     AssetManager.musicEnd.dispose();
 
