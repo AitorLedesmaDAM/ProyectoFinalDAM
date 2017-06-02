@@ -53,9 +53,9 @@ public class AtaqueScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
 
-    private ArrayList<Tropas> tropasEnMapa, tropasColisionadas;
-    private ArrayList<Camino> camino;
-    private ArrayList<Torres> torres;
+    private ArrayList < Tropas > tropasEnMapa, tropasColisionadas;
+    private ArrayList < Camino > camino;
+    private ArrayList < Torres > torres;
 
     private long contador = 0;
 
@@ -66,7 +66,7 @@ public class AtaqueScreen implements Screen {
     private Container containerCaballero, containerNinja, containerRobot;
 
     private Musica m = new Musica();
-    private boolean musicaActiva = Settings.music, sonidoAtacar = false;
+    private boolean musicaActiva = Settings.music, sonidoAtacar = false, sonidoCaminar = false;
 
     public AtaqueScreen(TowerAttack game, int maxCaballeros, int maxNinjas, int maxRobots, int lvl) {
         this.game = game;
@@ -83,6 +83,7 @@ public class AtaqueScreen implements Screen {
 
         tropas = new Tropas();
 
+        //dependiendo de el lvl se pondra un mapa o otro
         if (lvl == 1) {
             mapa = AssetManager.tiledMap1;
         } else if (lvl == 2) {
@@ -98,10 +99,10 @@ public class AtaqueScreen implements Screen {
 
         nivel = new Nivel();
 
-        tropasEnMapa = new ArrayList<Tropas>();
+        tropasEnMapa = new ArrayList < Tropas > ();
 
         camino = nivel.recojerCamino(mapa);
-        tropasColisionadas = new ArrayList<Tropas>();
+        tropasColisionadas = new ArrayList < Tropas > ();
 
         Image caballero = new Image(AssetManager.caballeroSelecAtak); //Selección de caballero
         caballero.setName("Caballero");
@@ -157,6 +158,7 @@ public class AtaqueScreen implements Screen {
         Gdx.input.setInputProcessor(new InputHandler(this));
     }
 
+
     public void canviarMusica() {
         m.iconoMusica(stage);
     }
@@ -177,24 +179,37 @@ public class AtaqueScreen implements Screen {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+        //si las tropasEnMapa, maxCaballeros, maxRobot y maxNinjas estan a 0 quiere decir que se te han muerto
+        //todas las tropas y que has perdido
         if (tropasEnMapa.size() == 0 && maxCaballeros == 0 && maxRobots == 0 && maxNinjas == 0) {
+            //se llama a la final Screen con el ganado en false
             game.setScreen(new FinalScreen(game, lvl, false));
 
+            //sino se ha perdido la partida
         } else {
+
 
             camera.update();
             renderer.setView(camera);
             renderer.render();
 
+
             if (tropasEnMapa != null) {
+
+                //se recorre tropasEnMapa
                 for (int i = 0; i < tropasEnMapa.size(); i++) {
                     Tropas tropaActual = tropasEnMapa.get(i);
+                    //se actualiza el tiempo de estasdo para poder ver la animación
                     tropaActual.setTiempoDeEstado(tropaActual.getTiempoDeEstado() + delta);
+                    //si la tropa esta en estado caminando
                     if (tropaActual.getEstado() == Tropas.Estado.Caminando) {
                         if (contador % tropaActual.getVelocidad() == 0) {
+                            //buscara la siguiente casilla de camino para moverse
                             tropaActual.siguienteCasilla(camino);
-
+                            //y si la casilla actual de esta tropa es igual a la ultima de camino
                             if (nivel.comproFinal(camino, tropaActual.getCasillaActual())) {
+                                //llamamos a la ultima pantalla con el ganado a true
                                 game.setScreen(new FinalScreen(game, lvl, true));
                             }
                         }
@@ -202,19 +217,26 @@ public class AtaqueScreen implements Screen {
                 }
             }
 
+            //recorremos las torres y las tropasEnMapa
             for (int defensoras = 0; defensoras < torres.size(); defensoras++) {
                 Torres torreActual = torres.get(defensoras);
                 for (int atacantes = 0; atacantes < tropasEnMapa.size(); atacantes++) {
                     Tropas tropaActual = tropasEnMapa.get(atacantes);
 
+                    //si se hace el overlaps
                     if (Intersector.overlaps(torreActual.getCollisionCircle(), tropaActual.getCollisionRect())) {
 
+                        //miramos la orientación de la torre
                         orientacionUltimaTorre = torreActual.isOrientacion();
 
+                        //control para que solamente se introduzca la misma tropa solo una vez
                         if (contador % 60 == 0 && tropasColisionadas.indexOf(tropaActual) == -1) {
 
+                            //activamos el sonido
                             sonidoAtacar = true;
+                            //ponemos el estado a atacando
                             tropaActual.setEstaAtacando(true);
+                            //añadimos la tropa a tropasColisionadas
                             tropasColisionadas.add(tropaActual);
                             hayTropasColisionadas = true;
                         }
@@ -226,22 +248,24 @@ public class AtaqueScreen implements Screen {
                         if (contador % 60 == 0 && tropasColisionadas.size() > 0 && compruebaAtaqueTorre) {
                             compruebaAtaqueTorre = false;
 
-                            ArrayList<Tropas> tropasMuertas = ataqueTorre.atacarTropas(torreActual, tropasColisionadas);
+                            ArrayList < Tropas > tropasMuertas = ataqueTorre.atacarTropas(torreActual, tropasColisionadas);
                             if (tropasMuertas != null) {
-                                for (Tropas tropa : tropasMuertas) {
+                                //Controla las tropas muertas
+                                for (Tropas tropa: tropasMuertas) {
                                     tropasEnMapa.remove(tropasEnMapa.indexOf(tropa));
                                     borrarActorStage(tropa);
                                 }
                             }
-
+                            //muestra el ataque de la torre
                             ataqueTorre.mostrarAtaque(torreActual, tropasColisionadas);
 
                             ataqueTropa.atacarTorre(torreActual, tropasColisionadas, musicaActiva);
 
                         }
-
+                        //cambio del estado de las tropas a atacando
                         tropaActual.setEstado(Tropas.Estado.Atacando);
-
+                        //si la tropa qaue esta atacando es un robot no ira hacia la torre sino que se
+                        //quedara en la misma posicion del overlaps y atacara desde allí
                         if (!tropaActual.getName().equals("Robots")) {
                             if (contador % tropaActual.getVelocidad() == 0) {
                                 ataqueTropa.llegarATorre(torreActual, tropaActual, camino);
@@ -251,12 +275,14 @@ public class AtaqueScreen implements Screen {
                         }
 
                     } else {
-                        if (!tropaActual.isEstaAtacando() && contador % tropaActual.getVelocidad() == 0) {
+                        //mientras la tropa este atacando que no se mueva
+                        if (!tropaActual.isEstaAtacando() && contador % tropaActual.getVelocidad() == 0){
                             tropaActual.setanimacionCaminar(true);
                             if (!tropaActual.salirDeTorre()) {
                                 tropaActual.setEstado(Tropas.Estado.Caminando);
                                 tropasColisionadas.remove(tropaActual);
-                            } else {
+                            }else{
+                                //cuando termine de atacar que busque la siguiente casilla
                                 tropaActual.siguienteCasilla(camino);
                             }
                         }
@@ -266,7 +292,7 @@ public class AtaqueScreen implements Screen {
                     }
                 }
             }
-
+            //hacemos las animaciones caminar/atacar
             if (contador % 30 == 0) {
                 int caminar = 0, atacar = 0;
                 for (int i = 0; i < tropasEnMapa.size(); i++) {
@@ -277,6 +303,7 @@ public class AtaqueScreen implements Screen {
                             atacar++;
                     }
                 }
+                //Comprovamos el boolean musicaActiva para encender o parar la musica
                 if (musicaActiva) {
                     if (contador % 30 == 0) {
                         if (atacar > 0) {
@@ -287,7 +314,7 @@ public class AtaqueScreen implements Screen {
                     }
                     if (caminar > 0) {
                         AssetManager.soundWalk.play();
-                    } else {
+                    }else{
                         AssetManager.soundWalk.stop();
                     }
                 } else {
@@ -307,15 +334,26 @@ public class AtaqueScreen implements Screen {
         }
     }
 
+    /**
+     *
+     * Metodo para eliminar un actor del stage
+     *
+     * @param tropa
+     */
     public void borrarActorStage(Tropas tropa) {
-        Array<Actor> actores = stage.getActors();
-        for (Actor actor : actores) {
+        Array < Actor > actores = stage.getActors();
+        for (Actor actor: actores) {
             if (actor.equals(tropa)) {
                 actor.remove();
             }
         }
     }
 
+    /**
+     *
+     * Metodo para que cuando se pulse 'B' se vean los rectangulos y los circulos de colisiones de las tropas y las torres
+     *
+     */
     private void renderDebug() {
 
         debugRenderer.setProjectionMatrix(camera.combined);
@@ -341,6 +379,11 @@ public class AtaqueScreen implements Screen {
 
     }
 
+    /**
+     *
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -359,18 +402,25 @@ public class AtaqueScreen implements Screen {
 
     @Override
     public void hide() {
+
         stage.dispose();
         this.dispose();
     }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 
     public Stage getStage() {
         return stage;
     }
+
+
+    /**
+     *
+     * Metodo para añadir una tropa al camino y restar a la variable correspondiente
+     *
+     * @param tropa
+     */
 
     public void soltarTropa(String tropa) {
 

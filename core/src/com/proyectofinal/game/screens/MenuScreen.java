@@ -43,12 +43,7 @@ public class MenuScreen implements Screen {
         pref = new Preferences();
         lvl = pref.obtenerPreference();
         System.out.println(lvl);
-/**
-        //Image mIcono = new Image(AssetManager.musicIcono);
-        if (Settings.music) {
-            AssetManager.musicStart.play();
-        }
-*/
+
         camera = AssetManager.camera;
 
         // Creamos el Viewport con las mismas dimensiones que la cCamara
@@ -80,10 +75,12 @@ public class MenuScreen implements Screen {
 
         contenedorTitulo = new Container(titulo);
 
+
         contenedorTitulo.setTransform(true);
         contenedorTitulo.center();
         contenedorTitulo.setPosition(Settings.GAME_WIDTH / 2,Settings.GAME_HEIGHT/6);
 
+        // Creamos el Contenedor necesario para aplicarle las acciones
             container1 = new Container(textLbl1);
 
             container1.setTransform(true);
@@ -111,48 +108,8 @@ public class MenuScreen implements Screen {
             stage.addActor(container3);
         }
 
-        // Creamos el Contenedor necesario para aplicarle las acciones
-       /* container4 = new Container(textLbl4);
-        container5 = new Container(textLbl5);
-        container6 = new Container(textLbl6);
-        container7 = new Container(textLbl7);
-        container8 = new Container(textLbl8); */
-
-
-        // Asignamos la posicion de cada Contenedor en la pantalla
-     /*   container4.setTransform(true);
-        container4.center();
-        container4.setPosition((Settings.GAME_WIDTH / 5)*4,Settings.GAME_HEIGHT/2);
-
-        container5.setTransform(true);
-        container5.center();
-        container5.setPosition((Settings.GAME_WIDTH / 5),Settings.GAME_HEIGHT/2 + Settings.GAME_HEIGHT/4);
-
-        container6.setTransform(true);
-        container6.center();
-        container6.setPosition((Settings.GAME_WIDTH / 5)*2,Settings.GAME_HEIGHT/2 +Settings.GAME_HEIGHT/4);
-
-        container7.setTransform(true);
-        container7.center();
-        container7.setPosition((Settings.GAME_WIDTH / 5)*3,Settings.GAME_HEIGHT/2 + Settings.GAME_HEIGHT/4);
-
-        container8.setTransform(true);
-        container8.center();
-        container8.setPosition((Settings.GAME_WIDTH / 5)*4,Settings.GAME_HEIGHT/2 + Settings.GAME_HEIGHT/4);
-
-*/
-        
         // Añadimos los Contenedores como Actores al Stage
         stage.addActor(contenedorTitulo);
-     /*
-        stage.addActor(container4);
-        stage.addActor(container5);
-        stage.addActor(container6);
-        stage.addActor(container7);
-        stage.addActor(container8); */
-
-        //stage.addActor(containerMusic);
-
 
         // Hacemos que los Contenedores se puedan pulsar
         Gdx.input.setInputProcessor(new InputHandler(this));
