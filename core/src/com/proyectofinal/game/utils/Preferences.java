@@ -17,7 +17,7 @@ public class Preferences {
     }
 
     /**
-     * Recull Preferences del sistema
+     * Obtiene las prenferencias del sistema
      * @return
      */
     protected com.badlogic.gdx.Preferences getPrefs() {
@@ -29,7 +29,7 @@ public class Preferences {
 
 
     /**
-     * Guarda el nivell que t'acabes de passar
+     * Guarda el nivel que te acabas de pasar
      * @param nivell
      */
     public void guardarPreferences(int nivell){
@@ -45,7 +45,7 @@ public class Preferences {
     }
 
     /**
-     * Obté el nivel actual
+     * Obtiene el nivel actual
      * @return
      */
     public int obtenerPreference(){
